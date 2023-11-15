@@ -1,0 +1,59 @@
+{
+  "homepage": "https://Z3ronZ.github.io/smartexamhub",
+  "name": "thesis-project",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@material-tailwind/react": "^2.1.1",
+    "@mui/x-data-grid": "^6.11.1",
+    "axios": "^1.4.0",
+    "framer-motion": "^10.16.4",
+    "html2pdf.js": "^0.10.1",
+    "js-cookie": "^3.0.5",
+    "jspdf": "^2.5.1",
+    "moment": "^2.29.4",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.10.1",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.7.4",
+    "recharts": "^2.7.3",
+    "sass": "^1.65.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "gh-pages": "^6.0.0",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24"
+  }
+}

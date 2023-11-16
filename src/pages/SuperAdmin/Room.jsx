@@ -93,7 +93,7 @@ const Room = () => {
     5: '5 hours'
    };
   return (
-    <div>
+    <div className="h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-1 gap-4">
       {roomData && roomData.map((room, roomIndex) => (
           <div

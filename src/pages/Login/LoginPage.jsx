@@ -67,14 +67,14 @@ function LoginPage() {
   return (
     <>
         <div className="bg-white" style={{ backgroundImage: `url(${LP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-16">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-24">
          
           <h2 className="text-center text-2xl font-bold font-mono tracking-tight text-white">
             Sign in to your account
           </h2>
         </div>
 
-        <div className="mt-5 sm:mx-auto px-5 w-[390px] h-64 pt-4 shadow-black shadow-lg">
+        <div className="mt-5 sm:mx-auto px-5 sm:w-[320px] lg:w-[390px] h-64 pt-4 shadow-black shadow-lg">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <div className="mt-2">

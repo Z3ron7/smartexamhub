@@ -11,14 +11,14 @@ export default function LandingPage() {
   return (
     <div className="bg-blue-300 lg:h-screen md:h-screen sm:h-auto bg-gradient-to-r from-blue-400 to-indigo-700 " >
       <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between pt-0 px-6" aria-label="Global">
+        <nav className="flex items-center pt-0 mb-3 justify-between px-6" aria-label="Global">
           <div className='flex'>
             <img src={SE}
-        className=' h-auto w-20 object-cover'
+            className=' h-auto w-16 lg:w-20 object-cover'
       />
           </div>
         <div className=" lg:flex lg:flex-1 lg:justify-start">
-            <Link to="/" className="text-2xl font-bold font-mono text-white hover:text-black">
+            <Link to="/" className="text-xl font-bold font-mono text-white hover:text-blue-300">
               SmartExam
             </Link>
           </div>

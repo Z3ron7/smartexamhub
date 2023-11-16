@@ -109,7 +109,7 @@ export default function Register() {
             <h3 className="text-4xl font-bold font-mono text-white">Account Registration</h3>
           </a>
         </div>
-        <div className="px-6 py-4 mt-6 overflow-hidden items-center bg-transparent shadow-lg shadow-black sm:max-w-lg sm:rounded-lg">
+        <div className="px-2 lg:px-6 py-4 mt-6 overflow-hidden items-center bg-transparent shadow-lg shadow-black w-[360px] lg:w-[510px]  sm:rounded-lg">
       <form className="w-full" onSubmit={handleRegister} encType="multipart/form-data">
       <div className="flex flex-row items-start justify-start">
   {/* Left Column for Name and Email */}
@@ -148,7 +148,7 @@ export default function Register() {
           <img
             src={selectedImage || "default-profile-image.jpg"}
             alt="Click to Upload Image for verification"
-            className="w-full h-32 object-cover text-sm text-white pt-10 text-center justify-center bg-transparent"
+            className="w-full h-32 object-cover text-sm text-white text-center justify-center bg-transparent"
           />
         </label>
       <div className="mb-0">
@@ -166,7 +166,7 @@ export default function Register() {
 </div>
 
             <div className="flex items-start mt-4">
-            <div className="flex flex-col items-start mr-9">
+            <div className="flex flex-col items-start mr-2 text-sm lg:text-base">
   <Select
     id="gender"
     name="gender"
@@ -180,11 +180,11 @@ export default function Register() {
 </div>
 
             <RadioGroup value={values.status} onChange={status => setValues({ ...values, status })}>
-              <div className="flex items-start mt-3 mb-3">
-                <RadioGroup.Label className="block text-sm font-medium text-gray-700">
+              <div className=" lg:flex items-start lg:mt-3 mr-3 mb-3">
+                <RadioGroup.Label className="block text-sm text-center font-medium text-gray-700">
                   Status:
                 </RadioGroup.Label>
-                <div className="flex items-center ml-4 space-x-4">
+                <div className="flex items-center lg:ml-4 space-x-4">
                   <RadioGroup.Option value="student">
                     {({ checked }) => (
                       <label className="flex items-center space-x-2 cursor-pointer">

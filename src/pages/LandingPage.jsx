@@ -9,7 +9,7 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-blue-300 lg:h-screen md:h-screen sm:h-auto bg-gradient-to-r from-blue-400 to-indigo-700 " >
+    <div className="bg-blue-300 lg:h-screen md:h-screen sm:h-screen bg-gradient-to-r from-blue-400 to-indigo-700 " >
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center pt-0 mb-3 justify-between px-6" aria-label="Global">
           <div className='flex'>

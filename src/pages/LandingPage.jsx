@@ -9,7 +9,7 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-blue-300 lg:h-screen md:h-screen sm:h-[600px] bg-gradient-to-r from-blue-400 to-indigo-700 " >
+    <div className="bg-blue-300 lg:h-screen md:h-screen bg-gradient-to-r from-blue-400 to-indigo-700 " >
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center pt-0 mb-3 justify-between px-6" aria-label="Global">
           <div className='flex'>
@@ -65,9 +65,9 @@ export default function LandingPage() {
         </div>
       </div>
       <div className='lg:mt-7 md:mt-4 sm:mt-2 lg:mr-10 '>
-      <div className='bg-white flex mt-14 md:mt-36 lg:mt-40 h-72 justify-center mx-2 rounded-2xl skew-y-6'></div>
+      <div className='bg-white flex mt-[83px] md:mt-36 lg:mt-40 h-64 justify-center mx-2 rounded-2xl skew-y-6'></div>
           <img src={landing}
-        className=' h-auto w-[600px] relative mt-[-22rem] md:mt-[-20rem] lg:mt-[-25rem] object-cover'
+        className=' h-auto w-[550px] lg:[600px] relative mt-[-22rem] md:mt-[-20rem] lg:mt-[-25rem] object-cover'
       />
           </div>
     </div>

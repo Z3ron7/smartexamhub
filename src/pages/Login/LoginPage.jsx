@@ -17,7 +17,7 @@ function LoginPage() {
     event.preventDefault();
     setLoading(true);
     axios
-      .post('https://sparkling-red-snapper.cyclic.app/login', values, { withCredentials: true })
+      .post('https://smartexam.cyclic.app/login', values, { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Login Successful') {
           localStorage.setItem('token', res.data.token);

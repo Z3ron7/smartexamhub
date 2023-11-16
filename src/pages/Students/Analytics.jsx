@@ -40,7 +40,7 @@ const Analytics = () => {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/exams/fetch-user-exams?userId=${user_id}&limit=2`);
+        const response = await axios.get(`https://smartexam.cyclic.app/exams/fetch-user-exams?userId=${user_id}&limit=2`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);

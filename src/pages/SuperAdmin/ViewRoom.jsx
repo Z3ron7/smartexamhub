@@ -13,7 +13,7 @@ function ViewRoom() {
 
   useEffect(() => {
     // Make an API request to your backend to fetch room data
-    axios.get(`http://localhost:3001/room/rooms/${room_id}`)
+    axios.get(`https://smartexam.cyclic.app/room/rooms/${room_id}`)
       .then((response) => {
 console.log("Rdata:", response.data.room)
 

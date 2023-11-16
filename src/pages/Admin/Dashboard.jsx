@@ -24,7 +24,7 @@ const Dashboard = () => {
   
     useEffect(() => {
       // Fetch the counts from your backend
-      axios.get('http://localhost:3001/users/user-stats') // Adjust the URL accordingly
+      axios.get('https://smartexam.cyclic.app/users/user-stats') // Adjust the URL accordingly
         .then((response) => {
           setTotalStudents(response.data.totalStudentsVerified + response.data.totalAlumniVerified);
           setGraduatingStudents(response.data.totalStudentsVerified);

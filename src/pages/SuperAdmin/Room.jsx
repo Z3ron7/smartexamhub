@@ -24,7 +24,7 @@ const Room = () => {
   };
 
   const fetchRoomData = () => {
-    axios.get('http://localhost:3001/room/rooms')
+    axios.get('https://smartexam.cyclic.app/room/rooms')
       .then((response) => {
         setRoomData(response.data.rooms);
       })
@@ -38,7 +38,7 @@ const Room = () => {
   }, []); // Fetch room data when the component mounts
 
   const handleCreateRoom = (roomData) => {
-    axios.get('http://localhost:3001/room/refresh-rooms', roomData)
+    axios.get('https://smartexam.cyclic.app/room/refresh-rooms', roomData)
       .then((response) => {
         console.log(response.data);
         // Reset the form fields after successful submission
@@ -55,7 +55,7 @@ const Room = () => {
   
     if (confirmDelete) {
       axios
-        .delete(`http://localhost:3001/room/room/${room_id}`)
+        .delete(`https://smartexam.cyclic.app/room/room/${room_id}`)
         .then((response) => {
           if (response.data.success) {
             fetchRoomData();

@@ -106,7 +106,7 @@ export default function Register() {
       )}
       <div className="items-center mx-auto justify-center">
           <a href="/">
-            <h3 className="text-xl lg:text-4xl font-bold font-mono text-white">Account Registration</h3>
+            <h3 className="text-2xl lg:text-4xl font-bold font-mono text-white">Account Registration</h3>
           </a>
         </div>
         <div className="px-2 lg:px-6 py-4 mt-6 overflow-hidden items-center bg-transparent shadow-lg shadow-black w-[360px] lg:w-[510px]  sm:rounded-lg">

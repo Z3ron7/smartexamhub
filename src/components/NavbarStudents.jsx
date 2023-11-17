@@ -25,6 +25,8 @@ const NavbarStudents = () => {
       .get('https://smartexam.cyclic.app/logout', { withCredentials: true })
       .then((res) => {
         localStorage.removeItem('token'); // Remove the token from local storage
+	localStorage.removeItem('user_id');
+	localStorage.removeItem('role');
         navigate('/');
       })
       .catch((err) => console.log(err));

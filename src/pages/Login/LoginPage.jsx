@@ -24,7 +24,7 @@ function LoginPage() {
           console.log('data user:', res.data)
           localStorage.setItem('role', res.data.role);
           localStorage.setItem('user_id', res.data.user_id);
-          localStorage.setItem('isVerified', res.data.isVerified);
+          localStorage.setItem('isVerified', res.data.isVerified ? '1' : '0');
           const userRole = res.data.role;
   
           // Access the isVerified status from the response

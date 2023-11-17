@@ -163,8 +163,8 @@ const Questionnaire = () => {
           // Process choices
           const processedQuestions = shuffleArrayWithCorrectChoice(randomizedQuestions);
   
-          setQuestionsData(processedQuestions);
-          setMaxQuestions(maxQuestions); // Set the total questions count
+          setQuestionsData(response.data);
+          setMaxQuestions(response.data); // Set the total questions count
           setLoading(true)
           console.log('filteredQuestions:', response.data);
           console.log('selectedCompetencyId', selectedCompetency.value);

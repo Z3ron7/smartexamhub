@@ -48,14 +48,14 @@ function App() {
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    setIsLoggedIn(token !== undefined && token !== null);
-    setUserRole(role);
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  setIsLoggedIn(token !== undefined && token !== null);
+  setUserRole(role);
 
-    const verificationStatus = localStorage.getItem('isVerified');
-    setIsVerified(verificationStatus === 'true'); 
-  }, []);
+  const verificationStatus = localStorage.getItem('isVerified');
+  setIsVerified(verificationStatus === '1'); // Convert to boolean
+}, []);
 
   return (
     <BrowserRouter>

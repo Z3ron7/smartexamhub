@@ -268,7 +268,9 @@ function App() {
                     <StudentDashboard />
                   </LayoutStudents>
                 ) : (
+                <LayoutUnverified>
                   <Verification />
+                </LayoutUnverified>
                 )
               }
               allowedRoles={['Exam-taker']}

@@ -71,7 +71,7 @@ function Exam() {
               // Fetch questions for each competency and merge the results
               for (const competency of competencies) {
                 const competencyResponse = await axios.get(
-                  `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${competency}`
+                  `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
                 );
   
                 // Limit to maxQuestionsPerCategory questions per category
@@ -108,7 +108,7 @@ function Exam() {
             } else {
               // Fetch questions for the selected competency
               response = await axios.get(
-                `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
+                `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
               );
   
               // Limit to maxQuestionsPerCategory questions for the selected category

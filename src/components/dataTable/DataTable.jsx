@@ -16,7 +16,7 @@ const DataTable = (props) => {
     renderCell: (params) => {
       return (
         <div className="action">
-          <Link to={`https://smartexamhub.vercel.app/users/${params.row.user_id}`}>
+          <Link to={`/users/${params.row.user_id}`}>
             <img src="/view1.svg" alt="" />
           </Link>
           <div className="delete" onClick={() => props.handleDelete(params.row.user_id)}>

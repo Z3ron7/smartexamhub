@@ -40,6 +40,7 @@ const NavbarSuper = () => {
       .then((res) => {
         if (res.data.Status === 'Success') {
           setAuth(true);
+          console.log("credentials:", res.data)
           setName(res.data.name);
           setImage(res.data.image);
         } else {

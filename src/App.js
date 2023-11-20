@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 //Super Admin---------------------------
@@ -58,7 +58,7 @@ function App() {
 }, []);
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/*" element={<PageNotFound />} />
 
@@ -359,7 +359,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
 
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

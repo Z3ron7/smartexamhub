@@ -124,7 +124,7 @@ export default function Register() {
         value={values.name}
         onChange={(e) => setValues({ ...values, name: e.target.value })}
         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        require
+        required
       />
     </div>
     
@@ -138,7 +138,7 @@ export default function Register() {
         value={values.username}
         onChange={(e) => setValues({ ...values, username: e.target.value })}
         className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        require
+        required
       />
     </div>
   </div>
@@ -178,7 +178,7 @@ export default function Register() {
     styles={customStyles}
     isSearchable
     placeholder="Select Gender"
-    require
+    required
   />
 </div>
 
@@ -242,7 +242,7 @@ export default function Register() {
     value={values.password}
     onChange={(e) => setValues({ ...values, password: e.target.value })}
     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    require
+    required
   />
   {values.password.length < 8 && values.password.length > 0 && (
     <p className="text-red-500 text-sm mt-1">Password must be at least 8 characters long.</p>
@@ -264,7 +264,7 @@ export default function Register() {
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  require
+                  required
                 />
               </div>
             </div>

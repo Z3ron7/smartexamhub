@@ -16,7 +16,7 @@ const Profile = () => {
     async function fetchUserData() {
       try {
         const response = await axios.get(
-          `http://localhost:3001/users/users/${user_id}`
+          `https://smartexam.cyclic.app/users/users/${user_id}`
         );
         setUserData(response.data);
         // Set the initial input field values based on userData
@@ -75,7 +75,7 @@ const Profile = () => {
 
       // Fetch updated user data
       const response = await axios.get(
-        `http://localhost:3001/users/users/${user_id}`
+        `https://smartexam.cyclic.app/users/users/${user_id}`
       );
       setUserData(response.data);
     } catch (error) {

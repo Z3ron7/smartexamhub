@@ -34,7 +34,7 @@ const NavbarStudents = () => {
 
   useEffect(() => {
     axios
-      .get('https://smartexam.cyclic.app', { withCredentials: true })
+      .get('https://smartexam.cyclic.app/user', { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Success') {
           setAuth(true);

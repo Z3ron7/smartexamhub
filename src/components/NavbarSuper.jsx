@@ -36,13 +36,7 @@ const NavbarSuper = () => {
 
   useEffect(() => {
     axios
-      .get('https://smartexam.cyclic.app/user', null, { withCredentials: true, crossDomain: true,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin':
-        'https://smartexamhub.vercel.app',
-    }, })
+      .get('https://smartexam.cyclic.app/user', { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Success') {
           setAuth(true);

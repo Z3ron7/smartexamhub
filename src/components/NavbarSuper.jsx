@@ -22,7 +22,7 @@ const NavbarSuper = () => {
 
   const handleLogout = () => {
     axios
-      .get('http://localhost:3001/logout', { withCredentials: true })
+      .get('https://smartexam.cyclic.app/logout', { withCredentials: true })
       .then((res) => {
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
@@ -36,7 +36,7 @@ const NavbarSuper = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/user', { withCredentials: true })
+      .get('https://smartexam.cyclic.app/user', { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Success') {
           setAuth(true);

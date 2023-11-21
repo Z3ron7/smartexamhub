@@ -59,7 +59,7 @@ const QuestionModal = ({isOpen, onClose}) => {
 
     // Send a POST request to create the question
     axios
-      .post('http://localhost:3001/questions/create', requestBody)
+      .post('https://smartexam.cyclic.app/questions/create', requestBody)
       .then((response) => {
         setAlertMessage('Question created successfully');
         setQuestionText('');

@@ -7,7 +7,7 @@ function VerifyUser() {
 
   useEffect(() => {
     // Fetch a list of unverified users from the server
-    axios.get('http://localhost:3001/verify/unverified-users').then((response) => {
+    axios.get('https://smartexam.cyclic.app/verify/unverified-users').then((response) => {
       setUnverifiedUsers(response.data);
     });
   }, []);
@@ -17,7 +17,7 @@ function VerifyUser() {
     // Send a request to the server to accept the user
     if (confirmAccept) {
       // Send a request to the server to accept the user
-      axios.post(`http://localhost:3001/verify/accept-user/${userId}`).then(() => {
+      axios.post(`https://smartexam.cyclic.app/verify/accept-user/${userId}`).then(() => {
         // Update the list of unverified users
         setUnverifiedUsers((users) => users.filter((user) => user.user_id !== userId));
         localStorage.setItem('isVerified', 'true');
@@ -30,7 +30,7 @@ function VerifyUser() {
     // Send a request to the server to reject the user
     if (confirmReject) {
       // Send a request to the server to reject the user
-      axios.post(`http://localhost:3001/verify/reject-user/${userId}`).then(() => {
+      axios.post(`https://smartexam.cyclic.app/verify/reject-user/${userId}`).then(() => {
         // Update the list of unverified users
         setUnverifiedUsers((users) => users.filter((user) => user.user_id !== userId));
         localStorage.setItem('isVerified', 'false');

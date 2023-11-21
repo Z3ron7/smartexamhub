@@ -92,7 +92,7 @@ const Questionnaire = () => {
               // Fetch questions for each competency and merge the results
               for (const competency of competencies) {
                 const competencyResponse = await axios.get(
-                  `http://localhost:3001/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
+                  `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
                 );
   
                 // Limit to maxQuestionsPerCategory questions per category
@@ -129,7 +129,7 @@ const Questionnaire = () => {
             } else {
               // Fetch questions for the selected competency
               response = await axios.get(
-                `http://localhost:3001/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}&search=${searchQuery}`
+                `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}&search=${searchQuery}`
               );
   
               // Limit to maxQuestionsPerCategory questions for the selected category
@@ -187,7 +187,7 @@ const Questionnaire = () => {
   const handleDelete = (questionId) => {
     // Make an API request to delete the question by its ID
     axios
-      .delete(`http://localhost:3001/questions/delete/${questionId}`)
+      .delete(`https://smartexam.cyclic.app/questions/delete/${questionId}`)
       .then((response) => {
         // Handle success, for example, you can close the modal or update the questions list
         console.log('Question deleted successfully');

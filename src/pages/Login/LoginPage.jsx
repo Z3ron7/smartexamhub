@@ -16,8 +16,7 @@ function LoginPage() {
   const handleLogin = (event) => {
     event.preventDefault();
     setLoading(true);
-    axios
-      .post('https://smartexam.cyclic.app/login', values, { withCredentials: true })
+    axios.post('https://smartexam.cyclic.app/login', values, { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Login Successful') {
           localStorage.setItem('token', res.data.token);

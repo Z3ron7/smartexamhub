@@ -24,7 +24,7 @@ const SidebarStudents = () => {
       src: <RiFolderHistoryFill />,
       subMenus: [ // Add sub-menus here
         { title: 'Exam', path: '/exam-results', src: <BsCardList /> },
-        { title: 'Customize Exam', path: '/result', src: <MdViewComfy /> },
+        { title: 'Personalize Exam', path: '/result', src: <MdViewComfy /> },
       ],
     },
     { title: 'Room', path: '/student-room', src: <SiGoogleclassroom /> },

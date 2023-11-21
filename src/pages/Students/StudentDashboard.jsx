@@ -18,7 +18,7 @@ const StudentDashboard = () => {
       
         const fetchExamScores = async () => {
           try {
-            const response = await axios.get(`https://smartexam.cyclic.app/dashboard/fetch-latest?userId=${user_id}&limit=1`);
+            const response = await axios.get(`http://localhost:3001/dashboard/fetch-latest?userId=${user_id}&limit=1`);
             setExamScores(response.data.latestActivity)
       console.log('latest:', response.data.latestActivity)
       

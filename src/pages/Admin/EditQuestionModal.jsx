@@ -86,7 +86,7 @@ const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
 
     // Send a PUT request to update the question
     axios
-      .put(`https://smartexam.cyclic.app/questions/update/${questionToEdit.question_id}`, requestBody)
+      .put(`http://localhost:3001/questions/update/${questionToEdit.question_id}`, requestBody)
       .then((response) => {
         setAlertMessage('Question updated successfully');
       })

@@ -39,7 +39,7 @@ export default function ExamResult() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get('https://smartexam.cyclic.app/dashboard/fetch-exam-room');
+        const response = await axios.get('http://localhost:3001/dashboard/fetch-exam-room');
         setExamScores(response.data);
         console.log(response.data)
       } catch (error) {
@@ -213,7 +213,7 @@ const competencyMap = {
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
-        <div className="flex bg-gray-200 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
+        <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 mb-4 border-b-2 rounded-lg shadow-md">
           <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Name</div>
           <div className="sm:w-20 lg:w-28 lg:pl-14 lg:font-semibold md:text-sm text-sm">Avatar</div>
           <div className="w-1/4 text-sm md:text-sm lg:pl-16 lg:font-semibold">Room Name</div>
@@ -280,7 +280,7 @@ const competencyMap = {
     return (
       <AccordionLayout 
         title={(
-          <div className="flex flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-5 dark:text-white mx-3">
+          <div className="flex flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-5 dark:text-white mx-3 ">
             <div className="w-12 text-xs lg:text-base lg:w-16 ">{exam.name}</div>
             <div className="w-36 text-xs lg:text-base lg:w-16 lg:ml-12"><img
           src={exam.image}

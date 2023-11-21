@@ -40,7 +40,7 @@ const Analytics = () => {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/exams/fetch-user-exams?userId=${user_id}&limit=2`);
+        const response = await axios.get(`http://localhost:3001/exams/fetch-user-exams?userId=${user_id}&limit=2`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);
@@ -149,7 +149,9 @@ const Analytics = () => {
         <div key={index} className="w-1/2 p-4">
             <div className='basis-[50%] border bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
           <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED] mb-[20px]'>
-            <h2 className='text-[16px] leading-[19px] font-bold text-[#4e73df]'>Exam Result</h2>
+          <h2 className={`text-[16px] leading-[19px] font-bold ${index === 0 ? 'text-[#4e73df]' : 'text-[#c85b1c]'}`}>
+        {index === 0 ? 'Latest Result' : 'Previous Result'}
+      </h2>
             <FaEllipsisV color='gray' className='cursor-pointer' />
           </div>
 
@@ -205,7 +207,7 @@ const Analytics = () => {
         <h1 className='text-[28px] leading-[34px] font-normal text-[#5a5c69] cursor-pointer dark:text-white'>Analytics</h1>
       
         <div className='m-2'>
-            <button className='items-end text-base' onClick={handleDownloadPDF}>Download as PDF</button>
+            {/* <button className='items-end text-base' onClick={handleDownloadPDF}>Download as PDF</button> */}
             <button className='items-end text-base' onClick={handlePrint}>Print</button>
             </div>
       </div>

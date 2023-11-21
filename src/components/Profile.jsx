@@ -65,7 +65,7 @@ const Profile = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/users/users/${user_id}`);
+        const response = await axios.get(`http://localhost:3001/users/users/${user_id}`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -79,7 +79,7 @@ const Profile = () => {
     // Fetch latest activities based on the user ID
     async function fetchLatestActivities() {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/users/fetch-latest/${user_id}`);
+        const response = await axios.get(`http://localhost:3001/users/fetch-latest/${user_id}`);
         setLatestActivities(response.data.latestActivities);
         console.log("latest", response.data.latestActivities)
       } catch (error) {

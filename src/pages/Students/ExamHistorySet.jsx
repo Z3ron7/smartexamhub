@@ -12,7 +12,7 @@ function getColorForLevel(level) {
     case 'Average':
       return 'text-blue-500';
     case 'Good':
-      return 'text-yellow-500';
+      return 'text-yellow-700';
     case 'Poor':
       return 'text-orange-500';
     case 'Very Poor':
@@ -39,7 +39,7 @@ export default function ExamHistorySet() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/exam-room/fetch-exam-room?userId=${user_id}`);
+        const response = await axios.get(`http://localhost:3001/exam-room/fetch-exam-room?userId=${user_id}`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);
@@ -224,7 +224,7 @@ const competencyMap = {
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
-        <div className="flex bg-gray-200 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
+        <div className="flex bg-gray-200 dark:bg-slate-900 p-2 gap-2 mb-4 border-b-2 rounded-lg shadow-md">
           <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Exam ID</div>
           <div className="w-1/4 text-sm md:text-sm lg:font-semibold">Competency ID</div>
           <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Duration (Minutes)</div>

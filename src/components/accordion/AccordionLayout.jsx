@@ -13,7 +13,7 @@ const AccordionLayout = ({ title, children, index, activeIndex, setActiveIndex }
   
     return (
       <>
-          <div onClick={handleSetIndex} className='flex w-full justify-between p-2 mt-2 rounded dark:bg-slate-900 cursor-pointer'>
+          <div onClick={handleSetIndex} className='flex w-full justify-between p-2 mt-2 border-b-2 rounded dark:bg-slate-900 cursor-pointer'>
               <div className='flex'>
                   <div className='text-black dark:text-white w-full justify-between items-between font-bold'>{title}</div>
               </div>

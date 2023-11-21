@@ -50,7 +50,7 @@ export default function ExamHistory() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/exams/fetch-user-exam?userId=${user_id}`);
+        const response = await axios.get(`http://localhost:3001/exams/fetch-user-exam?userId=${user_id}`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);
@@ -63,7 +63,7 @@ export default function ExamHistory() {
   const handleDeleteExam = async (examId) => {
     try {
       // Make a DELETE request to your backend API
-      await axios.delete(`https://smartexam.cyclic.app/exams/delete-user-exam`, {
+      await axios.delete(`http://localhost:3001/exams/delete-user-exam`, {
         data: { examId }, // Pass the examId in the request body
       });
   

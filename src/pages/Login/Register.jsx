@@ -17,6 +17,7 @@ export default function Register() {
     password: "",
     status: "student", // Set a default status
     gender: "",
+    school_id: "",
     image: null, // Use null initially
     isVerified: 0,
   });
@@ -49,6 +50,7 @@ export default function Register() {
       formData.append("password", values.password);
       formData.append("status", values.status);
       formData.append("gender", values.gender);
+      formData.append("school_id", values.school_id);
       formData.append("profileImage", values.image); // Append the File object
       formData.append("isVerified", values.isVerified); // Append the File object
 
@@ -228,6 +230,20 @@ export default function Register() {
               </div>
             </RadioGroup>
             </div>
+            <div className="mt-4">
+      <label htmlFor="school_id" className="block text-sm font-medium text-gray-700">
+        School ID
+      </label>
+      <input
+        type="text"
+        name="school_id"
+        value={values.school_id}
+        onChange={(e) => setValues({ ...values, school_id: e.target.value })}
+        className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        placeholder="ex. 2020-0077"
+        required
+      />
+    </div>
             <div className="mt-4">
               <label
                 htmlFor="password"

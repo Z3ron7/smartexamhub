@@ -112,6 +112,12 @@ const Single = () => {
         )}
         {userData && (
           <div className="item">
+            <span className="itemTitle dark:text-white">School ID:</span>
+            <span className="itemValue dark:text-white">{userData.school_id}</span>
+          </div>
+        )}
+        {userData && (
+          <div className="item">
             <span className="itemTitle dark:text-white">Status:</span>
             <span className="itemValue dark:text-white">{userData.status}</span>
           </div>

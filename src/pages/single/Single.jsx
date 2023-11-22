@@ -41,9 +41,6 @@ function getTimeAgo(time) {
   } else if (timeDiffInMilliseconds < month) {
     const weeks = Math.floor(timeDiffInMilliseconds / week);
     return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
-  } else {
-    const months = Math.floor(timeDiffInMilliseconds / month);
-    return `${months} month${months > 1 ? 's' : ''} ago`;
   }
 }
 
@@ -109,6 +106,12 @@ const Single = () => {
           <div className="item">
             <span className="itemTitle">Email:</span>
             <span className="itemValue">{userData.username}</span>
+          </div>
+        )}
+        {userData && (
+          <div className="item">
+            <span className="itemTitle">School ID:</span>
+            <span className="itemValue">{userData.school_id}</span>
           </div>
         )}
         {userData && (

@@ -94,7 +94,7 @@ const Profile = () => {
           className=" flex w-1/2 mx-auto rounded-lg px-2 text-base font-mono text-green-500 justify-center items-center"
           role="alert"
         >
-          Update successful!
+          Update successfully!
         </div>
       )}
       {updateStatus === "success" && (

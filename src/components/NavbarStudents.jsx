@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./navbarstudents.scss";
 import Toggle from "./ThemeToggle";
-import { FaBell, FaCog } from "react-icons/fa";
-import { HiOutlineBell } from "react-icons/hi";
-import { Menu, Popover, Transition } from '@headlessui/react'
-import classNames from "classnames";
+// import { FaBell, FaCog } from "react-icons/fa";
+// import { HiOutlineBell } from "react-icons/hi";
+// import { Menu, Popover, Transition } from '@headlessui/react'
+// import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import { Link } from "react-router-dom";
@@ -105,7 +105,7 @@ const NavbarStudents = () => {
 
           {auth ? ( // Check if user data is available
             <div className="user h-[50px] w-[50px] rounded-full cursor-pointer flex items-center justify-center relative z-40">
-              <img src={image} alt="User Avatar" />
+              <img src={image || "/noavatar.png"} alt="User Avatar" />
             </div>
           ) : (
             <div className="user h-[50px] w-[50px] rounded-full cursor-pointer flex items-center justify-center relative z-40">

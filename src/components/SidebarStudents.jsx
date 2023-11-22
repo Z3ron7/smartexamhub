@@ -35,7 +35,7 @@ const SidebarStudents = () => {
   };
   return (
     <>
-      <div
+      <div onClick={() => setMobileMenu(false)}
         className={`${
           open ? 'w-60' : 'w-fit'
         } hidden sm:block relative h-screen duration-300 bg-gray-300 border-r border-gray-200 dark:border-gray-600 pt-4 dark:bg-slate-900 `}

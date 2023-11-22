@@ -94,7 +94,7 @@ const Profile = () => {
           className=" flex w-1/2 mx-auto rounded-lg px-2 text-base font-mono text-green-500 justify-center items-center"
           role="alert"
         >
-          Update successfully!
+          Update successful!
         </div>
       )}
       {updateStatus === "success" && (
@@ -111,7 +111,7 @@ const Profile = () => {
             {userData && userData.image && (
               <img
                 className="w-[150px] h-[150px] rounded-[20px]"
-                src={selectedImage || userData.image}
+                src={selectedImage || "/noavatar.png"}
                 alt=""
               />
             )}
@@ -177,6 +177,7 @@ const Profile = () => {
               <button
                 onClick={handleUpdate}
                 className="flex justify-center w-1/2 px-4 py-2 tracking-wide text-sm text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+                disabled
               >
                 Update Profile
               </button>

@@ -114,45 +114,43 @@ const SidebarStudents = () => {
           } absolute z-50 flex-col items-center self-end py-8 mt-16 space-y-6 font-bold sm:w-auto left-6 right-6 dark:text-white  bg-gray-50 dark:bg-slate-800 drop-shadow md rounded-xl`}
         >
           {Menus.map((menu, index) => (
-      <div key={index}>
-        {/* Make the span clickable and handle the click event */}
-        <span
-          className={` ${
-            location.pathname === menu.path &&
-            'bg-gray-200 dark:bg-gray-700'
-          } p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700`}
-          onClick={() => {
-            if (menu.title === 'View Result') {
-              setViewResultOpen(!viewResultOpen);
-            } else {
-              setMobileMenu(false);
-            }
-          }}
-        >
-          {menu.title}
-        </span>
-        {/* Render sub-menus for 'View Result' on mobile */}
-        {menu.title === 'View Result' && viewResultOpen && (
-          <ul className="ml-4">
-            {menu.subMenus.map((subMenu, subIndex) => (
-              <Link to={subMenu.path} key={subIndex} onClick={() => setMobileMenu(false)}>
-                <li
-                  className={`
-                    flex items-center gap-x-4 p-3 pl-7 text-base rounded-lg cursor-pointer mt-2
-                    hover:text-white dark:text-white hover:bg-indigo-700 dark:hover-bg-indigo-700
-                    transition-transform ease-in-out font-semibold
-                    ${location.pathname === subMenu.path && 'bg-indigo-700 dark:bg-indigo-700 text-white transform scale-110'}
-                  `}
-                >
-                  <span className='text-xl mx-2 py-1'>{subMenu.src}</span>
-                  {subMenu.title}
-                </li>
-              </Link>
-            ))}
-          </ul>
-        )}
-      </div>
-    ))}
+            <Link to={menu.path} key={index} onClick={() => setMobileMenu(false)}>
+              <li
+                className={` ${
+                  location.pathname === menu.path &&
+                  'bg-gray-200 dark:bg-gray-700'
+                } p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700`}
+                
+                onClick={() => {
+                  if (menu.title === 'View Result') {
+                    setViewResultOpen(!viewResultOpen); // Toggle the state
+                  }
+                }}
+              >
+                <span className='text-2xl mx-2 py-1'>{menu.src}</span>
+                {menu.title}
+              </li>
+              {menu.title === 'View Result' && viewResultOpen && (
+                  <ul className="mt-2 ">
+                  {menu.subMenus.map((subMenu, subIndex) => (
+                    <Link to={subMenu.path} key={subIndex}>
+                      <li
+                        className={`
+                          flex items-center gap-x-4 p-3 pl-7 text-base rounded-lg cursor-pointer mt-2
+                          hover:text-white dark:text-white hover:bg-indigo-700 dark:hover-bg-indigo-700
+                          transition-transform ease-in-out font-semibold ${menu.gap ? 'mt-9' : 'mt-2'}
+                          ${location.pathname === subMenu.path && 'bg-indigo-700 dark:bg-indigo-700 text-white transform scale-110'}
+                        `}
+                      >
+                        <span className='text-xl mx-2 py-1'>{subMenu.src}</span>
+                        {subMenu.title}
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
+                )}
+            </Link>
+          ))}
         </div>
       </div>
     </>

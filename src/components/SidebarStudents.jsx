@@ -115,6 +115,7 @@ const SidebarStudents = () => {
         >
           {Menus.map((menu, index) => (
       <div key={index}>
+        {/* Make the span clickable and handle the click event */}
         <span
           className={` ${
             location.pathname === menu.path &&

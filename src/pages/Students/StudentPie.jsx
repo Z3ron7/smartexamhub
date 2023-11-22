@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
-const data = [
-    { name: 'Group A', value: 100 },
-    { name: 'Group B', value: 89 },
-    { name: 'Group C', value: 68 },
-    { name: 'Group D', value: 58 },
-    { name: 'Group E', value: 50 },
-];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF8002'];
 
@@ -99,7 +92,6 @@ const StudentPie = () => {
         });
 
         // Sort the mappedScores array so that "All Competency" comes before other competencies
-        // Sort the mappedScores array so that "All Competency" comes before other competencies
         mappedScores.sort((a, b) => {
             if (a.competency === 'All Competency') return -1;
             if (b.competency === 'All Competency') return 1;
@@ -155,24 +147,18 @@ const StudentPie = () => {
         </div>
         <div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-5 justify-center mx-auto items-center'>
         {
-          
-          mappedScores
-  .filter((item) => item.competency !== 'All Competency') // Exclude the "All Competency" item
-  .map((item) => (
-    <p className='flex cursor-pointer font-bold justify-center items-center mx-auto'>{item.competency}</p>
-  ))
-
-        }
-        </div>
-        <div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-5'>
-            {
-                 COLORS.map((item)=>(
-        <div className="flex h-[15px] w-[15px] justify-center items-center mx-auto" style={{backgroundColor:item}}>
-
-          </div>
-                 ))
-
-            }
+  mappedScores
+    .filter((item) => item.competency !== 'All Competency') // Exclude the "All Competency" item
+    .map((item, index) => (
+      <p
+        key={`competency-${index}`}
+        className='flex cursor-pointer font-bold justify-center items-center mx-auto'
+        style={{ color: COLORS[index % COLORS.length] }}
+      >
+        {item.competency}
+      </p>
+    ))
+}
         </div>
 </div>
     )
@@ -180,19 +166,3 @@ const StudentPie = () => {
 }
 
 export default StudentPie
-
-
-
-
-
-
-
-// export default class Example extends PureComponent {
-//     static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
-
-//     render() {
-//         return (
-           
-//         );
-//     }
-// }

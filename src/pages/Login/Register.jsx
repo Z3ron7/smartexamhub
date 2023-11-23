@@ -26,9 +26,9 @@ export default function Register() {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result);
-        setValues({ ...values, image: file }); // Update the 'image' property with the File object
+      reader.onload = (event) => {
+        setSelectedImage(event.target.result);
+        setValues({ ...values, image: file }); 
       };
       reader.readAsDataURL(file);
     }

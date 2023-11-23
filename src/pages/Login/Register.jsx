@@ -38,7 +38,7 @@ export default function Register() {
     e.preventDefault();
 
     if (values.password !== passwordConfirmation) {
-      console.error("Password and password confirmation do not match");
+      console.error("Password and confirmation password confirmation do not match");
       return;
     }
 
@@ -56,23 +56,27 @@ export default function Register() {
 
       console.log("FormData:", formData);
 
+    try {
       const response = await axios.post("https://smartexam.cyclic.app/register", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.data.Status === "Success") {
         setRegistrationStatus("success");
+        setAlertMessage("Registration successful! Redirecting to login page...");
         setTimeout(() => {
           navigate("/Log-in");
         }, 2000);
       } else {
         setRegistrationStatus("error");
+        setAlertMessage("Registration failed. Please try again.");
       }
     } catch (err) {
-      console.error(err); // Log the error
+      console.error(err);
       setRegistrationStatus("error");
+      setAlertMessage("Registration failed. Please try again.");
     }
   };
 
@@ -92,8 +96,9 @@ export default function Register() {
     <div className="bg-white" style={{ backgroundImage: `url(${RP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
       {registrationStatus === "success" && (
         <div
-          className=" flex w-1/2 mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-500 justify-center items-center"
+          className=" flex w-1/2 mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-700 justify-center items-center"
           role="alert"
+          {alertMessage}
         >
           Registration successful! Redirecting to login page...
         </div>
@@ -102,6 +107,7 @@ export default function Register() {
         <div
           className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500"
           role="alert"
+          {alertMessage}
         >
           Registration failed. Please try again.
         </div>
@@ -142,6 +148,11 @@ export default function Register() {
         className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         required
       />
+      {registrationStatus === "error" && (
+  <div className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500" role="alert">
+    Registration failed. {usernameExists ? "Username already exists." : ""}
+  </div>
+)}
     </div>
   </div>
 
@@ -243,6 +254,11 @@ export default function Register() {
         placeholder="ex. 2020-0077"
         required
       />
+  {registrationStatus === "error" && (
+  <div className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500" role="alert">
+    Registration failed. {schoolIdExists ? "School ID already exists." : ""}
+  </div>
+)}
     </div>
             <div className="mt-4">
               <label
@@ -282,6 +298,9 @@ export default function Register() {
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   required
                 />
+                {values.password !== passwordConfirmation && passwordConfirmation.length > 0 && (
+      <p className="text-red-500 text-sm mt-1">Password and confirmation password do not match.</p>
+    )}
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -297,7 +316,7 @@ export default function Register() {
           <div className="mt-4 justify-center text-center text-white">
             Already have an account?{" "}
             <span>
-              <Link to="/Log-in" className="text-blue-600 hover:underline">
+              <Link to="/Log-in" className="text-blue-800 hover:underline">
                 Log in
               </Link>
             </span>

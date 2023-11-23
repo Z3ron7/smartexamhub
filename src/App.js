@@ -64,7 +64,7 @@ function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/Log-in" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/verification" element={<LayoutUnverified><Verification /></LayoutUnverified>} />
+        {/* <Route path="/verification" element={<LayoutUnverified><Verification /></LayoutUnverified>} /> */}
 
 
         {/* Routes for super admin */}

@@ -247,7 +247,9 @@ return (
     onClick={startExam}
     disabled={isLoading || !selectedProgram || !selectedCompetency || !selectedTime}
   >
-    {isLoading ? <Spinner className="flex justify-center mr-2 font-medium"/> : <FaPlay className="mr-2 flex items-center justify-center font-medium" />}
+    {isLoading ? <span className="mr-2">
+        <div className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+      </span> : <FaPlay className="mr-2 flex items-center justify-center font-medium" />}
     {isLoading ? 'Processing...' : 'Start Exam'}
   </button>
 </div>

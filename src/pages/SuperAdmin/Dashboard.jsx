@@ -43,7 +43,7 @@ const Dashboard = () => {
             <div className='grid grid-cols-2 sm:grid-rows-2 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-1 gap-4'>
             
                 <div className=' dark:bg-slate-900 border-2 h-[100px] rounded-[8px] bg-white border-l-[6px] border-[#4E73DF] flex items-center px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out'>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-[#4E73DF]">
                     <BsFillPersonCheckFill fontSize={28} color="" />
 				</div>
                     <div>
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
                 </div>
                 <div className='dark:bg-slate-900 border-2 h-[100px] rounded-[8px] bg-white border-l-[6px] border-[#1CC88A] flex items-center px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out'>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-[#1CC88A]">
                     <BsFillPersonCheckFill fontSize={28} color="" />
 				</div>
                     <div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className='dark:bg-slate-900 border-2 h-[100px] rounded-[8px] bg-white border-l-[6px] border-[#36B9CC] flex items-center px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out'>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-[#36B9CC]">
                     <FaGraduationCap fontSize={28} color="" />
 				</div>
                     <div>
@@ -72,7 +72,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className='dark:bg-slate-900 border-2 h-[100px] rounded-[8px] bg-white border-l-[6px] border-[#F6C23E] flex items-center px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out'>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-[#F6C23E]">
                     <BsFillPersonLinesFill fontSize={28} color="" />
 				</div>
                     <div>

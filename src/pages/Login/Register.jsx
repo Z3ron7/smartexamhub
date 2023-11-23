@@ -30,7 +30,7 @@ export default function Register() {
         setSelectedImage(e.target.result);
         setValues({ ...values, image: file }); // Update the 'image' property with the File object
       };
-      reader.readAsDataURL(file);
+      reader.readAsArrayBuffer(file);
     }
   };
 
@@ -152,7 +152,7 @@ export default function Register() {
           <img
             src={selectedImage || "default-profile-image.jpg"}
             alt="Click to Upload Image for verification"
-            className="w-full h-32 object-cover text-sm text-white text-center justify-center bg-transparent"
+            className="w-full h-32 object-contain text-sm text-white text-center justify-center bg-transparent"
           />
         </label>
       <div className="mb-0">

@@ -91,7 +91,7 @@ function LoginPage() {
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="text-sm">
                 <button
                   type="button" // Use a button for navigation
@@ -101,7 +101,7 @@ function LoginPage() {
                   Forgot password?
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className="mt-2">
               <input
                 name="password"
@@ -120,20 +120,24 @@ function LoginPage() {
           )}
 
           <div className='flex justify-center items-center '>
-            <button
-              type="submit"
-              className={`flex w-1/2 rounded-md justify-center bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white
-              transition-colors duration-200 transform shadow-md hover:shadow-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-                isLoading ? 'bg-indigo-500 font-semibold cursor-not-allowed' : 'bg-indigo-700 hover-translate-y-1'
-              }duration-300`}
-            >
-              {isLoading ? <Spinner className="flex justify-center mr-2 font-medium"/> : null }
-              {isLoading ? null : 'Sign in'}
-            </button>
-          </div>
+          <button
+    type="submit"
+    className={`flex w-1/2 rounded-md justify-center bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white
+      transition-colors duration-200 transform shadow-md hover:shadow-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+        isLoading ? 'bg-indigo-500 font-semibold cursor-not-allowed' : 'bg-indigo-700 hover-translate-y-1'
+      }duration-300`}
+  >
+    {isLoading ? (
+      <span className="mr-2">
+        <div className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+      </span>
+    ) : null}
+    {isLoading ? 'Processing...' : 'Sign in'}
+  </button>
+  </div>
         </form>
           <p className="mt-4 text-center text-sm text-white">
-            Don't have an account yet? {' '}
+            You don't have an account yet? {' '}
             <Link to="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Register
             </Link>

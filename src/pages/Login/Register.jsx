@@ -22,30 +22,18 @@ export default function Register() {
     isVerified: 0,
   });
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const base64Image = await convertToBase64(file);
-      setSelectedImage(base64Image); // Update the state with the base64 string
-      setValues({ ...values, image: file });
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result); // Set the data URL as the preview
+        setValues({ ...values, image: file });
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL
     }
   };
   
-  // Function to convert file to base64
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-  
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-  
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
   const handleRegister = async (e) => {
     e.preventDefault();
 

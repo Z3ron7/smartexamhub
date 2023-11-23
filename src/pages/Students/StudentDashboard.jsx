@@ -30,7 +30,20 @@ const StudentDashboard = () => {
         fetchExamScores();
       }, []);
       console.log("mappe", examScores)
-
+      if (examScores.length === 0) {
+        return (
+          <div className='flex text-center mt-36'>
+<div className='border p-4'>
+  <img src={error} alt='' className='scale-[135%]' />
+  <p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
+</div>
+<div className='flex border p-4 ml-4 justify-end'>
+  <img src={error} alt='' className='scale-[135%]' />
+  <p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
+</div>
+</div>
+        );
+      }
       return examScores.map((exam, index) => {
         const { score, end_time} = exam;
         const endDate = new Date(end_time);
@@ -118,7 +131,7 @@ const StudentDashboard = () => {
         });
       }
         const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
-      
+       
     return (
         <div key={index} className='dash'>
             <div className='flex flex-col md:flex-row md:gap-6 mt-[22px] w-full'>

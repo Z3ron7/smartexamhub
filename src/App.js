@@ -53,8 +53,13 @@ function App() {
   setIsLoggedIn(token !== undefined && token !== null);
   setUserRole(role);
 
-  const verificationStatus = localStorage.getItem('isVerified');
-  setIsVerified(verificationStatus === '1'); // Convert to boolean
+  const updateVerificationStatus = (status) => {
+    setIsVerified(status);
+    localStorage.setItem('isVerified', status ? '1' : '0');
+  };
+  
+  // Example usage after successful verification
+  updateVerificationStatus(true);
 }, []);
 
   return (

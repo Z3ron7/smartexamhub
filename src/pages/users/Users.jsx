@@ -34,6 +34,12 @@ const columns = [
     width: 150,
   },
   {
+    field: "school_id",
+    type: "string",
+    headerName: "School ID",
+    width: 150,
+  },
+  {
     field: "username",
     type: "string",
     headerName: "Email",

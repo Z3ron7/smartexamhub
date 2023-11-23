@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
+import error from '../../assets/images/error.png';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF8002'];
 
@@ -18,6 +19,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 const StudentPie = () => {
     const [examScores, setExamScores] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const user_id = localStorage.getItem('user_id');
@@ -27,14 +29,29 @@ const StudentPie = () => {
             const response = await axios.get(`https://smartexam.cyclic.app/dashboard/fetch-latest?userId=${user_id}&limit=1`);
             setExamScores(response.data.latestActivity)
       console.log('latest:', response.data.latestActivity)
-      
+      setLoading(false);
           } catch (error) {
             console.error('Error fetching exam scores:', error);
+            setLoading(false);
           }
         };
       
         fetchExamScores();
       }, []);
+      if (loading) {
+        return <div>Loading...</div>; // You can replace this with a loading spinner or component
+      }
+
+      if (examScores.length === 0) {
+        return (
+          <div className="text-center">
+            <img src={error} alt="" className="scale-[135%]" />
+            <p className="mt-[15px] text-center text-semibold text-gray-500">
+              No Exam data...
+            </p>
+          </div>
+        );
+      }
       console.log("mappe", examScores)
 
       return examScores.map((exam, index) => {

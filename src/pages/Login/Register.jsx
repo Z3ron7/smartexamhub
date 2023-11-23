@@ -43,18 +43,18 @@ export default function Register() {
     }
 
     try {
-      // Create a FormData object and append the image file
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("username", values.username);
-      formData.append("password", values.password);
-      formData.append("status", values.status);
-      formData.append("gender", values.gender);
-      formData.append("school_id", values.school_id);
-      formData.append("profileImage", values.image); // Append the File object
-      formData.append("isVerified", values.isVerified); // Append the File object
+    // Create a FormData object and append the image file
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("username", values.username);
+    formData.append("password", values.password);
+    formData.append("status", values.status);
+    formData.append("gender", values.gender);
+    formData.append("school_id", values.school_id);
+    formData.append("profileImage", values.image); // Append the File object
+    formData.append("isVerified", values.isVerified); // Append the File object
 
-      console.log("FormData:", formData);
+    console.log("FormData:", formData);
 
     try {
       const response = await axios.post("https://smartexam.cyclic.app/register", formData, {
@@ -65,7 +65,7 @@ export default function Register() {
 
       if (response.data.Status === "Success") {
         setRegistrationStatus("success");
-        setAlertMessage("Registration successful! Redirecting to login page...");
+        setAlertMessage("Registration successful! Redirecting to the login page...");
         setTimeout(() => {
           navigate("/Log-in");
         }, 2000);
@@ -78,8 +78,12 @@ export default function Register() {
       setRegistrationStatus("error");
       setAlertMessage("Registration failed. Please try again.");
     }
-  };
-
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+  } finally {
+    // Any cleanup or finalization code can go here
+  }
+};
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },

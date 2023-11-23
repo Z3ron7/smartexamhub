@@ -152,8 +152,8 @@ export default function Register() {
         required
       />
       {registrationStatus === "error" && (
-  <div className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500" role="alert">
-    Registration failed. {values.username ? "Username already exists." : ""}
+  <div className="mb-4 rounded-lg px-2 py-2 text-sm text-red-500" role="alert">
+     {values.username ? "Username already exists." : ""}
   </div>
 )}
     </div>
@@ -258,8 +258,8 @@ export default function Register() {
     required
   />
   {registrationStatus === "error" && (
-    <div className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500" role="alert">
-      Registration failed. {values.school_id ? "School ID already exists." : ""}
+    <div className="mb-4 rounded-lg px-2 py-2 text-sm text-red-500" role="alert">
+      {values.school_id ? "School ID already exists." : ""}
     </div>
   )}
 </div>

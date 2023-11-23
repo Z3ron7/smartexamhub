@@ -153,7 +153,7 @@ export default function Register() {
       />
       {registrationStatus === "error" && (
   <div className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500" role="alert">
-    Registration failed. {usernameExists ? "Username already exists." : ""}
+    Registration failed. {values.username ? "Username already exists." : ""}
   </div>
 )}
     </div>

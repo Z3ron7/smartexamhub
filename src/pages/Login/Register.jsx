@@ -103,7 +103,6 @@ export default function Register() {
         <div
           className=" flex w-1/2 mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-700 justify-center items-center"
           role="alert"
-          {alertMessage}
         >
           Registration successful! Redirecting to login page...
         </div>
@@ -112,7 +111,6 @@ export default function Register() {
         <div
           className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500"
           role="alert"
-          {alertMessage}
         >
           Registration failed. Please try again.
         </div>

@@ -57,7 +57,7 @@ function LoginPage() {
     .catch((error) => {
       console.error(error.response);
       // Display an alert for other errors
-      alert('An error occurred during login. Please try again.');
+      setError('An error occurred during login. Please try again.');
     })
     .finally(() => {
       setTimeout(() => {
@@ -97,7 +97,6 @@ function LoginPage() {
             </div>
           </div>
 
-          <div>
             {/* <div className="flex items-center justify-between">
               <div className="text-sm">
                 <button

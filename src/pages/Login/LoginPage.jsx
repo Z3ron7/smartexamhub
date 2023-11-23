@@ -50,19 +50,21 @@ function LoginPage() {
             }
             navigate(dashboardURL);
           }
+          alert('Login successfully.');
+        } else {
+        // Display an alert if the login was unsuccessful
+        alert('Incorrect username or password. Please try again.');
+      }
+    } catch (error) {
+      console.error(error.response);
+      // Display an alert for other errors
+      alert('An error occurred during login. Please try again.');
+    } finally {
           setTimeout(() => {
             // Reset the loading state to false after 2 seconds
             setLoading(false);
           }, 3000);
-          alert('Login successfully.');
-        } else {
-          setError('Login failed. Please check your credentials.');
-        }
-      })
-      .catch((err) => {
-        console.error(err.response);
-        setError('An error occurred during login.');
-      });
+    }
   };
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -76,7 +78,9 @@ function LoginPage() {
             Sign in to your account
           </h2>
         </div>
-
+          {error && (
+        <div className="text-red-600">{error}</div>
+      )}
         <div className="mt-5 sm:mx-auto px-5 sm:w-[320px] lg:w-[390px] h-64 pt-4 shadow-black shadow-lg">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
@@ -125,10 +129,6 @@ function LoginPage() {
           </button>
         </div>
       </div>
-
-      {error && (
-        <div className="text-red-600">{error}</div>
-      )}
           <div className='flex justify-center items-center '>
           <button
     type="submit"

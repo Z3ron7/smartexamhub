@@ -152,7 +152,7 @@ export default function Register() {
           <img
             src={selectedImage || "default-profile-image.jpg"}
             alt="Click to Upload Image for verification"
-            className="w-full h-32 object-contain text-sm text-white text-center justify-center bg-transparent"
+            className="w-full h-28 object-contain text-sm text-white text-center justify-center bg-transparent"
           />
         </label>
       <div className="mb-0">

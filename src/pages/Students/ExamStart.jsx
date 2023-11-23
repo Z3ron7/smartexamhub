@@ -399,6 +399,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
               onChange={(selectedOption) => setSelectedProgram(selectedOption)}
               options={programOptions}
               isDisabled={countdownStarted}
+              disabled
             />
         )}
           </div>
@@ -413,6 +414,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
               onChange={(selectedOption) => setSelectedCompetency(selectedOption)}
               options={competencyOptions}
               isDisabled={countdownStarted}
+              disabled
             />
         )}
           </div>
@@ -425,6 +427,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
               onChange={handleTimeChange}
               placeholder="Select Time"
               isDisabled={countdownStarted}
+              disabled
             />
         )}
           </div>

@@ -10,6 +10,7 @@ export default function Register() {
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
@@ -82,7 +83,7 @@ export default function Register() {
   } catch (error) {
     console.error("An unexpected error occurred:", error);
   } finally {
-    // Any cleanup or finalization code can go here
+    setLoading(false);
   }
 };
   const genderOptions = [

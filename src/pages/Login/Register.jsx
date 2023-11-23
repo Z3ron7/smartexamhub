@@ -151,7 +151,7 @@ export default function Register() {
       <label htmlFor="profileImage" className="w-32 h-28 rounded-full overflow-hidden cursor-pointer">
           <img
             src={selectedImage || "default-profile-image.jpg"}
-            alt="Click to Upload Image for verification"
+            alt="Click to upload image for verification"
             className="w-full h-28 object-cover text-sm text-white text-center justify-center bg-transparent"
           />
         </label>

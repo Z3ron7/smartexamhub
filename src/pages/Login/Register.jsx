@@ -25,12 +25,9 @@ export default function Register() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setSelectedImage(event.target.result);
-        setValues({ ...values, image: file }); 
-      };
-      reader.readAsDataURL(file);
+      const imageUrl = URL.createObjectURL(file); // Create a URL for the selected image
+      setSelectedImage(imageUrl); // Update the state with the created URL
+      setValues({ ...values, image: file });
     }
   };
 

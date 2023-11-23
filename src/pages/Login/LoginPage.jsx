@@ -37,7 +37,7 @@ function LoginPage() {
               navigate('/student-dashboard');
             } else {
               // User is not verified, redirect to the verification page
-              navigate('/verification');
+              navigate('/student-dashboard');
             }
           } else {
             // Handle different user roles as needed and redirect accordingly

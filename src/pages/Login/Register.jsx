@@ -161,7 +161,7 @@ export default function Register() {
           accept="image/*"
           id="profileImage"
           name="profileImage"
-          className="w-15 text-[11px]"
+          className="hidden w-15 text-[11px]"
           onChange={handleImageChange}
         />
       </div>

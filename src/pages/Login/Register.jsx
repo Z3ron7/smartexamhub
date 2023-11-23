@@ -9,6 +9,7 @@ export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
 
   const [values, setValues] = useState({

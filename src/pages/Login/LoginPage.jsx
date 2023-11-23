@@ -63,7 +63,9 @@ function LoginPage() {
         setError('An error occurred during login.');
       });
   };
-  
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   return (
     <>
         <div className="bg-white" style={{ backgroundImage: `url(${LP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
@@ -102,23 +104,30 @@ function LoginPage() {
                 </button>
               </div>
             </div> */}
-            <div className="mt-2">
-              <input
-                name="password"
-                type="password"
-                placeholder='Password'
-                autoComplete="current-password"
-                required
-                onChange={(e) => setValues({ ...values, password: e.target.value })}
-                className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+            <div className="mt-2 relative rounded-md shadow-sm">
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          autoComplete="current-password"
+          required
+          onChange={(e) => setValues({ ...values, password: e.target.value })}
+          className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        />
+        <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+          <button
+            type="button"
+            className="text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
+      </div>
 
-          {error && (
-            <div className="text-red-600">{error}</div>
-          )}
-
+      {error && (
+        <div className="text-red-600">{error}</div>
+      )}
           <div className='flex justify-center items-center '>
           <button
     type="submit"

@@ -91,11 +91,9 @@ const Room = () => {
                 </div>
                 <div className="flex justify-end ml-2 mt-3">
               <label className='mr-2 dark:text-white text-sm'>Status:</label>
-              <h2 className={`text-blue-600 text-[15px] font-bold ${
-                isRoomExpiredOrDone(room) ? 'text-red-500' : ''
-              }`}>
-                {isRoomExpiredOrDone(room) ? 'Expired' : 'Active'}
-              </h2>
+              <h2 className={`text-${isRoomExpiredOrDone(room) ? 'red-500' : 'blue-600'} text-[15px] font-bold`}>
+  {isRoomExpiredOrDone(room) ? 'Expired' : 'Active'}
+</h2>
             </div>
                 </div>
               </div>

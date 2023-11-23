@@ -26,14 +26,14 @@ export default function Register() {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result);
-        setValues({ ...values, image: file }); // Update the 'image' property with the File object
+      reader.onload = () => {
+        setSelectedImage(reader.result); // Set the data URL as the preview
+        setValues({ ...values, image: file });
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsDataURL(file); // Read the file as a data URL
     }
   };
-
+  
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -152,7 +152,7 @@ export default function Register() {
           <img
             src={selectedImage || "default-profile-image.jpg"}
             alt="Click to Upload Image for verification"
-            className="w-full h-28 object-contain text-sm text-white text-center justify-center bg-transparent"
+            className="w-full h-32 object-contain text-sm text-white text-center justify-center bg-transparent"
           />
         </label>
       <div className="mb-0">
@@ -161,7 +161,7 @@ export default function Register() {
           accept="image/*"
           id="profileImage"
           name="profileImage"
-          className="hidden w-15 text-[11px]"
+          className="w-15 text-[11px]"
           onChange={handleImageChange}
         />
       </div>

@@ -29,8 +29,6 @@ function LoginPage() {
   
           // Access the isVerified status from the response
           const isVerified = res.data.isVerified;
-  
-          
 
           if (userRole === 'Exam-taker') {
             if (isVerified) {
@@ -55,17 +53,19 @@ function LoginPage() {
         // Display an alert if the login was unsuccessful
         alert('Incorrect username or password. Please try again.');
       }
-    } catch (error) {
+    })
+    .catch((error) => {
       console.error(error.response);
       // Display an alert for other errors
       alert('An error occurred during login. Please try again.');
-    } finally {
-          setTimeout(() => {
-            // Reset the loading state to false after 2 seconds
-            setLoading(false);
-          }, 3000);
-    }
-  };
+    })
+    .finally(() => {
+      setTimeout(() => {
+        // Reset the loading state to false after 2 seconds
+        setLoading(false);
+      }, 3000);
+    });
+};
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };

@@ -148,11 +148,11 @@ export default function Register() {
   {/* Right Column for Image Upload */}
   <div className="w-1/3">
     <div className="bg-transparent p-1 border-1 border-black shadow-sm shadow-black">
-      <label htmlFor="profileImage" className="w-32 h-28 rounded-full cursor-pointer">
+      <label htmlFor="profileImage" className="w-32 h-28 rounded-full overflow-hidden cursor-pointer">
           <img
             src={selectedImage || "default-profile-image.jpg"}
             alt="Click to Upload Image for verification"
-            className="w-full h-28 object-cover text-sm text-white text-center justify-center "
+            className="w-full h-28 object-cover text-sm text-white text-center justify-center bg-transparent"
           />
         </label>
       <div className="mb-0">
@@ -161,7 +161,7 @@ export default function Register() {
           accept="image/*"
           id="profileImage"
           name="profileImage"
-          className="hidden w-15 text-[11px]"
+          className="w-15 text-[11px]"
           onChange={handleImageChange}
         />
       </div>

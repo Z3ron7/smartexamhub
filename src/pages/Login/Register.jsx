@@ -307,14 +307,21 @@ export default function Register() {
     )}
               </div>
             </div>
+        
             <div className="flex items-center mt-4">
-              <button
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
-                type="submit"
-              >
-                Register
-              </button>
-            </div>
+        <button
+          className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+          type="submit"
+          disabled={loading} // Disable the button when loading
+        >
+          {loading ? (
+      <span className="mr-2">
+        <div className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+      </span>
+    ) : null}
+    {loading ? 'Processing...' : 'Register'}
+        </button>
+      </div>
             
           </form>
           <div className="mt-4 justify-center text-center text-white">

@@ -152,11 +152,6 @@ console.log("Backend Response:", response.data);
         className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         required
       />
-      {registrationStatus === "error" && (
-  <div className="mb-4 rounded-lg px-2 py-2 text-sm text-red-500" role="alert">
-     {values.username ? "Username already exists." : ""}
-  </div>
-)}
     </div>
   </div>
 
@@ -258,11 +253,6 @@ console.log("Backend Response:", response.data);
     placeholder="ex. 2020-0077"
     required
   />
-  {registrationStatus === "error" && (
-    <div className="mb-4 rounded-lg px-2 py-2 text-sm text-red-500" role="alert">
-      {values.school_id ? "School ID already exists." : ""}
-    </div>
-  )}
 </div>
             <div className="mt-4">
               <label

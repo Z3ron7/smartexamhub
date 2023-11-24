@@ -64,7 +64,7 @@ export default function Register() {
           "Content-Type": "multipart/form-data",
         },
       });
-
+console.log("Backend Response:", response.data);
       if (response.data.Status === "Success") {
         setRegistrationStatus("success");
         setAlertMessage("Registration successful! Redirecting to the login page...");

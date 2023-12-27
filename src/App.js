@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 //Super Admin---------------------------
 import ProfileS from './pages/SuperAdmin/Profile'
@@ -21,7 +20,6 @@ import Questionnairess from './pages/Admin/Questionnaire';
 import Roomss from './pages/Admin/Rooms';
 import Userss from './pages/users/Users';
 import ExamResultss from './pages/Admin/ExamResults';
-import ViewRooms from './pages/Admin/ViewRoom';
 //Exam-takers----------------------------
 import ProfileSt from './pages/Students/Profile'
 import LayoutStudents from './components/LayoutStudents';
@@ -41,36 +39,52 @@ import Register from './pages/Login/Register';
 import PageNotFound from './pages/PageNotFound';
 import ProtectedRoute from './pages/ProtectedRoute';
 import LayoutUnverified from './components/LayoutUnverified';
+import ForgotPassword from './pages/Login/ForgotPassword'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
-  const [isVerified, setIsVerified] = useState(false);
-
-  useEffect(() => {
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-  setIsLoggedIn(token !== undefined && token !== null);
-  setUserRole(role);
-
-  const updateVerificationStatus = (status) => {
-    setIsVerified(status);
-    localStorage.setItem('isVerified', status ? '1' : '0');
-  };
+  const [isVerifieds, setIsVerified] = useState(false);
   
-  // Example usage after successful verification
-  updateVerificationStatus(true);
-}, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    const isVerifieds = localStorage.getItem('isVerified');
+    setIsLoggedIn(token !== undefined && token !== null);
+    setUserRole(role);
+    setIsVerified(isVerifieds);
+  
+  });
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<PageNotFound />} />
 
-        <Route path="/register" element={<Register />} />
+        <Route
+            path="/register"
+            element={
+              isLoggedIn ? (
+                // Redirect to dashboard or another page
+                <Navigate to={userRole === 'Super Admin' ? '/super-dashboard' : userRole === 'Admin' ? '/admin-dashboard' : '/student-dashboard'} />
+              ) : (
+                <Register />
+              )
+            }
+          />
         <Route path="/Log-in" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
-        {/* <Route path="/verification" element={<LayoutUnverified><Verification /></LayoutUnverified>} /> */}
-
+        <Route
+            path="/forgot-password"
+            element={
+              isLoggedIn ? (
+                // Redirect to dashboard or another page
+                <Navigate to={userRole === 'Super Admin' ? '/super-dashboard' : userRole === 'Admin' ? '/admin-dashboard' : '/student-dashboard'} />
+              ) : (
+                <ForgotPassword />
+              )
+            }
+          />
+        <Route path="/verification" element={<LayoutUnverified><Verification /></LayoutUnverified>} />
 
         {/* Routes for super admin */}
         <Route
@@ -267,17 +281,7 @@ function App() {
           path="/student-dashboard"
           element={
             <ProtectedRoute
-              element={
-                isLoggedIn && isVerified ? (
-                  <LayoutStudents>
-                    <StudentDashboard />
-                  </LayoutStudents>
-                ) : (
-                <LayoutUnverified>
-                  <Verification />
-                </LayoutUnverified>
-                )
-              }
+              element={<LayoutStudents><StudentDashboard /></LayoutStudents>}
               allowedRoles={['Exam-taker']}
               isLoggedIn={isLoggedIn}
               userRole={userRole}
@@ -362,7 +366,6 @@ function App() {
           }
         />
         <Route path="/" element={<LandingPage />} />
-
       </Routes>
     </BrowserRouter>
   );

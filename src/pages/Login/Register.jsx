@@ -10,6 +10,8 @@ export default function Register() {
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [schoolIdError, setSchoolIdError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -38,54 +40,70 @@ export default function Register() {
   
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (values.password !== passwordConfirmation) {
-      console.error("Password and confirmation password confirmation do not match");
+  
+    setLoading(true); // Show loading spinner
+    
+    if (values.password.length < 8 ) {
+      console.error("Password must be at least 8 characters long.");
+      setLoading(false);
       return;
     }
-
+    if (values.password !== passwordConfirmation) {
+      console.error("Password and confirmation password do not match.");
+      setLoading(false); // Hide loading spinner
+      return;
+    }
+  
     try {
-    // Create a FormData object and append the image file
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("username", values.username);
-    formData.append("password", values.password);
-    formData.append("status", values.status);
-    formData.append("gender", values.gender);
-    formData.append("school_id", values.school_id);
-    formData.append("profileImage", values.image); // Append the File object
-    formData.append("isVerified", values.isVerified); // Append the File object
-
-    console.log("FormData:", formData);
-
-    try {
-      const response = await axios.post("https://smartexam.cyclic.app/register", formData, {
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("username", values.username);
+      formData.append("password", values.password);
+      formData.append("status", values.status);
+      formData.append("gender", values.gender);
+      formData.append("school_id", values.school_id);
+      formData.append("profileImage", values.image);
+      formData.append("isVerified", values.isVerified);
+  
+      console.log("FormData:", formData);
+  
+      const response = await axios.post("http://localhost:3001/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-console.log("Backend Response:", response.data);
+  
+      console.log("Backend Response:", response.data);
+  
       if (response.data.Status === "Success") {
         setRegistrationStatus("success");
         setAlertMessage("Registration successful! Redirecting to the login page...");
         setTimeout(() => {
           navigate("/Log-in");
         }, 2000);
-      } else {
+      } else if (response.data.Error === "Username already exists") {
         setRegistrationStatus("error");
-        setAlertMessage("Registration failed. Please try again.");
+        setUsernameError("Username already exists.");
+
+      } else if (response.data.Error === "School ID already exists") {
+        setRegistrationStatus("error");
+        setSchoolIdError("School ID already exists.");
+        setUsernameError("");
+      } else {
+        console.error("Registration failed:", response.data.Error);
+        setRegistrationStatus("error");
+        setAlertMessage("Registration failed. Please try again!");
       }
-    } catch (err) {
-      console.error(err);
-      setRegistrationStatus("error");
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
       setAlertMessage("Registration failed. Please try again.");
+    } finally {
+      setTimeout(() => {
+        // Reset the loading state to false after 2 seconds
+        setLoading(false);
+      }, 2000);
     }
-  } catch (error) {
-    console.error("An unexpected error occurred:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -102,7 +120,7 @@ console.log("Backend Response:", response.data);
     <div className="bg-white" style={{ backgroundImage: `url(${RP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
       {registrationStatus === "success" && (
         <div
-          className=" flex w-1/2 mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-700 justify-center items-center"
+          className=" flex w-1/2 mx-auto rounded-lg bg-green-100 px-6 py-3 text-base text-green-700 justify-center items-center"
           role="alert"
         >
           Registration successful! Redirecting to login page...
@@ -110,10 +128,10 @@ console.log("Backend Response:", response.data);
       )}
       {registrationStatus === "error" && (
         <div
-          className="mb-4 rounded-lg bg-error-100 px-6 py-5 text-base text-red-500"
+          className=" rounded-lg bg-error-100 px-6 py-3 text-base text-red-500"
           role="alert"
         >
-          Registration failed. Please try again.
+          {alertMessage}
         </div>
       )}
       <div className="items-center mx-auto justify-center">
@@ -135,25 +153,31 @@ console.log("Backend Response:", response.data);
         name="name"
         value={values.name}
         onChange={(e) => setValues({ ...values, name: e.target.value })}
-        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
         required
       />
     </div>
-    
     <div className="mt-4">
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-        Email
-      </label>
-      <input
-        type="email"
-        name="username"
-        value={values.username}
-        onChange={(e) => setValues({ ...values, username: e.target.value })}
-        className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        required
-      />
-      
+  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+    Email
+  </label>
+  <input
+    type="email"
+    name="username"
+    value={values.username}
+    onChange={(e) => {
+      setValues({ ...values, username: e.target.value })
+      setUsernameError("");
+    }}
+    className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+    required
+  />
+  {registrationStatus === "error" && (
+    <div className="rounded-lg px-2 text-sm text-red-500" role="alert">
+      {usernameError}
     </div>
+  )}
+</div>
   </div>
 
   {/* Right Column for Image Upload */}
@@ -249,12 +273,22 @@ console.log("Backend Response:", response.data);
     type="text"
     name="school_id"
     value={values.school_id}
-    onChange={(e) => setValues({ ...values, school_id: e.target.value })}
-    className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    onChange={(e) => {
+      setValues({ ...values, school_id: e.target.value });
+      // Clear the error when the input changes
+      setSchoolIdError("");
+    }}
+    className="block w-full rounded-md py-1.5 px-2 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
     placeholder="ex. 2020-0077"
     required
   />
+  {registrationStatus === "error" && (
+    <div className="rounded-lg px-2 text-sm text-red-500" role="alert">
+      {schoolIdError}
+    </div>
+  )}
 </div>
+
             <div className="mt-4">
               <label
                 htmlFor="password"
@@ -263,19 +297,18 @@ console.log("Backend Response:", response.data);
                 Password
               </label>
               <div className="flex flex-col items-start">
-  <input
-    type="password"
-    name="password"
-    value={values.password}
-    onChange={(e) => setValues({ ...values, password: e.target.value })}
-    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    required
-  />
-  {values.password.length < 8 && values.password.length > 0 && (
-    <p className="text-red-500 text-sm mt-1">Password must be at least 8 characters long.</p>
-  )}
-</div>
-
+                <input
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  onChange={(e) => setValues({ ...values, password: e.target.value })}
+                  className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
+                  required
+                />
+                {values.password.length < 8 && values.password.length > 0 && (
+                  <p className="text-red-500 text-sm mt-1">Password must be at least 8 characters long.</p>
+                )}
+              </div>
             </div>
             <div className="mt-4">
               <label
@@ -290,7 +323,7 @@ console.log("Backend Response:", response.data);
                   name="password_confirmation"
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
                   required
                 />
                 {values.password !== passwordConfirmation && passwordConfirmation.length > 0 && (

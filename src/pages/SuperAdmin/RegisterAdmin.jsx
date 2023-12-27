@@ -49,7 +49,7 @@ export default function RegisterAdmin() {
       console.log("FormData:", formData);
 
       const response = await axios.post(
-        "https://smartexam.cyclic.app/register",
+        "http://localhost:3001/register",
         formData,
         {
           headers: {

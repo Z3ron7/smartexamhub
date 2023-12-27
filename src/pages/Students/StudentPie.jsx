@@ -26,7 +26,7 @@ const StudentPie = () => {
       
         const fetchExamScores = async () => {
           try {
-            const response = await axios.get(`https://smartexam.cyclic.app/dashboard/fetch-latest?userId=${user_id}&limit=1`);
+            const response = await axios.get(`http://localhost:3001/dashboard/fetch-latest?userId=${user_id}&limit=1`);
             setExamScores(response.data.latestActivity)
       console.log('latest:', response.data.latestActivity)
       setLoading(false);
@@ -39,21 +39,12 @@ const StudentPie = () => {
         fetchExamScores();
       }, []);
       if (loading) {
-        return <div>Loading...</div>; // You can replace this with a loading spinner or component
-      }
-
-      if (examScores.length === 0) {
         return (
           <div className="text-center">
-            <img src={error} alt="" className="scale-[135%]" />
-            <p className="mt-[15px] text-center text-semibold text-gray-500">
-              No Exam data...
-            </p>
+            <p className="mt-[15px] text-center text-semibold text-gray-500">Loading...</p>
           </div>
         );
       }
-      console.log("mappe", examScores)
-
       return examScores.map((exam, index) => {
         const { score, end_time} = exam;
         const endDate = new Date(end_time);
@@ -140,45 +131,59 @@ const StudentPie = () => {
         });
       }
         const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
-    return (
-        <div>
-        <div >
-        <ResponsiveContainer width="100%" height={320}>
-        <PieChart >
-            <Pie
-                data={competenciesForChart}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={130}
-                fill="#8884d8"
-                dataKey="score"
-            >
-                {mappedScores.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-            </Pie>
-        </PieChart>
-        </ResponsiveContainer>
-        </div>
-        <div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-5 justify-center mx-auto items-center'>
-        {
-  mappedScores
-    .filter((item) => item.competency !== 'All Competency') // Exclude the "All Competency" item
-    .map((item, index) => (
-      <p
-        key={`competency-${index}`}
-        className='flex cursor-pointer font-bold justify-center items-center mx-auto'
-        style={{ color: COLORS[index % COLORS.length] }}
-      >
-        {item.competency}
-      </p>
-    ))
-}
-        </div>
-</div>
-    )
+        console.log('score:', examScores)
+
+        return (
+          <div>
+            {examScores.length === 0 ? (
+              <div className="text-center">
+                <img src={error} alt="" className="scale-[135%]" />
+                <p className="mt-[15px] text-center text-semibold text-gray-500">
+                  Searching...
+                </p>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <ResponsiveContainer width="100%" height={320}>
+                    <PieChart>
+                      <Pie
+                        data={competenciesForChart}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={renderCustomizedLabel}
+                        outerRadius={130}
+                        fill="#8884d8"
+                        dataKey="score"
+                      >
+                        {mappedScores.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className='grid gap-2 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-5 justify-center mx-auto items-center'>
+                  {mappedScores
+                    .filter((item) => item.competency !== 'All Competency')
+                    .map((item, index) => (
+                      <p
+                        key={`competency-${index}`}
+                        className='flex cursor-pointer font-bold justify-center items-center mx-auto'
+                        style={{ color: COLORS[index % COLORS.length] }}
+                      >
+                        {item.competency}
+                      </p>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
         })
 }
 

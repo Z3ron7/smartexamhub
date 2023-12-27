@@ -69,7 +69,7 @@ function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, 
               // Fetch questions for each competency and merge the results
               for (const competency of competencies) {
                 const competencyResponse = await axios.get(
-                  `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${competency}`
+                  `http://localhost:3001/questions/refresh?program=${selectedProgram.label || ''}&competency=${competency}`
                 );
   
                 // Limit to maxQuestionsPerCategory questions per category
@@ -106,7 +106,7 @@ function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, 
             } else {
               // Fetch questions for the selected competency
               response = await axios.get(
-                `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
+                `http://localhost:3001/questions/refresh?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
               );
   
               // Limit to maxQuestionsPerCategory questions for the selected category
@@ -333,7 +333,7 @@ const formattedEndTime = `${endTime.getFullYear()}-${(endTime.getMonth() + 1).to
       Math.floor(total_duration_minutes_with_interval % 60)
     ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes_with_interval % 1) * 60)).padStart(2, '0')}s`;
 
-    const response = await axios.post('https://smartexam.cyclic.app/exam-room/end-exam-room', {
+    const response = await axios.post('http://localhost:3001/exam-room/end-exam-room', {
       exam_id: user_exam_id, // Replace with the actual exam ID
       score: calculateScore(), // Replace with your score calculation logic
       total_duration_minutes: formattedTotalDuration, // Send the total duration in the "00h:00m:00s" format

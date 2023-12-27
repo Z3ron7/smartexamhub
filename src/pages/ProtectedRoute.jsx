@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ element, allowedRoles }) => {
   const isLoggedIn = localStorage.getItem('token') !== null;
+  const isVerified = localStorage.getItem('isVerified') === '1'; // Assuming '1' means verified
 
   const userRole = localStorage.getItem('role');
 
@@ -12,6 +13,11 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
   if (!isLoggedIn) {
     // Redirect to the login page if not logged in
     return <Navigate to="/Log-in" />;
+  }
+
+  if (!isVerified) {
+    // Redirect to an unauthorized page if the user is not verified
+    return <Navigate to="/verification" />;
   }
 
   if (!isRoleAllowed) {

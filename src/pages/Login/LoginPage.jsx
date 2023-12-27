@@ -17,7 +17,7 @@ function LoginPage() {
   const handleLogin = (event) => {
     event.preventDefault();
     setLoading(true);
-    axios.post('https://smartexam.cyclic.app/login', values, { withCredentials: true })
+    axios.post('http://localhost:3001/login', values, { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Login Successful') {
           localStorage.setItem('token', res.data.token);
@@ -31,12 +31,12 @@ function LoginPage() {
           const isVerified = res.data.isVerified;
 
           if (userRole === 'Exam-taker') {
-            if (isVerified) {
+            if (isVerified === 1) {
               // User is verified, redirect to the student dashboard
               navigate('/student-dashboard');
             } else {
               // User is not verified, redirect to the verification page
-              navigate('/student-dashboard');
+              navigate('/verification');
             }
           } else {
             // Handle different user roles as needed and redirect accordingly
@@ -63,7 +63,7 @@ function LoginPage() {
       setTimeout(() => {
         // Reset the loading state to false after 2 seconds
         setLoading(false);
-      }, 3000);
+      }, 2000);
     });
 };
   const togglePasswordVisibility = () => {
@@ -81,7 +81,7 @@ function LoginPage() {
           {error && (
         <div className="text-red-600">{error}</div>
       )}
-        <div className="mt-5 sm:mx-auto px-5 sm:w-[320px] lg:w-[390px] h-64 pt-4 shadow-black shadow-lg">
+        <div className="mt-5 sm:mx-auto px-5 sm:w-[320px] lg:w-[390px] h-72 pt-4 shadow-black shadow-lg">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <div className="mt-2">
@@ -97,7 +97,7 @@ function LoginPage() {
             </div>
           </div>
 
-            {/* <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div className="text-sm">
                 <button
                   type="button" // Use a button for navigation
@@ -107,7 +107,7 @@ function LoginPage() {
                   Forgot password?
                 </button>
               </div>
-            </div> */}
+            </div>
             <div className="mt-2 relative rounded-md shadow-sm">
         <input
           name="password"

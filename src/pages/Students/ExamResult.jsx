@@ -86,32 +86,35 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetGame, selectedCom
       </Link>
       </div>
       </div>
-      {filteredQuestionsByCompetency.map((question, index) => (
-        <div key={index} className="mb-4 dark:text-white dark:bg-slate-900 p-3 border-2 dark:border-gray-700 dark:rounded-lg">
-          <h2 className="text-xl text-center dark:text-white btn-primary">
-            Question {index + 1}/{filteredQuestionsByCompetency.length}
-          </h2>
-          <p className="mb-2 text-lg border-b border-black dark:border-white">{question.questionText}</p>
-          <ul>
-            {question.choices && question.choices.map((choice, choiceIndex) => (
-            <li
-              key={choiceIndex}
-              className={classNames("container btn-container items-center dark:text-white flex border border-gray-700 mb-2 rounded-3xl cursor-pointer", {
-                "bg-green-400": selectedChoices[index] && selectedChoices[index].isCorrect && selectedChoices[index] === choice,
-                "bg-red-600": selectedChoices[index] && !selectedChoices[index].isCorrect && selectedChoices[index] === choice,
-              })}
-            >
-              <div className="dark-text-white py-2 px-4 bg-gray-700 text-white font-bold text-lg rounded-3xl m-1 shadow-md btn-primary">
-                {String.fromCharCode(65 + choiceIndex)}
-              </div>
-              <div className="dark-text-white py-2 dark:text-white px-4 text-gray-700 font-semibold">
-                {choice.choiceText}
-              </div>
-            </li>
-          ))}
-          </ul>
-        </div>
-      ))}
+      <div className="overflow-y-auto max-h-screen">
+  {filteredQuestionsByCompetency.map((question, index) => (
+    <div key={index} className="mb-4 dark:text-white dark:bg-slate-900 p-3 border-2 dark:border-gray-700 dark:rounded-lg">
+      <h2 className="text-xl text-center dark:text-white btn-primary">
+        Question {index + 1}/{filteredQuestionsByCompetency.length}
+      </h2>
+      <p className="mb-2 text-lg border-b border-black dark:border-white">{question.questionText}</p>
+      <ul>
+        {question.choices && question.choices.map((choice, choiceIndex) => (
+          <li
+            key={choiceIndex}
+            className={classNames("container btn-container items-center dark:text-white flex border border-gray-700 mb-2 rounded-3xl cursor-pointer", {
+              "bg-green-400": selectedChoices[index] && selectedChoices[index].isCorrect && selectedChoices[index] === choice,
+              "bg-red-600": selectedChoices[index] && !selectedChoices[index].isCorrect && selectedChoices[index] === choice,
+            })}
+          >
+            <div className="dark-text-white py-2 px-4 bg-gray-700 text-white font-bold text-lg rounded-3xl m-1 shadow-md btn-primary">
+              {String.fromCharCode(65 + choiceIndex)}
+            </div>
+            <div className="dark-text-white py-2 dark:text-white px-4 text-gray-700 font-semibold">
+              {choice.choiceText}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };

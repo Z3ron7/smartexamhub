@@ -64,7 +64,7 @@ const Single = () => {
     // Fetch user data based on the user ID
     async function fetchUserData() {
       try {
-        const response = await axios.get(`http://localhost:3001/users/users/${user_id}`);
+        const response = await axios.get(`https://smartexamhub.vercel.app/users/users/${user_id}`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -78,7 +78,7 @@ const Single = () => {
     // Fetch latest activities based on the user ID
     async function fetchLatestActivities() {
       try {
-        const response = await axios.get(`http://localhost:3001/users/fetch-latest/${user_id}`);
+        const response = await axios.get(`https://smartexamhub.vercel.app/users/fetch-latest/${user_id}`);
         setLatestActivities(response.data.latestActivities);
         console.log("latest", response.data.latestActivities)
       } catch (error) {

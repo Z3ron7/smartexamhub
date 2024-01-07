@@ -42,7 +42,7 @@ const Rankings = () => {
   useEffect(() => {
     const fetchRankings = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/dashboard/fetch-rankings');
+        const response = await axios.get('https://smartexamhub.vercel.app/dashboard/fetch-rankings');
         setRankings(response.data);
       } catch (error) {
         console.error('Error fetching rankings:', error);

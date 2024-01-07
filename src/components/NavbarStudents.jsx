@@ -22,7 +22,7 @@ const NavbarStudents = () => {
 
   const handleLogout = () => {
     axios
-      .get('http://localhost:3001/logout', { withCredentials: true })
+      .get('https://smartexamhub.vercel.app/logout', { withCredentials: true })
       .then((res) => {
         localStorage.removeItem('token'); // Remove the token from local storage
 	localStorage.removeItem('user_id');
@@ -35,7 +35,7 @@ const NavbarStudents = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/user', { withCredentials: true })
+      .get('https://smartexamhub.vercel.app/user', { withCredentials: true })
       .then((res) => {
         if (res.data.Status === 'Success') {
           setAuth(true);

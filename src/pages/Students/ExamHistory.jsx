@@ -51,7 +51,7 @@ export default function ExamHistory() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/exams/fetch-user-exam?userId=${user_id}`);
+        const response = await axios.get(`https://smartexamhub.vercel.app/exams/fetch-user-exam?userId=${user_id}`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);
@@ -72,26 +72,12 @@ export default function ExamHistory() {
           <div className="w-1/6 text-sm md:text-sm lg:font-semibold">Action</div>
         </div>
       <div className='flex justify-center items-center mt-36'>
-<div className='basis-[53%] border-2 border-slate-700 justify-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 mb-4 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
-                <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                    <h2 className='text-[#4e73df] text-[16px] font-bold '>Recent Exam chart</h2>
-                </div>
-                
-<div className='border p-4 justify-center'>
-<img src={error} alt='' className='flex justify-center scale-[135%]' />
-<p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
-</div>
-            </div>
-            <div className='basis-[43%] justify-center items-center w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] md:w-80 h-4/5 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
-                <div className='bg-[#F8F9FC] items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                    <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
-                </div>
+
                 
 <div className='border p-4 justify-center items-center'>
 <img src={error} alt='' className='justify-center scale-[135%]' />
 <p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
 </div>
-            </div>
 </div>
 </div>
     );
@@ -100,7 +86,7 @@ export default function ExamHistory() {
   const handleDeleteExam = async (examId) => {
     try {
       // Make a DELETE request to your backend API
-      await axios.delete(`http://localhost:3001/exams/delete-user-exam`, {
+      await axios.delete(`https://smartexamhub.vercel.app/exams/delete-user-exam`, {
         data: { examId }, // Pass the examId in the request body
       });
   

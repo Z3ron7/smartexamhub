@@ -8,6 +8,7 @@ import { SiGoogleclassroom } from 'react-icons/si';
 import { MdViewComfy } from 'react-icons/md';
 import Logo from '../assets/images/logo.png';
 import HamburgerButton from './HamburgerMenuButton/HamburgerButton';
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
 
 const SidebarStudents = () => {
   const [open, setOpen] = useState(true);
@@ -78,8 +79,23 @@ const SidebarStudents = () => {
                   }
                 }}
               >
-                <span className='text-xl mx-2 py-1'>{menu.src}</span>
-                <span>{menu.title}</span>
+              {menu.title === 'View Result' && (
+                <>
+                  <span className='text-xl mx-2 py-1'>{menu.src}</span>
+                  <span>{menu.title}</span>
+                  {viewResultOpen === true ? (
+                    <FaChevronUp className="w-4 h-4 font-bold" />
+                    ) : (
+                    <FaChevronDown className="w-4 h-4 font-bold" />
+                    )}
+                </>
+              )}
+              {menu.title !== 'View Result' && (
+                <>
+                  <span className='text-xl mx-2 py-1'>{menu.src}</span>
+                  <span>{menu.title}</span>
+                </>
+              )}
                 {/* Render sub-menus for 'View Result' when clicked */}
               </li>
               {menu.title === 'View Result' && viewResultOpen && (

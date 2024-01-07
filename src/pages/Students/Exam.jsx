@@ -13,7 +13,7 @@ function Exam() {
   const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
   const questionsPerPage = 3; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
-  const [selectedCompetency, setSelectedCompetency] = useState({ value: 'All Competency', label: 'All Competency' });
+  const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [userExamId, setUserExamId] = useState(null);
@@ -71,7 +71,7 @@ function Exam() {
               // Fetch questions for each competency and merge the results
               for (const competency of competencies) {
                 const competencyResponse = await axios.get(
-                  `http://localhost:3001/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
+                  `https://smartexamhub.vercel.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
                 );
   
                 // Limit to maxQuestionsPerCategory questions per category
@@ -108,7 +108,7 @@ function Exam() {
             } else {
               // Fetch questions for the selected competency
               response = await axios.get(
-                `http://localhost:3001/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
+                `https://smartexamhub.vercel.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
               );
   
               // Limit to maxQuestionsPerCategory questions for the selected category
@@ -249,8 +249,7 @@ const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   };
 // Define your Select options
 const programOptions = [
-  { value: 'Social Work', label: 'Social Work' },
-  { value: 'Option', label: 'Option' },
+  { value: 'Social Work', label: 'Social Work' }
 ];
 
 const competencyOptions = [
@@ -262,7 +261,6 @@ const competencyOptions = [
   { value: 'Groupwork', label: 'Groupwork' },
 ];
 const countdownOptions = [
-  { value: 0, label: 'Time Duration' },
   { value: 0.5, label: '30 minutes' },
   { value: 1, label: '1 hour' },
   { value: 2, label: '2 hours' },
@@ -346,7 +344,7 @@ const startExam = async () => {
     const user_id = localStorage.getItem('user_id');
 
     // Create a user_exam entry in the database
-    const response = await axios.post('http://localhost:3001/exams/user-exams', {
+    const response = await axios.post('https://smartexamhub.vercel.app/exams/user-exams', {
       user_id,
       program: programValue,
       competency: competencyValue,
@@ -386,7 +384,7 @@ const formattedEndTime = `${endTime.getFullYear()}-${(endTime.getMonth() + 1).to
       Math.floor(total_duration_minutes_with_interval % 60)
     ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes_with_interval % 1) * 60)).padStart(2, '0')}s`;
 
-    const response = await axios.post('http://localhost:3001/exams/end-exam', {
+    const response = await axios.post('https://smartexamhub.vercel.app/exams/end-exam', {
       exam_id: user_exam_id, // Replace with the actual exam ID
       score: calculateScore(), // Replace with your score calculation logic
       total_duration_minutes: formattedTotalDuration, // Send the total duration in the "00h:00m:00s" format
@@ -462,7 +460,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
           <div className="mb-4 lg:w-72">
         {!showResults && ( 
             <Select
-              placeholder="Competency"
+              placeholder="Choose a Category"
               id="competency"
               name="competency"
               value={selectedCompetency}
@@ -508,7 +506,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
             </div>
           )}
       </div>
-        {!showResults && (
+        {countdownStarted && !showResults && (
           <div>
             {filteredQuestions.slice(currentQuestion, currentQuestion + questionsPerPage).map((question, index) => (
               <div key={index} className="border-2 dark:border-gray-700 border-indigo-700 rounded-lg dark:rounded-lg dark:bg-slate-900 shadow-lg items-center justify-center my-2 mb-4">
@@ -544,22 +542,22 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
             ))}
             <div className="flex justify-center p-4">
             <div className="container w-full flex justify-end items-end">
-            <button
-    className="relative rounded justify-center items-center h-10 mr-2 bg-indigo-700 px-3 py-1.5 text-md font-medium text-white flex ease-in-out transition delay-150 hover:-translate-y-2 duration-300 ..."
-              onClick={() => {
-                if (countdownStarted) {
-                  const confirmSubmit = window.confirm("Are you sure you want to continue?");
-                  if (confirmSubmit) {
-                    // The user confirmed, you can proceed with the action
-                    handleFinishExam();
-                  }
-                }
-              }}
-              disabled={!countdownStarted}
-            >
-              Submit
-            </button>
-            </div>
+  {countdownStarted && (
+    <button
+      className="relative rounded justify-center items-center h-10 mr-2 bg-indigo-700 px-3 py-1.5 text-md font-medium text-white flex ease-in-out transition delay-150 hover:-translate-y-2 duration-300 ..."
+      onClick={() => {
+        const confirmSubmit = window.confirm("Are you sure you want to continue?");
+        if (confirmSubmit) {
+          // The user confirmed, you can proceed with the action
+          handleFinishExam();
+        }
+      }}
+      disabled={!countdownStarted}
+    >
+      Submit
+    </button>
+  )}
+</div>
           <div className="container flex justify-end header-bg dark:text-white">
           <ul className="list-style-none flex">
           <li>

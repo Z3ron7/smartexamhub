@@ -3,6 +3,7 @@ import { FaEllipsisV } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import AccordionLayout from '../../components/accordion/AccordionLayout'
+import error from "../../assets/images/error.png"
 
 // Define a function to get text color based on competency level
 function getColorForLevel(level) {
@@ -39,7 +40,7 @@ export default function ExamHistorySet() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/exam-room/fetch-exam-room?userId=${user_id}`);
+        const response = await axios.get(`https://smartexamhub.vercel.app/exam-room/fetch-exam-room?userId=${user_id}`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);
@@ -57,7 +58,28 @@ const competencyMap = {
   '5': 'Groupwork',
   // Add more mappings as needed
 };
+if (examScores.length === 0) {
+  return (
+    <div>
+      <div className="flex bg-gray-200 dark:text-blue-600 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
+        <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Exam ID</div>
+        <div className="w-1/4 text-sm md:text-sm lg:font-semibold">Competency ID</div>
+        <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Duration (Minutes)</div>
+        <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Total Duration</div>
+        <div className="w-1/5 text-sm md:text-sm lg:font-semibold">Exam Date taken</div>
+        <div className="w-1/6 text-sm md:text-sm lg:font-semibold">Action</div>
+      </div>
+    <div className='flex justify-center items-center mt-36'>
 
+              
+<div className='border p-4 justify-center items-center'>
+<img src={error} alt='' className='justify-center scale-[135%]' />
+<p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
+</div>
+</div>
+</div>
+  );
+}
   const processExamScores = (exam, index, activeIndex) => {
     const { room_name, description, score, duration_minutes, end_time, total_duration_minutes } = exam;
     const endDate = new Date(end_time);

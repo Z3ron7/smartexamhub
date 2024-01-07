@@ -10,7 +10,7 @@ const Room = () => {
 
   useEffect(() => {
     // Fetch room data from the backend API
-    axios.get('http://localhost:3001/room/rooms')
+    axios.get('https://smartexamhub.vercel.app/room/rooms')
       .then((response) => {
         setRoomData(response.data.rooms);
       })

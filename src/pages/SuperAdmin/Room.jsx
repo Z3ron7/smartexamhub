@@ -100,7 +100,7 @@ const Room = () => {
           key={roomIndex}
           className='dark:bg-slate-900 border-2 mt-3 h-[150px] rounded-[8px] bg-white border-l-[6px] border-[#4E73DF] items-center px-[20px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out'
           onClick={() => {
-            navigate(`/room/view-rooms/${room.room_id}`);
+            navigate(`/room/view-room/${room.room_id}`);
           }}
         >
             <div className="rounded-lg h-8 w-12 mt-[-1rem] mx-auto flex items-center p-2 justify-center border-2 border-[#4E73DF] bg-orange-600">

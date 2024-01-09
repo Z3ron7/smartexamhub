@@ -41,7 +41,7 @@ const CreateRoom = ({isOpen, onClose, onCreateRoom}) => {
     console.log('room data:', roomData)
 
     // Send a POST request to add the room data
-    axios.post('https://smartexamhub.vercel.app/room/room', roomData)
+    axios.post('https://smartexam.cyclic.app/room/room', roomData)
       .then((response) => {
         console.log(response.data);
         setAlertMessage('Room created successfully');

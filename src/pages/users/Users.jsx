@@ -60,7 +60,7 @@ const Users = () => {
 
   // Function to fetch data from the backend
   const fetchData = () => {
-    axios.get("https://smartexamhub.vercel.app/users/users")
+    axios.get("https://smartexam.cyclic.app/users/users")
       .then((response) => {
         setData(response.data);
         setIsLoading(false);
@@ -72,7 +72,7 @@ const Users = () => {
   };
 
   const handleDelete = (user_id) => {
-    axios.delete(`https://smartexamhub.vercel.app/users/users/${user_id}`)
+    axios.delete(`https://smartexam.cyclic.app/users/users/${user_id}`)
       .then((response) => {
         if (response.status === 200) {
           // User deleted successfully

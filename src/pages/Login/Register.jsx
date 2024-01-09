@@ -67,7 +67,7 @@ export default function Register() {
   
       console.log("FormData:", formData);
   
-      const response = await axios.post("https://smartexamhub.vercel.app/register", formData, {
+      const response = await axios.post("https://smartexam.cyclic.app/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

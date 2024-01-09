@@ -18,7 +18,7 @@ function ExamRoom() {
 
   useEffect(() => {
     // Make an API request to your backend to fetch room data
-    axios.get(`https://smartexamhub.vercel.app/room/rooms/${room_id}`)
+    axios.get(`https://smartexam.cyclic.app/room/rooms/${room_id}`)
       .then((response) => {
 console.log("Rdata:", response.data.room)
 
@@ -110,7 +110,7 @@ const startExam = async () => {
       const competencyId = competencyValueToId[competencyValue];
 
       // Check if the user has already taken an exam for the given room
-    const checkExamResponse = await axios.get(`https://smartexamhub.vercel.app/exam-room/check-user-exam/${user_id}/${roomId}`);
+    const checkExamResponse = await axios.get(`https://smartexam.cyclic.app/exam-room/check-user-exam/${user_id}/${roomId}`);
     
     if (checkExamResponse.data.hasTakenExam) {
       // Display an alert or message to the user
@@ -120,7 +120,7 @@ const startExam = async () => {
     }
     
       // Create a user_exam entry in the database
-      const response = await axios.post('https://smartexamhub.vercel.app/exam-room/exam-room', {
+      const response = await axios.post('https://smartexam.cyclic.app/exam-room/exam-room', {
         user_id,
         room_id: roomId,
         program_id: programId,

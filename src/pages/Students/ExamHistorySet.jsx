@@ -40,7 +40,7 @@ export default function ExamHistorySet() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`https://smartexamhub.vercel.app/exam-room/fetch-exam-room?userId=${user_id}`);
+        const response = await axios.get(`https://smartexam.cyclic.app/exam-room/fetch-exam-room?userId=${user_id}`);
         setExamScores(response.data.userExams);
       } catch (error) {
         console.error('Error fetching exam scores:', error);

@@ -49,7 +49,7 @@ export default function RegisterAdmin() {
       console.log("FormData:", formData);
 
       const response = await axios.post(
-        "https://smartexamhub.vercel.app/register",
+        "https://smartexam.cyclic.app/register",
         formData,
         {
           headers: {

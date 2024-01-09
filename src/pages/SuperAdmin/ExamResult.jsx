@@ -39,7 +39,7 @@ export default function ExamResult() {
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get('https://smartexamhub.vercel.app/dashboard/fetch-exam-room');
+        const response = await axios.get('https://smartexam.cyclic.app/dashboard/fetch-exam-room');
         setExamScores(response.data);
         console.log(response.data)
       } catch (error) {

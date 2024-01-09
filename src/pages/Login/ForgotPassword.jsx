@@ -8,7 +8,7 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     try {
       // Send a request to the backend to initiate the password reset
-      const response = await axios.post('https://smartexamhub.vercel.app/forgot-password', { username });
+      const response = await axios.post('https://smartexam.cyclic.app/forgot-password', { username });
       setMessage(response.data.Status);
     } catch (error) {
       console.error('Forgot password error:', error);

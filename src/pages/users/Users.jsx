@@ -101,9 +101,19 @@ const Users = () => {
       </div>
 
       {isLoading ? (
-        <div class="flex justify-center w-full h-24 border-2 rounded-md mx-auto mt-20">
-        <div class="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
-          <div class="w-12 bg-gray-300 h-12 rounded-full ">
+        <div class="flex  w-full h-24 border-2 rounded-md mx-auto mt-20">
+        <div class="flex justify-center items-center p-4 animate-pulse flex-row h-full space-x-7">
+        <div class="w-7 bg-gray-300 h-5 ">
+          </div>
+          <div class="w-7 bg-gray-300 h-5">
+          </div>
+          <div class="w-12 bg-gray-300 h-5 ">
+          </div>
+          <div class="w-14 bg-gray-300 h-5 ">
+          </div>
+          <div class="w-20 bg-gray-300 h-5 ">
+          </div>
+          <div class="w-20 bg-gray-300 h-5 ">
           </div>
               <div class="flex flex-col space-y-3">
               <div class="w-full bg-gray-300 h-6 rounded-md ">

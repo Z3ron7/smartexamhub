@@ -41,6 +41,9 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import LayoutUnverified from './components/LayoutUnverified';
 import ForgotPassword from './pages/Login/ForgotPassword'
 import ResetPassword from './pages/Login/ResetPassword'
+import VerificationLink from './pages/VerificationLink';
+import VerificationComplete from './pages/VerificationComplete';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,18 +68,16 @@ function App() {
         <Route
             path="/register"
             element={
-              isLoggedIn ? (
-                // Redirect to dashboard or another page
-                <Navigate to={userRole === 'Super Admin' ? '/super-dashboard' : userRole === 'Admin' ? '/admin-dashboard' : '/student-dashboard'} />
-              ) : (
                 <Register />
-              )
+
             }
           />
         <Route path="/Log-in" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
         <Route path="/verification" element={<LayoutUnverified><Verification /></LayoutUnverified>} />
+        <Route path="/verify/:otp" element={<VerificationLink />} />
+        <Route path="/verification-complete" element={<VerificationComplete />} />
 
         {/* Routes for super admin */}
         <Route

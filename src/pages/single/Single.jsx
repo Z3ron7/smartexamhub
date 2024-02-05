@@ -88,12 +88,14 @@ const Single = () => {
 
     fetchLatestActivities();
   }, [user_id]);
+      const imageUrl = userData.image || "/noavatar.png";
+
   return (
     <div className="single">
       <div className="view">
         <div className="info">
           <div className="topInfo">
-            {userData && userData.image && <img src="/avatar/Context Diagram.jpg" alt="" />}
+          <img src={imageUrl} alt="" />
           </div>
           <div className="details">
         {userData && (

@@ -154,6 +154,7 @@ export default function Register() {
         value={values.name}
         onChange={(e) => setValues({ ...values, name: e.target.value })}
         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+        placeholder="Full Name"
         required
       />
     </div>

@@ -19,7 +19,7 @@ function VerifyUser() {
     const confirmAccept = window.confirm('Are you sure you want to accept this user?');
     // Send a request to the server to accept the user
     if (confirmAccept) {
-      axios.post(`https://smartexam.cyclic.app/verify/accept-user/${userId}`).then(() => {
+      axios.post(`https://smartexam.cyclic.app/verify/send-verification/${userId}`).then(() => {
         // Update the list of unverified users
         setUnverifiedUsers((users) => users.filter((user) => user.user_id !== userId));
         localStorage.setItem('isVerified', 'true');
@@ -71,24 +71,13 @@ function VerifyUser() {
                 {unverifiedUsers.map((user) => (
                   <tr
                     key={user.user_id}
-                    className="border-b border-gray-200 p-2 cursor-pointer"
+                    className="border-b border-gray-200 p-4 cursor-pointer"
                     onClick={() => handleRowClick(user)}
                   >
                     <td className="mx-5">{user.name}</td>
                     <td className="text-center">{user.username}</td>
-                    <td className="text-center">
-                      <button
-                        onClick={() => handleAcceptUser(user.user_id)}
-                        className="text-white px-2 py-1 rounded-md mr-2"
-                      >
-                        <img className="w-5 h-5" src="../check.svg" alt="" />
-                      </button>
-                      <button
-                        onClick={() => handleRejectUser(user.user_id)}
-                        className="text-white px-2 py-1 rounded-md"
-                      >
-                        <img className="w-5 h-5" src="../eks.svg" alt="" />
-                      </button>
+                    <td className="text-center text-[green]">
+                      View
                     </td>
                   </tr>
                 ))}

@@ -11,7 +11,7 @@ function Exam() {
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 3; 
+  const questionsPerPage = 10; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});
@@ -208,10 +208,11 @@ const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   // Calculate the score for the current competency
   const competencyScore = calculateScore(updatedSelectedChoices, competencyId);
   updateCompetencyScore(competencyId, competencyScore);
-  localStorage.setItem('selectedChoices', JSON.stringify(updatedSelectedChoices));
-  saveExamStateToLocalStorage()
 
+  localStorage.setItem('selectedChoices', JSON.stringify(updatedSelectedChoices));
+  saveExamStateToLocalStorage();
 };
+
 
   // Function to calculate the total score for selected questions
   const calculateScore = () => {
@@ -411,11 +412,28 @@ const handleFinishExam = () => {
 };
 
 const nextPage = () => {
-  const nextPage = Math.min(currentPage + 1, totalPages); // Ensure we don't go beyond the last page
-  const nextQuestion = (nextPage - 1) * questionsPerPage;
-  setCurrentQuestion(nextQuestion);
-  saveExamStateToLocalStorage()
-  window.scrollTo(0, 0);
+  // Get the questions on the current page
+  const currentQuestions = filteredQuestions.slice(
+    currentQuestion,
+    currentQuestion + questionsPerPage
+  );
+
+  // Check if all questions on the current page have valid answers
+  const allQuestionsAnswered = currentQuestions.every(
+    (question, index) => selectedChoices[currentQuestion + index] !== undefined
+  );
+
+  if (allQuestionsAnswered) {
+    const nextPage = Math.min(currentPage + 1, totalPages);
+    const nextQuestion = (nextPage - 1) * questionsPerPage;
+    setCurrentQuestion(nextQuestion);
+    saveExamStateToLocalStorage();
+    window.scrollTo(0, 0);
+  } else {
+    // Display a message or take appropriate action indicating that all questions need to be answered
+    alert('Please answer all questions on the current page before proceeding.');
+    // You can also customize the behavior as per your requirements.
+  }
 };
 
 const prevPage = () => {
@@ -426,11 +444,34 @@ const prevPage = () => {
 };
 
 const handlePageClick = (page) => {
-const newPage = Math.max(1, Math.min(page, totalPages)); // Ensure the selected page is within valid bounds
-const newQuestion = (newPage - 1) * questionsPerPage;
-setCurrentQuestion(newQuestion);
-window.scrollTo(0, 0);
+  // Get the questions on the current page
+  const currentQuestions = filteredQuestions.slice(
+    currentQuestion,
+    currentQuestion + questionsPerPage
+  );
+
+  // Check if all questions on the current page have valid answers
+  const allQuestionsAnswered = currentQuestions.every(
+    (question, index) => selectedChoices[currentQuestion + index] !== undefined
+  );
+
+  if (allQuestionsAnswered) {
+    const newPage = Math.max(1, Math.min(page, totalPages)); // Ensure the selected page is within valid bounds
+    const newQuestion = (newPage - 1) * questionsPerPage;
+    setCurrentQuestion(newQuestion);
+    window.scrollTo(0, 0);
+  } else {
+    // Display a message or take appropriate action indicating that all questions need to be answered
+    alert('Please answer all questions on the current page before proceeding.');
+    // You can also customize the behavior as per your requirements.
+  }
 };
+
+const isCurrentPageFullyAnswered = () => {
+  const currentQuestions = filteredQuestions.slice(currentQuestion, currentQuestion + questionsPerPage);
+  return currentQuestions.every((question, index) => selectedChoices[currentQuestion + index] !== undefined);
+};
+
 
 const totalPages = Math.ceil(maxQuestions / questionsPerPage);
   const currentPage = Math.floor(currentQuestion / questionsPerPage) + 1;
@@ -587,16 +628,20 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
         </li>
       ))}
       <li>
-        {currentPage < totalPages && (
-          <button
-            className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
-            onClick={nextPage}
-          >
-            Next
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
-          </button>
-        )}
-      </li>
+  {currentPage < totalPages && (
+    <>
+      {isCurrentPageFullyAnswered() && (
+        <button
+          className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
+          onClick={nextPage}
+        >
+          Next
+          <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
+        </button>
+      )}
+    </>
+  )}
+</li>
             </ul>
           </div>
           </div>

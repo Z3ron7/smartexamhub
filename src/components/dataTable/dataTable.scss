@@ -39,12 +39,5 @@
       width: 500px; /* Add appropriate width for large screens */
     }
 
-    @include xl {
-      /* Adjust styles for extra-large screens (max-width: $xl) */
-    }
-
-    @include xxl {
-      /* Adjust styles for extra-extra-large screens (max-width: $xxl) */
-    }
   }
 }

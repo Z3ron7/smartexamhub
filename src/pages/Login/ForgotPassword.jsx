@@ -22,22 +22,23 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="bg-blue-300  items-center justify-center flex h-screen bg-gradient-to-r from-blue-400 to-indigo-700">
-      <div className="flex justify-center mt-32 w-5/12  h-32 items-center border shadow-lg shadow-black">
-        <div className="flex">
-      <h2>Forgot Password</h2>
-      <p>Enter your username to receive a password reset link.</p>
-      </div>
+    <div className="bg-blue-300 items-center justify-center flex h-screen bg-gradient-to-r from-blue-400 to-indigo-700">
+    <div className="flex flex-col items-center w-5/12 h-64 shadow-lg shadow-black p-4">
+      <h2 className="mb-2 text-2xl font-mono font-semibold">Forgot Password</h2>
+      <p className="mb-4 text-lg font-mono">Enter your username to receive a password reset link.</p>
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        className="mb-3 p-2 w-52 border rounded"
       />
-      <button onClick={handleForgotPassword}>Submit</button>
-      {message && <p>{message}</p>}
+      <button onClick={handleForgotPassword} className="bg-indigo-800 p-2 text-white rounded">
+        Submit
+      </button>
+      {message && <p className="text-m font-mono">{message}</p>}
     </div>
-    </div>
+  </div>
   );
 };
 

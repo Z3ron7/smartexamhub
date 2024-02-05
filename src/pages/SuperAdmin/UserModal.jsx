@@ -29,16 +29,16 @@ function UserModal({ user, onAccept, onReject, onClose }) {
           className="w-full h-32 object-cover mt-4"
         />
         <h2 className="text-xl font-semibold mb-4">{user.name}</h2>
-        <p><strong>Username:</strong> {user.username}</p>
-        <p><strong>Gender:</strong> {user.gender}</p>
-        <p><strong>Status:</strong> {user.status}</p>
-        <p><strong>School ID:</strong> {user.school_id}</p>
+        <p className="p-2"><strong>Gender:</strong> {user.gender}</p>
+        <p className="p-2"><strong>Status:</strong> {user.status}</p>
+        <p className="p-2"><strong>Username:</strong> {user.username}</p>
+        <p className="p-2"><strong>School ID:</strong> {user.school_id}</p>
         <div className="flex justify-end mt-4">
           <button
             onClick={() => onAccept(user.user_id)}
             className="bg-green-500 text-white px-4 py-2 rounded-md mr-2"
           >
-            Accept
+            Send Verification
           </button>
           <button
             onClick={() => onReject(user.user_id)}

@@ -31,13 +31,13 @@ const columns = [
     field: "gender",
     type: "string",
     headerName: "Gender",
-    width: 150,
+    width: 130,
   },
   {
     field: "school_id",
     type: "string",
     headerName: "School ID",
-    width: 150,
+    width: 130,
   },
   {
     field: "username",
@@ -49,7 +49,7 @@ const columns = [
     field: "status",
     type: "string",
     headerName: "Status",
-    width: 150,
+    width: 120,
   },
 ];
 
@@ -62,6 +62,7 @@ const Users = () => {
   const fetchData = () => {
     axios.get("https://smartexam.cyclic.app/users/users")
       .then((response) => {
+        console.log("Data received:", response.data); // Add this line to log the data
         setData(response.data);
         setIsLoading(false);
       })
@@ -70,6 +71,7 @@ const Users = () => {
         setIsLoading(false);
       });
   };
+  
 
   const handleDelete = (user_id) => {
     axios.delete(`https://smartexam.cyclic.app/users/users/${user_id}`)

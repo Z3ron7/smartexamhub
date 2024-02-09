@@ -61,7 +61,7 @@ function VerifyUser() {
           ) : (
             <table className="dark:text-white w-full">
               <thead>
-                <tr className="bg-slate-600 text-white font-semibold">
+                <tr className="bg-slate-600 text-white p-4 font-semibold">
                   <th>Name</th>
                   <th>Email</th>
                   <th className="ml-24">Actions</th>

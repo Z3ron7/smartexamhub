@@ -71,7 +71,7 @@ function VerifyUser() {
                 {unverifiedUsers.map((user) => (
   <tr
     key={user.user_id}
-    className="border-b border-gray-200 p-6 cursor-pointer" // Increase padding to p-6
+    className="border-b border-gray-200 p-4! cursor-pointer" // Increase padding to p-6
     onClick={() => handleRowClick(user)}
   >
     <td className="mx-5">{user.name}</td>

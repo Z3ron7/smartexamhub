@@ -67,14 +67,14 @@ function VerifyUser() {
                   <th className="ml-24">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="p-4">
                 {unverifiedUsers.map((user) => (
                   <tr
                     key={user.user_id}
-                    className="border-b border-gray-200 p-4 cursor-pointer"
+                    className="border-b border-gray-200 p-4 h-7 cursor-pointer"
                     onClick={() => handleRowClick(user)}
                   >
-                    <td className="mx-5">{user.name}</td>
+                    <td className="mx-5 my-3">{user.name}</td>
                     <td className="text-center">{user.username}</td>
                     <td className="text-center text-[green]">
                       View

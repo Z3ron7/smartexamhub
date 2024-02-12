@@ -17,6 +17,7 @@ function Exam() {
   const [competencyScores, setCompetencyScores] = useState({});
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [userExamId, setUserExamId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function shuffleArray(array) {
     const shuffledArray = [...array];
@@ -139,13 +140,11 @@ function Exam() {
           setSelectedChoices(Array(maxQuestions).fill(-1));
         }
 
-        const storedCurrentQuestion = localStorage.getItem('currentQuestion');
-        if (storedCurrentQuestion) {
-          currentQuestion = parseInt(storedCurrentQuestion, 10);
-          setCurrentQuestion(currentQuestion);
-        } else {
-          setCurrentQuestion(0);
-        }
+        // Retrieve currentQuestion from localStorage or set it to 0 if not available
+const storedCurrentQuestion = localStorage.getItem('currentQuestion');
+const initialCurrentQuestion = storedCurrentQuestion ? parseInt(storedCurrentQuestion, 10) : 0;
+setCurrentQuestion(initialCurrentQuestion);
+
   
           const randomizedQuestions = shuffleArray(response.data).slice(0, 500);
           // Process choices
@@ -203,6 +202,8 @@ useEffect(() => {
 const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   const updatedSelectedChoices = [...selectedChoices];
   updatedSelectedChoices[choiceIndex] = choice;
+  console.log('selectedChoices before update:', selectedChoices);
+  console.log('updatedSelectedChoices:', updatedSelectedChoices); // Add this line
   setSelectedChoices(updatedSelectedChoices);
 
   // Calculate the score for the current competency
@@ -211,8 +212,7 @@ const handleChoiceClick = (choiceIndex, choice, competencyId) => {
 
   localStorage.setItem('selectedChoices', JSON.stringify(updatedSelectedChoices));
   saveExamStateToLocalStorage();
-};
-
+}
 
   // Function to calculate the total score for selected questions
   const calculateScore = () => {
@@ -242,7 +242,7 @@ const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   };
   
 
-  const resetGame = () => {
+  const resetExam = () => {
     setSelectedChoices(Array(maxQuestions).fill(-1)); // Reset selected answers
     setScore(0); // Reset the score
     setCurrentQuestion(0);
@@ -288,6 +288,7 @@ const formatTime = (seconds) => {
 const decreaseNum = () => setNum((prev) => prev - 1);
 
 useEffect(() => {
+  setLoading(false);
   if (countdownStarted && selectedTime > 0 && num > 0) {
     intervalRef.current = setInterval(decreaseNum, 1000);
     saveTimerStateToLocalStorage();
@@ -300,9 +301,10 @@ useEffect(() => {
   return () => clearInterval(intervalRef.current);
 }, [countdownStarted, selectedTime, num]);
 
-
+const [initialSelectedTime, setInitialSelectedTime] = useState(0);
 const handleTimeChange = (selectedOption) => {
   setSelectedTime(selectedOption.value);
+  setInitialSelectedTime(selectedOption.value); // Store the initially selected time
   setNum(selectedOption.value * 3600);
   setCountdownStarted(false);
 };
@@ -312,6 +314,7 @@ const saveTimerStateToLocalStorage = () => {
     num,
     selectedTime,
     countdownStarted,
+    elapsedTime: selectedTime * 3600 - num
   };
   localStorage.setItem('timerState', JSON.stringify(timerState));
 };
@@ -324,12 +327,16 @@ useEffect(() => {
     setNum(parsedTimerState.num);
     setSelectedTime(parsedTimerState.selectedTime);
     setCountdownStarted(parsedTimerState.countdownStarted);
+
+    // Calculate remaining time based on elapsed time
+    const remainingTime = parsedTimerState.selectedTime * 3600 - parsedTimerState.elapsedTime;
+    setNum(remainingTime);
   }
 }, []);
 const startExam = async () => {
-  const currentStartTime = new Date();
-
   try {
+    setLoading(true); // Set loading state to true before making the request
+
     // Validate selectedProgram and selectedCompetency
     const programValue = selectedProgram ? selectedProgram.value : null;
     const competencyValue = selectedCompetency ? selectedCompetency.value : null;
@@ -338,6 +345,7 @@ const startExam = async () => {
       // Handle the case where program or competency is not selected
       console.error('Program or competency is not selected.');
       // You can display an error message to the user or handle it as needed.
+      setLoading(false); // Reset the loading state
       return;
     }
 
@@ -350,7 +358,7 @@ const startExam = async () => {
       program: programValue,
       competency: competencyValue,
       duration_minutes: selectedTime * 60, // Convert selectedTime to minutes
-      start_time: currentStartTime,
+      start_time: new Date(), // Use the current time as the start time
     });
 
     // Store the user_exam_id and other relevant data in your frontend state
@@ -358,10 +366,16 @@ const startExam = async () => {
     setCountdownStarted(true);
     saveTimerStateToLocalStorage();
     setNum(selectedTime * 3600); // Set the countdown time in seconds
-    setExamStartTime(currentStartTime);
+    setExamStartTime(new Date()); // Update exam start time to current time
     localStorage.removeItem('examState');
+
+    // Reset the loading state after 2 seconds (simulate loading)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   } catch (error) {
     console.error('Error starting exam:', error);
+    setLoading(false); // Reset the loading state in case of error
   }
 };
 
@@ -369,33 +383,40 @@ const endExam = async () => {
   try {
     const user_exam_id = userExamId;
     const endTime = new Date();
-    // Convert JavaScript Date to DATETIME string in 24-hour format
-const formattedEndTime = `${endTime.getFullYear()}-${(endTime.getMonth() + 1).toString().padStart(2, '0')}-${endTime.getDate().toString().padStart(2, '0')} ${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}:${endTime.getSeconds().toString().padStart(2, '0')}`;
-
     const startTime = examStartTime;
 
     // Calculate the duration in milliseconds
-    const durationMilliseconds = endTime - startTime;
+    let durationMilliseconds = endTime - startTime;
 
-    // Calculate the total duration in minutes (including the interval time)
-    const total_duration_minutes_with_interval = (durationMilliseconds / 60000).toFixed(2);
+    // Handle cases where the duration might be greater due to system delays (e.g., laptop sleep)
+    if (durationMilliseconds < 0) {
+      // If the end time is before the start time, set duration to 0
+      durationMilliseconds = 0;
+    }
 
-    // Send the total duration in the "00h:00m:00s" format
-    const formattedTotalDuration = `${String(Math.floor(total_duration_minutes_with_interval / 60)).padStart(2, '0')}h:${String(
-      Math.floor(total_duration_minutes_with_interval % 60)
-    ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes_with_interval % 1) * 60)).padStart(2, '0')}s`;
+    // Calculate the total duration in minutes
+    let total_duration_minutes = durationMilliseconds / (1000 * 60); // Convert milliseconds to minutes
+
+    // Ensure that the duration does not exceed the initially selected time
+    total_duration_minutes = Math.min(total_duration_minutes, initialSelectedTime * 60);
+
+    // Format the total duration as "00h:00m:00s"
+    const formattedTotalDuration = `${String(Math.floor(total_duration_minutes / 60)).padStart(2, '0')}h:${String(
+      Math.floor(total_duration_minutes % 60)
+    ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes % 1) * 60)).padStart(2, '0')}s`;
 
     const response = await axios.post('https://smartexam.cyclic.app/exams/end-exam', {
-      exam_id: user_exam_id, // Replace with the actual exam ID
-      score: calculateScore(), // Replace with your score calculation logic
-      total_duration_minutes: formattedTotalDuration, // Send the total duration in the "00h:00m:00s" format
-      endTime: formattedEndTime,
+      exam_id: user_exam_id,
+      score: calculateScore(),
+      total_duration_minutes: formattedTotalDuration,
+      endTime: endTime.toISOString(), // Use ISO string format for the end time
     });
+
     localStorage.removeItem('examState');
     localStorage.removeItem('timerState');
     localStorage.removeItem('selectedChoices');
+    
     if (response.status === 200) {
-      // The exam has ended successfully, and you can handle any further actions here.
       console.log('Exam ended successfully');
     }
   } catch (error) {
@@ -403,12 +424,15 @@ const formattedEndTime = `${endTime.getFullYear()}-${(endTime.getMonth() + 1).to
   }
 };
 
-
 const handleFinishExam = () => {
   setShowResults(true);
   setCountdownStarted(false);
   endExam(); // Call the endExam function when the Finish button is clicked
   saveTimerStateToLocalStorage();
+  setTimeout(() => {
+    // Reset the loading state to false after 2 seconds
+    setLoading(false);
+  }, 2000);
 };
 
 const nextPage = () => {
@@ -420,7 +444,7 @@ const nextPage = () => {
 
   // Check if all questions on the current page have valid answers
   const allQuestionsAnswered = currentQuestions.every(
-    (question, index) => selectedChoices[currentQuestion + index] !== undefined
+    (questions, index) => selectedChoices[currentQuestion + index] !== undefined
   );
 
   if (allQuestionsAnswered) {
@@ -527,25 +551,31 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
       </div>
       <div className="flex justify-center items-center w-full sticky top-0 left-0 bg-white dark:bg-transparent text-center">
       {selectedTime > 0 && (
-            <div className="flex items-center dark:text-white dark:bg-slate-900 p-2 border-x-2 border-b-2 rounded-b-lg dark:border-gray-700 border-indigo-700">
-              <div className='text-blue-600 text-lg'>{formatTime(num)}</div>
-              {!countdownStarted ? (
-        !showResults && ( 
-          <button
-            className="ml-3 text-lg h-8 transition flex justify-center items-center ease-in-out rounded-lg px-5 delay-150 bg-indigo-700 hover:-translate-y-2 duration-300 ..."
-            onClick={startExam}
-            disabled={!selectedProgram || !selectedCompetency || !selectedTime}
-          >
-            <span className='text-white font-normal'>Start</span>
-          </button>
-        )
-              ) : (
-                <button className="text-red-700 text-base ml-2" disabled>
-                  Counting Down
-                </button>
-              )}
-            </div>
-          )}
+  <div className='flex items-center dark:text-white dark:bg-slate-900 p-2 border-x-2 border-b-2 rounded-b-lg dark:border-gray-700 border-indigo-700'>
+    <div className='text-blue-600 text-lg'>{formatTime(num)}</div>
+    {!countdownStarted ? (
+      !showResults && (
+        <button
+          className={`ml-3 text-lg h-8 transition flex justify-center items-center ease-in-out rounded-lg px-5 delay-150 ${loading ? 'bg-indigo-700 cursor-not-allowed' : 'bg-indigo-700 hover:-translate-y-2'} duration-300 ...`}
+          onClick={startExam}
+          disabled={loading || !selectedProgram || !selectedCompetency || !selectedTime}
+        >
+          {loading ? (
+            <span className='text-white font-normal'>
+              <div className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+            </span>
+          ) : null}
+          {loading ? '' : 'Start'}
+        </button>
+      )
+    ) : (
+      <button className="text-red-700 text-base ml-2" disabled>
+        Counting Down
+      </button>
+    )}
+  </div>
+)}
+
       </div>
         {countdownStarted && !showResults && (
           <div>
@@ -585,18 +615,18 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
             <div className="container w-full flex justify-end items-end">
   {countdownStarted && (
     <button
-      className="relative rounded justify-center items-center h-10 mr-2 bg-indigo-700 px-3 py-1.5 text-md font-medium text-white flex ease-in-out transition delay-150 hover:-translate-y-2 duration-300 ..."
-      onClick={() => {
-        const confirmSubmit = window.confirm("Are you sure you want to continue?");
-        if (confirmSubmit) {
-          // The user confirmed, you can proceed with the action
-          handleFinishExam();
-        }
-      }}
-      disabled={!countdownStarted}
-    >
-      Submit
-    </button>
+    className="relative rounded justify-center items-center h-10 mr-2 bg-indigo-700 px-3 py-1.5 text-md font-medium text-white flex ease-in-out transition delay-150 hover:-translate-y-2 duration-300 ..."
+    onClick={() => {
+      const confirmSubmit = window.confirm("Are you sure you want to continue?");
+      if (confirmSubmit) {
+        // The user confirmed, you can proceed with the action
+        handleFinishExam();
+      }
+    }}
+    disabled={!countdownStarted}
+  >
+    Submit
+  </button>
   )}
 </div>
           <div className="container flex justify-end header-bg dark:text-white">
@@ -628,19 +658,28 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
         </li>
       ))}
       <li>
-  {currentPage < totalPages && (
-    <>
-      {isCurrentPageFullyAnswered() && (
-        <button
-          className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
-          onClick={nextPage}
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
-        </button>
-      )}
-    </>
-  )}
+      {currentPage < totalPages && (
+  <>
+    {isCurrentPageFullyAnswered() ? (
+      <button
+        className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
+        onClick={nextPage}
+      >
+        Next
+        <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
+      </button>
+    ) : (
+      <button
+        className="relative rounded bg-indigo-400 text-white ml-2 py-2 px-4 flex items-center cursor-not-allowed"
+        disabled
+      >
+        Next
+        <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
+      </button>
+    )}
+  </>
+)}
+
 </li>
             </ul>
           </div>
@@ -650,7 +689,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
         {showResults && <ExamResult 
         filteredQuestions={filteredQuestions} 
         selectedChoices={selectedChoices} 
-        resetGame={resetGame} 
+        resetExam={resetExam} 
         selectedCompetency={selectedCompetency} />}
     </div>
   );

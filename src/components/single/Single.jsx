@@ -95,7 +95,7 @@ const Single = () => {
       <div className="view">
         <div className="info">
           <div className="topInfo">
-            {userData && userData.image && <img src={userData.image} alt="" />}
+            {userData && <img src={userData.image} alt="" />}
           </div>
           <div className="details">
         {userData && (

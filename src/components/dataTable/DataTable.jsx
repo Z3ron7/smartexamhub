@@ -28,7 +28,7 @@ const DataTable = (props) => {
   };
 
     return (
-      <div className="dataTable w-11/12 border-2 border-slate-700"> 
+      <div className="dataTable w-[1250px] border-2 border-slate-700"> 
         <DataGrid
           className="dataGrid dark:bg-slate-900 flex-row-reverse dark:text-white "
           rows={props.rows}

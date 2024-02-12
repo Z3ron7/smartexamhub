@@ -61,7 +61,7 @@ function VerifyUser() {
           ) : (
             <table className="dark:text-white w-full">
               <thead>
-                <tr className="bg-slate-600 text-white font-semibold">
+                <tr className="bg-slate-600 text-white p-4 font-semibold">
                   <th>Name</th>
                   <th>Email</th>
                   <th className="ml-24">Actions</th>
@@ -69,18 +69,19 @@ function VerifyUser() {
               </thead>
               <tbody className="p-4">
                 {unverifiedUsers.map((user) => (
-                  <tr
-                    key={user.user_id}
-                    className="border-b border-gray-200 p-4 h-7 cursor-pointer"
-                    onClick={() => handleRowClick(user)}
-                  >
-                    <td className="mx-5 my-3">{user.name}</td>
-                    <td className="text-center">{user.username}</td>
-                    <td className="text-center text-[green]">
-                      View
-                    </td>
-                  </tr>
-                ))}
+  <tr
+    key={user.user_id}
+    className="border-b border-gray-200 p-4! cursor-pointer" // Increase padding to p-6
+    onClick={() => handleRowClick(user)}
+  >
+    <td className="mx-5">{user.name}</td>
+    <td className="text-center">{user.username}</td>
+    <td className="text-center text-[green]">
+      View
+    </td>
+  </tr>
+))}
+
               </tbody>
             </table>
           )}

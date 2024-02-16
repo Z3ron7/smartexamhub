@@ -12,6 +12,7 @@ import ViewRoom from './pages/SuperAdmin/ViewRoom';
 import ExamResult from './pages/SuperAdmin/ExamResult';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
+import VerifyUser from './pages/SuperAdmin/VerifiyUser'; 
 //Admin----------------------------------
 import ProfileA from './pages/Admin/Profile'
 import Layout from './components/Layout';
@@ -44,7 +45,6 @@ import ResetPassword from './pages/Login/ResetPassword'
 import VerificationLink from './pages/VerificationLink';
 import VerificationComplete from './pages/VerificationComplete';
 import VerificationMessage from './pages/Login/VerificationMessage'; 
-import VerifyUser from './components/VerifiyUser'; 
 
 
 function App() {

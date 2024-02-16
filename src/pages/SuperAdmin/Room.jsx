@@ -84,14 +84,14 @@ const Room = () => {
     5: 'CO',
     6: 'Groupwork',
   };
-  const timer = {
-    0: '0',
-    1: '1 hour',
-    2: '2 hours',
-    3: '3 hours',
-    4: '4 hours',
-    5: '5 hours'
-   };
+  const timer = [
+    {value: 0.5, label: '30 minutes'},
+    {value:1, label: '1 hour'},
+    {value:2, label: '2 hours'},
+    {value:3, label: '3 hours'},
+    {value:4, label: '4 hours'},
+    {value:5, label: '5 hours'},
+  ];
   return (
     <div className="h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-1 gap-4">
@@ -120,11 +120,12 @@ const Room = () => {
               </h2>
             </div>
             <div className="flex justify-start ml-2">
-              <label className='mr-2 dark:text-white text-sm'>Time limit:</label>
-              <h2 className="text-blue-600 text-[15px] font-bold">
-              {timer[room.duration_minutes] || 'No countdown'}
-              </h2>
-            </div>
+  <label className='mr-2 dark:text-white text-sm'>Time limit:</label>
+  <h2 className="text-blue-600 text-[15px] font-bold">
+    {timer.find(item => item.value === room.duration_minutes)?.label || 'No countdown'}
+  </h2>
+</div>
+
             <div className="flex justify-start ml-2">
               <label className='mr-2 dark:text-white text-sm'>Category:</label>
               <h2 className="text-blue-600 text-[15px] font-bold">

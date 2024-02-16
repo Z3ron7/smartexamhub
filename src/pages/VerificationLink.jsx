@@ -1,6 +1,6 @@
 // VerificationLink.js
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const VerificationLink = () => {
@@ -31,12 +31,14 @@ const VerificationLink = () => {
   }, [userId, otp, navigate]);
 
   return (
-    <div>
-      <p>You are now verified. You can now login.</p>
+      <div className="flex flex-col h-screen justify-center items-center">
+      <p className="text-4xl font-mono mb-8">Verify your account.</p>
       {/* Add a button to navigate to VerificationComplete.jsx */}
-      <button onClick={() => navigate('/verification-complete')}>
-        Verify
-      </button>
+      <Link to="/verification-complete">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Verify
+        </button>
+      </Link>
     </div>
   );
 };

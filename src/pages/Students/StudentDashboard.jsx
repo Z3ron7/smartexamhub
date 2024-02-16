@@ -33,9 +33,9 @@ const StudentDashboard = () => {
       if (examScores.length === 0) {
         return (
           <div className='flex justify-center items-center mt-36'>
-<div className='basis-[53%] border-2 border-slate-700 justify-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 mb-4 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
+<div className='basis-[53%] border-2 border-slate-700 justify-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                        <h2 className='text-[#4e73df] text-[16px] font-bold '>Recent Exam chart</h2>
+                        <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
                     </div>
                     
 <div className='border p-4 justify-center'>
@@ -147,8 +147,8 @@ const StudentDashboard = () => {
     return (
         <div key={index} className='dash'>
             <div className='flex flex-col md:flex-row md:gap-6 mt-[22px] w-full'>
-            <div className='basis-[53%] border-2 border-slate-700 bg-white shadow-md rounded-[4px] dark:bg-slate-900 mb-4 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
-                    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED] mb-[20px]'>
+            <div className='basis-[53%] border-2 border-slate-700 bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
+                    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />
                     </div>
@@ -175,7 +175,7 @@ const StudentDashboard = () => {
                         </ResponsiveContainer>
                     </div>
                 </div>
-                <div className='basis-[43%] w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900'>
+                <div className='basis-[43%] w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] lg:mb-0 lg:mr-4 dark:bg-slate-900'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />

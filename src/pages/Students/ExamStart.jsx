@@ -5,7 +5,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Select from 'react-select';
 import ExamResult from './ExamResult'
 
-function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, setSelectedProgram, selectedTime, setSelectedTime, countdownStarted, setCountdownStarted, num, setNum, examStartTime, handleTimeChange, formatTime}) {
+function ExamStart({setUserExamId, userExamId, selectedCompetency, setSelectedCompetency, selectedProgram, setSelectedProgram, selectedTime, setSelectedTime, initialSelectedTime, countdownStarted, setCountdownStarted, num, setNum, examStartTime, handleTimeChange, formatTime}) {
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [maxQuestions, setMaxQuestions] = useState(null);
@@ -14,7 +14,6 @@ function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, 
   const questionsPerPage = 3; // Adjust the number of questions per page
   const [competencyScores, setCompetencyScores] = useState({});
   const [filteredQuestions, setFilteredQuestions] = useState([]);
-  const [userExamId, setUserExamId] = useState(null);
 
   function shuffleArray(array) {
     const shuffledArray = [...array];
@@ -69,7 +68,7 @@ function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, 
               // Fetch questions for each competency and merge the results
               for (const competency of competencies) {
                 const competencyResponse = await axios.get(
-                  `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${competency}`
+                  `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
                 );
   
                 // Limit to maxQuestionsPerCategory questions per category
@@ -106,7 +105,7 @@ function ExamStart({selectedCompetency, setSelectedCompetency, selectedProgram, 
             } else {
               // Fetch questions for the selected competency
               response = await axios.get(
-                `https://smartexam.cyclic.app/questions/refresh?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
+                `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`
               );
   
               // Limit to maxQuestionsPerCategory questions for the selected category
@@ -175,6 +174,7 @@ const saveExamStateToLocalStorage = () => {
     currentQuestion: currentQuestion,
     score,
     userExamId,
+    examStartTime,
     selectedProgram,
     selectedCompetency,
     maxQuestions: maxQuestions,
@@ -228,29 +228,12 @@ const calculateScore = () => {
 
         scoresByCompetency[competencyId]++;
       }
-    } else if (selectedChoice && !selectedChoice.isCorrect) {
-      // If the choice is incorrect, reduce the score of the associated competency
-      if (question.competency_id) {
-        const competencyId = question.competency_id;
-        if (!scoresByCompetency[competencyId]) {
-          scoresByCompetency[competencyId] = 0;
-        }
-      }
     }
   });
 
-  // Handle the case when "All Competency" is selected
-  if (selectedCompetency && selectedCompetency.value === "All Competency") {
-    // Add all competencies with a score of 0
-    for (const competencyId in competencyOptions) {
-      if (!scoresByCompetency[competencyId]) {
-        scoresByCompetency[competencyId] = 0;
-      }
-    }
-  }
-
-  return scoresByCompetency;
+  return JSON.stringify(scoresByCompetency); 
 };
+
 const competencyIdToValue = {
   1: 'SWWPS',
   2: 'Casework',
@@ -260,7 +243,7 @@ const competencyIdToValue = {
   // Add other competency IDs and values here
 };
 
-  const resetGame = () => {
+  const resetExam = () => {
     setSelectedChoices(Array(maxQuestions).fill(-1)); // Reset selected answers
     setScore(0); // Reset the score
     setCurrentQuestion(0);
@@ -334,10 +317,10 @@ const formattedEndTime = `${endTime.getFullYear()}-${(endTime.getMonth() + 1).to
     ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes_with_interval % 1) * 60)).padStart(2, '0')}s`;
 
     const response = await axios.post('https://smartexam.cyclic.app/exam-room/end-exam-room', {
-      exam_id: user_exam_id, // Replace with the actual exam ID
+      exam_room_id: user_exam_id, // Replace with the actual exam ID
       score: calculateScore(), // Replace with your score calculation logic
       total_duration_minutes: formattedTotalDuration, // Send the total duration in the "00h:00m:00s" format
-      endTime: formattedEndTime,
+      end_time: formattedEndTime,
     });
     localStorage.removeItem('examState');
     localStorage.removeItem('timerState');
@@ -545,10 +528,10 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
           </div>
         </div>
         )}
-        {showResults && <ExamResult 
+        {showResults && <ExamResult    
         filteredQuestions={filteredQuestions} 
         selectedChoices={selectedChoices} 
-        resetGame={resetGame} 
+        resetExam={resetExam} 
         selectedCompetency={selectedCompetency} />}
     </div>
   );

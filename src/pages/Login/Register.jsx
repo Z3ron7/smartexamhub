@@ -79,7 +79,7 @@ export default function Register() {
         setRegistrationStatus("success");
         setAlertMessage("Registration successful! Redirecting to the login page...");
         setTimeout(() => {
-          navigate("/Log-in");
+          navigate("/verification-message");
         }, 2000);
       } else if (response.data.Error === "Username already exists") {
         setRegistrationStatus("error");

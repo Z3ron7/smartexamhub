@@ -128,12 +128,13 @@ const startExam = async () => {
         duration_minutes: selectedTime * 60, // Convert selectedTime to minutes
         start_time: currentStartTime,
       });
+      console.log('examId', response.data.user_exam_id)
       console.log('ss', programValue)
       // Store the user_exam_id and other relevant data in your frontend state
       setUserExamId(response.data.user_exam_id);
       setCountdownStarted(true);
       setNum(selectedTime * 3600); // Set the countdown time in seconds
-      setExamStartTime(currentStartTime);
+      setExamStartTime(new Date());
       setShowExam(true);
       setTimeout(() => {
         // Reset the loading state to false after 2 seconds
@@ -172,9 +173,10 @@ useEffect(() => {
   return () => clearInterval(intervalRef.current);
 }, [countdownStarted, selectedTime, num]);
 
-
+const [initialSelectedTime, setInitialSelectedTime] = useState(0);
 const handleTimeChange = (selectedOption) => {
   setSelectedTime(selectedOption.value);
+  setInitialSelectedTime(selectedOption.value); // Store the initially selected time
   setNum(selectedOption.value * 3600);
   setCountdownStarted(false);
 };
@@ -188,7 +190,6 @@ return (
     <div className="flex flex-row items-center dark:text-white">
       <p className="mr-2 font-bold">Room:</p>
       <h1 className="mr-2">{selectedRoom.room_name}</h1>
-      <p className="mr-2">This is room</p>
     </div>
 
     <div className="flex flex-row dark:text-white">
@@ -198,7 +199,7 @@ return (
 
     <div className="flex flex-row items-center dark:text-white">
       <p className="mr-2 font-bold">Expiry Date:</p>
-      <h2 className="mr-2">{selectedRoom.expiry_date}</h2>
+      <h2 className="mr-2">{selectedRoom.expiry_date.split('T')[0]}</h2>
     </div>
   </>
 ) : (
@@ -215,6 +216,7 @@ return (
                   value={selectedProgram}
                   onChange={(selectedOption) => setSelectedProgram(selectedOption)}
                   options={programOptions}
+                  isDisabled={true}
                 />
               </div>
   
@@ -226,6 +228,7 @@ return (
                   value={selectedCompetency}
                   onChange={(selectedOption) => setSelectedCompetency(selectedOption)}
                   options={competencyOptions}
+                  isDisabled={true}
                 />
               </div>
   
@@ -235,6 +238,7 @@ return (
                   value={countdownOptions.find(option => option.value === selectedTime)}
                   onChange={handleTimeChange}
                   placeholder="Select Time"
+                  isDisabled={true}
                 />
               </div>
             </div>
@@ -263,6 +267,7 @@ return (
           selectedCompetency={selectedCompetency}
           setSelectedCompetency={setSelectedCompetency}
           selectedTime={selectedTime}
+          initialSelectedTime={initialSelectedTime}
           setSelectedTime={setSelectedTime}
           examStartTime={examStartTime}
           countdownStarted={countdownStarted}

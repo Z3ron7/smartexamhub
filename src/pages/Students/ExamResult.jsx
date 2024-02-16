@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom'
 
-const ExamResult = ({ filteredQuestions, selectedChoices, resetGame, selectedCompetency }) => {
+const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCompetency }) => {
   // State for selectedCompetency
   const [localSelectedCompetency, setLocalSelectedCompetency] = useState('All Competency');
 
@@ -71,18 +71,11 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetGame, selectedCom
   </span>
 </h2>
 
-      <div className='flex justify-between'> 
-      <button
-        className="bg-indigo-700 hover-bg-indigo-600 text-white py-2 px-4 mb-3 rounded"
-        onClick={resetGame}
-      >
-        Go back
-      </button>
+      <div className='flex justify-start'> 
       <Link to="/exam/analytics">
-      <button
         className="bg-indigo-700 hover-bg-indigo-600 text-white py-2 px-4 mb-3 rounded"
-      >View Analytics
-      </button>
+      >
+        View Analytics
       </Link>
       </div>
       </div>

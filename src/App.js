@@ -12,7 +12,6 @@ import ViewRoom from './pages/SuperAdmin/ViewRoom';
 import ExamResult from './pages/SuperAdmin/ExamResult';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
-import VerifyUser from './pages/SuperAdmin/VerifyUser'; 
 //Admin----------------------------------
 import ProfileA from './pages/Admin/Profile'
 import Layout from './components/Layout';
@@ -81,7 +80,6 @@ function App() {
         <Route path="/verify/:userId/:otp" element={<VerificationLink />} />
         <Route path="/verification-complete" element={<VerificationComplete />} /> 
         <Route path="/verification-message" element={<VerificationMessage />} /> 
-        <Route path="/send-verification/:userId" element={<VerifyUser />} /> 
 
         {/* Routes for super admin */}
         <Route

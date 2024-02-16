@@ -12,7 +12,7 @@ import ViewRoom from './pages/SuperAdmin/ViewRoom';
 import ExamResult from './pages/SuperAdmin/ExamResult';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
-import VerifyUser from './pages/SuperAdmin/VerifiyUser'; 
+import VerifyUser from './pages/SuperAdmin/VerifyUser'; 
 //Admin----------------------------------
 import ProfileA from './pages/Admin/Profile'
 import Layout from './components/Layout';

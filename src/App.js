@@ -43,7 +43,8 @@ import ForgotPassword from './pages/Login/ForgotPassword'
 import ResetPassword from './pages/Login/ResetPassword'
 import VerificationLink from './pages/VerificationLink';
 import VerificationComplete from './pages/VerificationComplete';
-import VerificationMessage from './pages/Login/VerificationMessage';
+import VerificationMessage from './pages/Login/VerificationMessage'; 
+import VerifyUser from './components/VerifiyUser'; 
 
 
 function App() {
@@ -80,6 +81,7 @@ function App() {
         <Route path="/verify/:userId/:otp" element={<VerificationLink />} />
         <Route path="/verification-complete" element={<VerificationComplete />} /> 
         <Route path="/verification-message" element={<VerificationMessage />} /> 
+        <Route path="/send-verification/:userId" element={<VerifyUser />} /> 
 
         {/* Routes for super admin */}
         <Route

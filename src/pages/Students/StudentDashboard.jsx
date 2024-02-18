@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, } from 'recharts';
 import PieComponent from './StudentPie';
 // import { Progress } from 'antd';
-import error from "../../assets/images/error.png"
+import error from "../../assets/images/loading-search-animation.gif"
 import './studentDashboard.scss';
 import axios from 'axios';
 
@@ -32,28 +32,31 @@ const StudentDashboard = () => {
       console.log("mappe", examScores)
       if (examScores.length === 0) {
         return (
-          <div className='flex justify-center items-center mt-36'>
-<div className='basis-[53%] border-2 border-slate-700 justify-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
-                    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                        <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
-                    </div>
-                    
-<div className='border p-4 justify-center'>
-  <img src={error} alt='' className='flex justify-center scale-[135%]' />
-  <p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
+          <div className='flex flex-col md:flex-row md:gap-6 justify-center items-center mt-36'>
+  <div className='basis-[53%] border-2 w-96 border-slate-700 justify-center items-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4 sm:mb-4 md:mb-0'>
+    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
+      <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
+    </div>
+    <div className='border p-4 justify-center items-center'>
+      <div className='flex justify-center'> {/* Add flex justify-center to center the image */}
+        <img src={error} alt='' className='w-44  h-32' /> {/* Remove 'flex' class from here */}
+      </div>
+      <p className='mt-[15px] text-center justify-center text-semibold text-gray-500'>No Exam data...</p>
+    </div>
+  </div>
+  <div className='basis-[43%] justify-center items-center w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] md:w-80 h-4/5 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
+    <div className='bg-[#F8F9FC] items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
+      <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
+    </div>
+    <div className='border p-4 justify-center items-center'>
+      <div className='flex justify-center'> {/* Add flex justify-center to center the image */}
+        <img src={error} alt='' className=' w-44 h-32 ' /> {/* Remove 'flex' class from here */}
+      </div>
+      <p className='mt-[15px] text-center justify-center text-semibold text-gray-500'>No Exam data...</p>
+    </div>
+  </div>
 </div>
-                </div>
-                <div className='basis-[43%] justify-center items-center w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] md:w-80 h-4/5 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
-                    <div className='bg-[#F8F9FC] items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                        <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
-                    </div>
-                    
-<div className='border p-4 justify-center items-center'>
-  <img src={error} alt='' className='justify-center scale-[135%]' />
-  <p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
-</div>
-                </div>
-</div>
+
         );
       }
       return examScores.map((exam, index) => {

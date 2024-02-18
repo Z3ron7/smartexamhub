@@ -3,9 +3,11 @@ import { FaListAlt } from 'react-icons/fa';
 import axios from 'axios';
 import ExamRoom from './ExamRoom';
 import { useNavigate } from 'react-router-dom';
+import noDataImage from "../../assets/images/error.png"
 
 const Room = () => {
   const [roomData, setRoomData] = useState([]);
+  const [roomsAvailable, setRoomsAvailable] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,11 +15,15 @@ const Room = () => {
     axios.get('https://smartexam.cyclic.app/room/rooms')
       .then((response) => {
         setRoomData(response.data.rooms);
+        if (response.data.rooms.length === 0) {
+          setRoomsAvailable(false);
+        }
       })
       .catch((error) => {
         console.error('Error fetching rooms:', error);
       });
   }, []);
+  
   const isRoomExpiredOrDone = (room) => {
     const currentTimestamp = new Date().getTime();
     const expiryTimestamp = new Date(room.expiry_date).getTime();
@@ -50,8 +56,8 @@ const Room = () => {
    5: '5 hours'
   };
   return (
-    <div>
-        <>
+    <div className="overflow-auto">
+        {roomsAvailable ? (
           <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-1 gap-4">
             {roomData.map((room, roomIndex) => (
               <div
@@ -93,13 +99,18 @@ const Room = () => {
               <label className='mr-2 dark:text-white text-sm'>Status:</label>
               <h2 className={`text-${isRoomExpiredOrDone(room) ? 'red-500' : 'blue-600'} text-[15px] font-bold`}>
   {isRoomExpiredOrDone(room) ? 'Expired' : 'Active'}
-</h2>
+  </h2>
             </div>
                 </div>
               </div>
             ))}
           </div>
-        </>
+        ) : (
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-lg font-bold mb-4">There are no rooms created.</p>
+            <img src={noDataImage} alt="No data" />
+          </div>
+        )}
     </div>
   );
 };

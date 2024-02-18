@@ -32,7 +32,7 @@ const VerificationLink = () => {
 
   return (
       <div className="flex flex-col h-screen justify-center items-center">
-      <p className="text-4xl font-mono mb-8">Verify your account.</p>
+      <p className="text-4xl font-mono mb-8">Click verify button to verify your account.</p>
       {/* Add a button to navigate to VerificationComplete.jsx */}
       <Link to="/verification-complete">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

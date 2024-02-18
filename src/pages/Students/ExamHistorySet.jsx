@@ -3,7 +3,7 @@ import { FaEllipsisV } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import AccordionLayout from '../../components/accordion/AccordionLayout'
-import error from "../../assets/images/error.png"
+import error from "../../assets/images/loading-search-animation.gif"
 
 // Define a function to get text color based on competency level
 function getColorForLevel(level) {
@@ -72,9 +72,9 @@ if (examScores.length === 0) {
     <div className='flex justify-center items-center mt-36'>
 
               
-<div className='border p-4 justify-center items-center'>
-<img src={error} alt='' className='justify-center scale-[135%]' />
-<p className='mt-[15px] text-center text-semibold text-gray-500'>No Exam data...</p>
+<div className='p-4 justify-center items-center'>
+<img src={error} alt='' className='justify-center w-44 h-36 scale-[135%]' />
+<p className='mt-[22px] text-lg text-center font-mono text-semibold text-gray-500'>No Exam data...</p>
 </div>
 </div>
 </div>

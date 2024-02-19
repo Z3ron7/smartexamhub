@@ -72,7 +72,7 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCom
 </h2>
 
       <div className='flex justify-start'> 
-      <Link to="/exam/analytics">
+      <Link to="/exam/analytics"
         className="bg-indigo-700 hover-bg-indigo-600 text-white py-2 px-4 mb-3 rounded"
       >
         View Analytics

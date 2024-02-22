@@ -82,9 +82,9 @@ const Dashboard = () => {
                 </div>
 
             </div>
-            <div className='flex flex-col md:flex-row md:gap-6 mt-[16px] w-full'>
-            <div className='basis-[54%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
-                    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED] mb-[20px]'>
+            <div className='flex flex-col md:flex-row md:gap-3 mt-[16px] w-full'>
+            <div className='basis-[50%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
+                    <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Pending Request</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />
                     </div>
@@ -92,7 +92,7 @@ const Dashboard = () => {
                     <VerifyUser />
 
                 </div>
-                <div className='basis-[43%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900'>
+                <div className='basis-[50%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Recent Exam Rankings</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />

@@ -48,34 +48,34 @@ function VerifyUser() {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="w-full p-4 mb-2">
+    <div className="flex items-center justify-center font-mono">
+      <div className="w-full p-2 mb-2">
         <div className="max-h-96 overflow-y-auto">
           {unverifiedUsers.length === 0 ? (
             <div className="text-center">
               <img src={error} alt="" className="scale-[135%]" />
-              <p className="mt-[15px] text-center text-semibold text-gray-500">
+              <p className="mt-[15px] text-center font-mono text-semibold text-gray-500">
                 Searching...
               </p>
             </div>
           ) : (
             <table className="dark:text-white w-full">
-              <thead>
-                <tr className="bg-slate-600 text-white p-4 font-semibold">
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th className="ml-24">Actions</th>
+              <thead className=''>
+                <tr className="bg-slate-600 text-white font-mono font-semibold">
+                  <th className='flex items-start justify-start p-2 mx-4'>Name</th>
+                  <th className=''>Email</th>
+                  <th className="">Actions</th>
                 </tr>
               </thead>
               <tbody className="p-4">
                 {unverifiedUsers.map((user) => (
   <tr
     key={user.user_id}
-    className="border-b border-gray-200 p-4! cursor-pointer" // Increase padding to p-6
+    className="border-b border-gray-200 p-5 cursor-pointer" // Increase padding to p-6
     onClick={() => handleRowClick(user)}
   >
-    <td className="mx-5">{user.name}</td>
-    <td className="text-center">{user.username}</td>
+    <td className="flex mx-0 p-3">{user.name}</td>
+    <td className="text-center p-3">{user.username}</td>
     <td className="text-center text-[green]">
       View
     </td>

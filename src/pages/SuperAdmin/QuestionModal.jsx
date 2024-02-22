@@ -15,7 +15,7 @@ import Select from 'react-select';
     { value: 'Groupwork', label: 'Groupwork' },
   ];
 
-const QuestionModal = ({isOpen, onClose}) => {
+const QuestionModal = ({isOpen, onClose, fetchDataFromBackend, fetchData}) => {
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Bachelor of Science in Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [questionText, setQuestionText] = useState('');
@@ -64,6 +64,8 @@ const QuestionModal = ({isOpen, onClose}) => {
         setAlertMessage('Question created successfully');
         setQuestionText('');
         setChoiceText([{ choiceText: '', isCorrect: false }]);
+        fetchDataFromBackend()
+        fetchData()
       })
       .catch((error) => {
         console.error('Error creating question:', error);

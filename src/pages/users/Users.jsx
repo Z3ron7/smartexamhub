@@ -96,7 +96,7 @@ const Users = () => {
   return (
     <div className="users">
       <div className="flex justify-center info">
-        <h1 className="dark:text-white flex justify-center font-bold text-3xl">USER'S</h1>
+        <h1 className="dark:text-white flex justify-center font-bold text-3xl">USERS</h1>
         <div className="flex items-end marker:justify-end">
           
         </div>

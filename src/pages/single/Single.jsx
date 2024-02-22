@@ -28,20 +28,23 @@ function getTimeAgo(time) {
 
   if (timeDiffInMilliseconds < minute) {
     const seconds = Math.floor(timeDiffInMilliseconds / 1000);
-    return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+    return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
   } else if (timeDiffInMilliseconds < hour) {
     const minutes = Math.floor(timeDiffInMilliseconds / minute);
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
   } else if (timeDiffInMilliseconds < day) {
     const hours = Math.floor(timeDiffInMilliseconds / hour);
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
   } else if (timeDiffInMilliseconds < week) {
     const days = Math.floor(timeDiffInMilliseconds / day);
-    return `${days} day${days > 1 ? 's' : ''} ago`;
+    return `${days} day${days !== 1 ? 's' : ''} ago`;
   } else if (timeDiffInMilliseconds < month) {
     const weeks = Math.floor(timeDiffInMilliseconds / week);
-    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+    return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
   }
+
+  // For more than a month, return the full date
+  return activityTime.toDateString();
 }
 
 const competencyMap = {
@@ -79,7 +82,10 @@ const Single = () => {
     async function fetchLatestActivities() {
       try {
         const response = await axios.get(`https://smartexam.cyclic.app/users/fetch-latest/${user_id}`);
-        setLatestActivities(response.data.latestActivities);
+        setLatestActivities(response.data.latestActivities.map(activity => ({
+          ...activity,
+          score: Object.values(JSON.parse(activity.score)).reduce((acc, cur) => acc + cur, 0)
+        })));
         console.log("latest", response.data.latestActivities)
       } catch (error) {
         console.error('Error fetching latest activities:', error);
@@ -88,7 +94,7 @@ const Single = () => {
 
     fetchLatestActivities();
   }, [user_id]);
-      const imageUrl = userData.image || "/noavatar.png";
+  const imageUrl = userData ? userData.image || "/noavatar.png" : "/noavatar.png";
 
   return (
     <div className="single">
@@ -165,7 +171,7 @@ const Single = () => {
       {latestActivities.map((activity, index) => (
         <li key={index}>
           <div>
-          <p>{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
+          <p>{`Took the exam with a category of ${competencyMap[activity.competency_id]} and a score of ${activity.score}`}</p>
             <time>{getTimeAgo(activity.end_time)}</time>
           </div>
         </li>

@@ -213,7 +213,7 @@ const competencyMap = {
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
-        <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 mb-4 border-b-2 rounded-lg shadow-md">
+        <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 p-2 mb-4 border-b-2 rounded-lg shadow-md">
           <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Name</div>
           <div className="sm:w-20 lg:w-28 lg:pl-14 lg:font-semibold md:text-sm text-sm">Avatar</div>
           <div className="w-1/4 text-sm md:text-sm lg:pl-16 lg:font-semibold">Room Name</div>

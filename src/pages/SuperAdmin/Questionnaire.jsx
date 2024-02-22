@@ -127,7 +127,7 @@ const fetchDataFromBackend = async () => {
 useEffect(() => {
   fetchDataFromBackend();
   fetchData();
-}, [searchQuery, selectedProgram, selectedCompetency]);
+}, [selectedProgram, selectedCompetency]);
 
 const handleEditQuestion = (updatedQuestion) => {
   // Update the state with the updated question
@@ -208,7 +208,10 @@ const handleEditQuestion = (updatedQuestion) => {
 
   <div className="flex flex-col w-full lg:grid lg:grid-rows-2 lg:grid-cols-1 text-center py-2 text-lg font-semibold dark:text-white space-x-4">
   <div className="flex items-center justify-between w-full">
-  <form className="group flex-1 mb-3 mr-3 relative">
+  <form className="group flex-1 mb-3 mr-3 relative" onSubmit={(e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    fetchData(); // Fetch data based on selected program, competency, and search query
+  }}>
   <svg
     width="20"
     height="20"
@@ -223,13 +226,22 @@ const handleEditQuestion = (updatedQuestion) => {
     />
   </svg>
   <input
-          className="focus:ring-2 focus:ring-blue-500 w-full focus:outline-none appearance-none lg:w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
-          type="text"
-          aria-label="Filter questions"
-          placeholder="Search question and choices..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as the user types
-        />
+    className="focus:ring-2 focus:ring-blue-500 w-full focus:outline-none appearance-none lg:w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 pr-14 ring-1 ring-slate-200 shadow-sm"
+    type="text"
+    aria-label="Filter questions"
+    placeholder="Search question and choices..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as the user types
+  />
+  <button 
+      className="absolute inset-y-0 right-0 bg-indigo-700 hover:bg-indigo-600 w-32 justify-center items-center text-sm text-center mb-3 text-white h-10 py-2 px-4 rounded"
+    // Add onClick event to handle search
+    onClick={() => {
+      fetchData(); // Fetch data based on selected program, competency, and search query
+    }}
+  >
+    Search
+  </button>
 </form>
 
     <button

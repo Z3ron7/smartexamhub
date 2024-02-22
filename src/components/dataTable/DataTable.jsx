@@ -19,9 +19,14 @@ const DataTable = (props) => {
           <Link to={`/users/${params.row.user_id}`}>
             <img src="/view1.svg" alt="" />
           </Link>
-          <div className="delete" onClick={() => props.handleDelete(params.row.user_id)}>
-              <img src="/delete.svg" alt="" />
-          </div>
+          <div className="delete" onClick={() => {
+  if (window.confirm('Are you sure you want to delete this user?')) {
+    props.handleDelete(params.row.user_id);
+  }
+}}>
+  <img src="/delete.svg" alt="" />
+</div>
+
         </div>
       );
     },

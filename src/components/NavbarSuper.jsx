@@ -84,7 +84,7 @@ const NavbarSuper = () => {
           )}
 
           {open && (
-            <div className="bg-white border h-[90px] w-[150px] absolute bottom-[-135px] z-20 right-0 pt-[15px] pl-[15px] space-y-[10px]">
+            <div className="bg-white border h-[100px] w-[150px] absolute bottom-[-115px] z-20 right-0 pt-[15px] pl-[15px] space-y-[10px]">
               <Link to="/profile">
               <p className="cursor-pointer hover:text-[blue] font-semibold">
                 Profile

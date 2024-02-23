@@ -11,7 +11,7 @@ function Exam() {
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 1; 
+  const questionsPerPage = 10; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});

@@ -20,7 +20,7 @@ const SidebarSuper = () => {
     { title: 'Questionnaire', path: '/questionnaire', src: <RiQuestionnaireFill /> },
     { title: 'Room', path: '/room', src: <SiGoogleclassroom /> },
     { title: 'Exam Result', path: '/exam-result', src: <BsCardList /> },
-    { title: 'Admin', path: '/add-admin', src: <RiAdminFill /> },
+    // { title: 'Admin', path: '/add-admin', src: <RiAdminFill /> },
     // { title: 'Signin', path: '/login', src: <SiFuturelearn />, gap: 'true' },
   ]
 

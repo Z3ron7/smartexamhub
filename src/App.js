@@ -7,7 +7,7 @@ import LayoutSuper from './components/LayoutSuper';
 import RoomSuper from './pages/SuperAdmin/Room';
 import DashboardSuper from './pages/SuperAdmin/Dashboard'
 import QuestionnaireSuper from './pages/SuperAdmin/Questionnaire'
-import RegisterAdmin from './pages/SuperAdmin/RegisterAdmin';
+// import RegisterAdmin from './pages/SuperAdmin/RegisterAdmin';
 import ViewRoom from './pages/SuperAdmin/ViewRoom';
 import ExamResult from './pages/SuperAdmin/ExamResult';
 import Users from './pages/users/Users';
@@ -148,7 +148,7 @@ function App() {
             />
           }
         />
-        <Route
+        {/* <Route
           path="/add-admin"
           element={
             <ProtectedRoute
@@ -158,7 +158,7 @@ function App() {
               userRole={userRole}
             />
           }
-        />
+        /> */}
         <Route
           path="/room/view-room/:room_id"
           element={

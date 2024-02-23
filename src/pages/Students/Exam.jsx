@@ -11,7 +11,7 @@ function Exam() {
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 10; 
+  const questionsPerPage = 1; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});
@@ -145,15 +145,17 @@ const storedCurrentQuestion = localStorage.getItem('currentQuestion');
 const initialCurrentQuestion = storedCurrentQuestion ? parseInt(storedCurrentQuestion, 10) : 0;
 setCurrentQuestion(initialCurrentQuestion);
 
-  
-          const randomizedQuestions = shuffleArray(response.data).slice(0, 500);
-          // Process choices
-          const processedQuestions = shuffleArrayWithCorrectChoice(randomizedQuestions);
-  
-          setFilteredQuestions(processedQuestions);
-          setMaxQuestions(maxQuestions); // Set the total questions count
-          console.log('filteredQuestions:', response.data);
-          console.log('selectedCompetencyId', selectedCompetency.value);
+          if (!countdownStarted) {
+            // Shuffle data only if countdown has not started
+            const randomizedQuestions = shuffleArray(response.data).slice(0, 500);
+            // Process choices
+            const processedQuestions = shuffleArrayWithCorrectChoice(randomizedQuestions);
+
+            setFilteredQuestions(processedQuestions);
+            setMaxQuestions(maxQuestions); // Set the total questions count
+            console.log('filteredQuestions:', response.data);
+            console.log('selectedCompetencyId', selectedCompetency.value);
+          }
         }
       } catch (error) {
         console.error('Error:', error);
@@ -180,6 +182,7 @@ const saveExamStateToLocalStorage = () => {
     selectedCompetency,
     maxQuestions: maxQuestions,
     filteredQuestions: filteredQuestions.map(question => ({ ...question })), // Convert to plain objects
+    selectedChoices: [...selectedChoices],
   };
   localStorage.setItem('examState', JSON.stringify(examState));
 };
@@ -195,7 +198,8 @@ useEffect(() => {
     setUserExamId(parsedState.userExamId);
     setSelectedProgram(parsedState.selectedProgram);
     setMaxQuestions(parsedState.maxQuestions);
-    setFilteredQuestions(parsedState.filteredQuestions); // Convert plain objects back to the original format
+    setFilteredQuestions(parsedState.filteredQuestions); // Convert plain objects back to the original 
+    setSelectedChoices(parsedState.selectedChoices);
   }
 }, []);
 
@@ -444,7 +448,7 @@ const nextPage = () => {
 
   // Check if all questions on the current page have valid answers
   const allQuestionsAnswered = currentQuestions.every(
-    (questions, index) => selectedChoices[currentQuestion + index] !== undefined
+    (question, index) => selectedChoices[currentQuestion + index] !== undefined
   );
 
   if (allQuestionsAnswered) {
@@ -493,9 +497,8 @@ const handlePageClick = (page) => {
 
 const isCurrentPageFullyAnswered = () => {
   const currentQuestions = filteredQuestions.slice(currentQuestion, currentQuestion + questionsPerPage);
-  return currentQuestions.every((question, index) => selectedChoices[currentQuestion + index] !== undefined);
+  return currentQuestions.every((_, choiceIndex) => selectedChoices[currentQuestion + choiceIndex] !== undefined);
 };
-
 
 const totalPages = Math.ceil(maxQuestions / questionsPerPage);
   const currentPage = Math.floor(currentQuestion / questionsPerPage) + 1;
@@ -598,7 +601,6 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
                         `container dark:text-white text-gray-700 btn-container items-center flex border border-gray-700 mb-2 rounded-3xl cursor-pointer 
                          ${selectedChoices[currentQuestion + index] === choice ? 'bg-indigo-500 text-white' : ''}`
                       }
-                      disabled={!countdownStarted}
                     >
                       <div className="dark:text-white py-2 px-4 bg-gray-700 text-white font-bold text-lg rounded-3xl m-1 shadow-md btn-primary">
                   {String.fromCharCode(65 + choiceIndex)}
@@ -658,29 +660,16 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
         </li>
       ))}
       <li>
-      {currentPage < totalPages && (
-  <>
-    {isCurrentPageFullyAnswered() ? (
-      <button
-        className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
-        onClick={nextPage}
-      >
-        Next
-        <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
-      </button>
-    ) : (
-      <button
-        className="relative rounded bg-indigo-400 text-white ml-2 py-2 px-4 flex items-center cursor-not-allowed"
-        disabled
-      >
-        Next
-        <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
-      </button>
-    )}
-  </>
-)}
-
-</li>
+        {currentPage < totalPages && (
+          <button
+            className="relative rounded bg-indigo-700 hover:bg-indigo-600 text-white ml-2 py-2 px-4 flex items-center"
+            onClick={nextPage}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4 ml-2" />
+          </button>
+        )}
+      </li>
             </ul>
           </div>
           </div>

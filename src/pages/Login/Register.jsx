@@ -4,10 +4,16 @@ import axios from "axios";
 import { RadioGroup } from "@headlessui/react";
 import Select from 'react-select';
 import RP from '../../assets/images/1.jpg'
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+import { IoIosEye } from "react-icons/io";
+import { IoIosEyeOff } from "react-icons/io";
 
 export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [registrationStatus, setRegistrationStatus] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);  
+  const [showPassword1, setShowPassword1] = useState(false);  
   const [selectedImage, setSelectedImage] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -115,6 +121,12 @@ export default function Register() {
       ...provided,
       width: 170, // Adjust the width as needed
     }),
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1((prevShowPassword) => !prevShowPassword);
   };
   return (
     <div className="bg-white" style={{ backgroundImage: `url(${RP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
@@ -298,18 +310,30 @@ export default function Register() {
                 Password
               </label>
               <div className="flex flex-col items-start">
-                <input
-                  type="password"
-                  name="password"
-                  value={values.password}
-                  onChange={(e) => setValues({ ...values, password: e.target.value })}
-                  className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
-                  required
-                />
-                {values.password.length < 8 && values.password.length > 0 && (
-                  <p className="text-red-500 text-sm mt-1">Password must be at least 8 characters long.</p>
-                )}
-              </div>
+      <div className="relative w-full">
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={values.password}
+          onChange={(e) => setValues({ ...values, password: e.target.value })}
+          className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
+          required
+        />
+        <button
+  onClick={togglePasswordVisibility}
+  className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
+>
+  {showPassword ? (
+    <FaEye className="h-6 w-6" />
+  ) : (
+    <FaEyeSlash className="h-6 w-6" />
+  )}
+</button>
+      </div>
+      {values.password.length < 8 && values.password.length > 0 && (
+        <p className="text-red-500 text-sm mt-1">Password must be at least 8 characters long.</p>
+      )}
+    </div>
             </div>
             <div className="mt-4">
               <label
@@ -318,19 +342,26 @@ export default function Register() {
               >
                 Confirm Password
               </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="password"
-                  name="password_confirmation"
-                  value={passwordConfirmation}
-                  onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
-                  required
-                />
-                {values.password !== passwordConfirmation && passwordConfirmation.length > 0 && (
-      <p className="text-red-500 text-sm mt-1">Password and confirmation password do not match.</p>
-    )}
-              </div>
+              <div className="relative flex flex-col items-start">
+      <input
+        type={showPassword1 ? "text" : "password"}
+        name="password"
+        value={passwordConfirmation}
+        onChange={(e) => setPasswordConfirmation(e.target.value)}
+        className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
+        required
+      />
+      <button
+        onClick={togglePasswordVisibility1}
+        className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
+      >
+        {showPassword1 ? (
+    <FaEye className="h-6 w-6" />
+  ) : (
+    <FaEyeSlash className="h-6 w-6" />
+  )}
+      </button>
+    </div>
             </div>
         
             <div className="flex items-center mt-4">

@@ -453,7 +453,6 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
                         `container dark:text-white text-gray-700 btn-container items-center flex border border-gray-700 mb-2 rounded-3xl cursor-pointer 
                          ${selectedChoices[currentQuestion + index] === choice ? 'bg-indigo-500 text-white' : ''}`
                       }
-                      disabled={!countdownStarted}
                     >
                       <div className="dark:text-white py-2 px-4 bg-gray-700 text-white font-bold text-lg rounded-3xl m-1 shadow-md btn-primary">
                   {String.fromCharCode(65 + choiceIndex)}

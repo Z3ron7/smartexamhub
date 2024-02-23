@@ -38,6 +38,32 @@ console.log("Rdata:", response.data.room)
     }
   }, [selectedRoom]);
   
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(`https://smartexam.cyclic.app/room/room/${roomId}`, {
+        room_name: selectedRoom.room_name,
+        description: selectedRoom.description,
+        program_id: selectedProgram?.value,
+        competency_id: selectedCompetency?.value,
+        duration_minutes: selectedTime?.value,
+        expiry_date: selectedRoom.expiry_date,
+        date_created: selectedRoom.date_created
+      });
+  
+      console.log(response.data);
+  
+      // Update the selected room with the updated data
+      setSelectedRoom(prevRoom => ({
+        ...prevRoom,
+        program_id: selectedProgram?.value,
+        competency_id: selectedCompetency?.value,
+        duration_minutes: selectedTime?.value
+      }));
+    } catch (error) {
+      console.error('Error updating room:', error);
+    }
+  };
+  
   const programIdToValue = {
     1: 'Social Work'
   };

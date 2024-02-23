@@ -40,24 +40,25 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCom
     <div>
       <div className='p-3 my-3 border-2 dark:border-gray-700 dark:rounded-lg dark:bg-slate-900'>
       <div className="competency-buttons">
-        {/* Buttons for selecting competencies */}
-        {competencyOptions.map(option => (
-          <button
-            key={option.value}
-            className={classNames("bg-transparent mt-3 hover:bg-indigo-700 hover:text-white dark:text-white border-2 border-indigo-700 py-2 px-4 mr-2 rounded", {
-              'bg-indigo-700 text-white': localSelectedCompetency === option.value,
-            })}
-            onClick={() => setLocalSelectedCompetency(option.value)}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
+      {/* Buttons for selecting competencies */}
+      {competencyOptions.map(option => (
+        <button
+          key={option.value}
+          className={classNames("bg-transparent mt-3 hover:bg-indigo-700 hover:text-white dark:text-white border-2 border-indigo-700 py-2 px-4 mr-2 rounded", {
+            'bg-indigo-700 text-white': localSelectedCompetency === option.value,
+          })}
+          onClick={() => setLocalSelectedCompetency(option.value)}
+        >
+          {option.label}
+        </button>
+      ))}
+      
+    </div>
       <h1 className="text-2xl font-bold mb-4 justify-center dark:text-white">
         {localSelectedCompetency === 'All Competency' ? 'Competency Results' : getCompetencyLabel(localSelectedCompetency)}
       </h1>
 
-      <h2 className="flex mb-4 mx-auto justify-center text-3xl font-medium dark:text-white">
+      <h2 className="flex mb-4 mx-auto justify-center text-xl font-medium dark:text-white lg:text-3xl md:text-xl sm:text-md">
   Total Score: 
   <span className="text-green-500 mx-2">
     {calculateTotalScore()}
@@ -67,13 +68,23 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCom
     {filteredQuestionsByCompetency.length}
   </span> question - 
   <span className="text-blue-500 ml-1">
-    ({((calculateTotalScore() / filteredQuestionsByCompetency.length) * 100).toFixed(2)}%)
+    {filteredQuestionsByCompetency.length > 0
+      ? `(${((calculateTotalScore() / filteredQuestionsByCompetency.length) * 100).toFixed(2)}%)`
+      : '(0%)'}
   </span>
 </h2>
 
-      <div className='flex justify-start'> 
+
+      <div className='flex justify-between'> 
+      {/* Add the button for resetting the exam */}
+      <button
+        className="bg-indigo-700 hover:bg-indigo-600 hover:text-white dark:text-white text-white py-2 px-4 mr-2 mb-3 rounded"
+        onClick={resetExam}
+      >
+        Back
+      </button>
       <Link to="/exam/analytics"
-        className="bg-indigo-700 hover-bg-indigo-600 text-white py-2 px-4 mb-3 rounded"
+        className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-4 mb-3 rounded"
       >
         View Analytics
       </Link>

@@ -10,8 +10,8 @@ function Exam() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
-  const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 1; 
+  const [selectedChoices, setSelectedChoices] = useState([]); // Adjust the number of questions
+  const questionsPerPage = 10; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});
@@ -217,6 +217,9 @@ const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   localStorage.setItem('selectedChoices', JSON.stringify(updatedSelectedChoices));
   saveExamStateToLocalStorage();
 }
+useEffect(() => {
+  console.log('selectedChoices after update:', selectedChoices);
+}, [selectedChoices]);
 
   // Function to calculate the total score for selected questions
   const calculateScore = () => {
@@ -559,7 +562,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
     {!countdownStarted ? (
       !showResults && (
         <button
-          className={`ml-3 text-lg h-8 transition flex justify-center items-center ease-in-out rounded-lg px-5 delay-150 ${loading ? 'bg-indigo-700 cursor-not-allowed' : 'bg-indigo-700 hover:-translate-y-2'} duration-300 ...`}
+          className={`ml-3 text-lg h-8 flex justify-center text-white items-center ease-in-out rounded-lg px-5 delay-150 ${loading ? 'bg-indigo-700 cursor-not-allowed' : 'bg-indigo-700 hover:-translate-y-2'} duration-300 ...`}
           onClick={startExam}
           disabled={loading || !selectedProgram || !selectedCompetency || !selectedTime}
         >

@@ -38,6 +38,32 @@ console.log("Rdata:", response.data.room)
     }
   }, [selectedRoom]);
   
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(`https://smartexam.cyclic.app/room/room/${roomId}`, {
+        room_name: selectedRoom.room_name,
+        description: selectedRoom.description,
+        program_id: selectedProgram?.value,
+        competency_id: selectedCompetency?.value,
+        duration_minutes: selectedTime?.value,
+        expiry_date: selectedRoom.expiry_date,
+        date_created: selectedRoom.date_created
+      });
+  
+      console.log(response.data);
+  
+      // Update the selected room with the updated data
+      setSelectedRoom(prevRoom => ({
+        ...prevRoom,
+        program_id: selectedProgram?.value,
+        competency_id: selectedCompetency?.value,
+        duration_minutes: selectedTime?.value
+      }));
+    } catch (error) {
+      console.error('Error updating room:', error);
+    }
+  };
+  
   const programIdToValue = {
     1: 'Social Work'
   };
@@ -76,6 +102,14 @@ const programValueToId = {
   'Social Work': 1,
   // Add other program options here
 };
+const competencyValueToId = {
+  'SWPPS' : 1,
+  'Casework' : 2,
+  'HBSE': 3,
+  'CO': 4,
+  'Groupwork': 5,
+  'All Competency': 6,
+};
 
 // Add your state variables for selected options
 const [num, setNum] = useState(0);
@@ -83,6 +117,13 @@ const [selectedTime, setSelectedTime] = useState(0);
 const [countdownStarted, setCountdownStarted] = useState(false);
 
 let intervalRef = useRef();
+
+const formatTime = (seconds) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  return `${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(remainingSeconds).padStart(2, '0')}s`;
+};
 
 const decreaseNum = () => setNum((prev) => prev - 1);
 

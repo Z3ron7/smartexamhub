@@ -295,15 +295,16 @@ const competencyMap = {
     <span className='w-24 text-xs lg:text-base'>{new Date(exam.end_time).toISOString().split('T')[0].split(' ')[0]}</span>
   </div>
   <div className="flex justify-end mt-4">
-      <button
-        onClick={() => {
-          const confirmed = window.confirm("Are you sure you want to delete this exam?");
-          if (confirmed) {
-            handleDeleteExam(exam.exam_id);
-          }
-        }}
-        className="text-white lg:pl-14 rounded p-2"
-      >
+  <button
+  onClick={(e) => {
+    e.stopPropagation();
+    const confirmed = window.confirm("Are you sure you want to delete this exam?");
+    if (confirmed) {
+      handleDeleteExam(exam.exam_id);
+    }
+  }}
+  className="text-white lg:pl-14 rounded p-2"
+>
         <img className=' p-1 border-2 border-white hover:border-red-600' src="/delete.svg" alt="" />
       </button>
     </div>

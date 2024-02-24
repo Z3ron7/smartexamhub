@@ -43,9 +43,10 @@ function LoginPage() {
             let dashboardURL = '/admin-dashboard'; // Default URL
             if (userRole === 'Admin') {
               dashboardURL = '/admin-dashboard';
-            } else if (userRole === 'Super Admin') {
-              dashboardURL = '/super-dashboard';
             }
+            //  else if (userRole === 'Super Admin') {
+            //   dashboardURL = '/admin-dashboard';
+            // }
             navigate(dashboardURL);
             alert('Login successfully.');
           }

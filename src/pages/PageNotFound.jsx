@@ -14,7 +14,7 @@ function PageNotFound() {
   const goBack = () => {
     // Check the user's role and navigate accordingly
     if (userRole === 'Super Admin') {
-      navigate('/super-dashboard'); // Redirect admin to /dashboard
+      navigate('/admin-dashboard'); // Redirect admin to /dashboard
     } else if (userRole === 'Admin') {
       navigate('/admin-dashboard'); // Redirect admin to /dashboard
     } else if (userRole === 'Exam-taker') {

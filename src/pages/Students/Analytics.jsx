@@ -146,9 +146,9 @@ const Analytics = () => {
       const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
       console.log('competency:', competenciesForChart)
       return (
-        <div key={index} className="w-1/2 p-4">
-            <div className='basis-[50%] border bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
-          <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED] mb-[20px]'>
+        <div key={index} className="lg:w-1/2 md:w-2/3 pr-4 sm:w-[415px]">
+            <div className='basis-[50%] border-2 border-slate-400 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
+          <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-slate-300 mb-[20px]'>
           <h2 className={`text-[16px] leading-[19px] font-bold ${index === 0 ? 'text-[#4e73df]' : 'text-[#c85b1c]'}`}>
         {index === 0 ? 'Latest Result' : 'Previous Result'}
       </h2>

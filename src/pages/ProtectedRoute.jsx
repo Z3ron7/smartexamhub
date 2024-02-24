@@ -16,7 +16,7 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
 
   if (userRole === 'Super Admin') {
     // If the user is a Super Admin, no verification is required
-    return isRoleAllowed ? element : <Navigate to="/super-dashboard" />;
+    return isRoleAllowed ? element : <Navigate to="/admin-dashboard" />;
   }
 
   if (userRole === 'Admin') {

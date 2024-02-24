@@ -64,9 +64,9 @@ const Rankings = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <table className="table-auto w-full overflow-y-scroll border-collapse h-64 ">
-        <thead className="bg-slate-600 p-2 font-semibold text-white">
+    <div className="container mx-auto p-2 font-mono">
+      <table className="table-auto w-full overflow-y-scroll h-80">
+        <thead className="bg-slate-600 p-2 font-semibold border-b-2 text-white">
           <tr>
             <th className="px-4 py-2">#</th>
             <th className="px-4 py-2">Avatar</th>
@@ -112,20 +112,16 @@ const Rankings = () => {
           })
           .sort((a, b) => b.maxScore - a.maxScore)
           .map((sortedItem, index) => (
-            <tr key={index}>
-              <td className=" px-4 py-2">
+            <tr key={index} className='border-b text-sm h-10 border-slate-400'>
+              <td className="px-2 border-r border-slate-800">
                 {getMedalIcon(index)}
               </td>
-              <td className=" px-4 py-2">
-                <img
-                  src={sortedItem.image}
-                  alt=""
-                  className="rounded-full w-10 h-10"
-                />
+              <td className="px-2">
+                <img src={sortedItem.image} alt="" className="rounded-full w-8 h-8" />
               </td>
-              <td className=" px-4 py-2">{sortedItem.name}</td>
-              <td className=" px-4 py-2">{competencyName[sortedItem.competency_id]}</td>
-              <td className=" px-4 py-2">
+              <td className="px-2">{sortedItem.name}</td>
+              <td className="px-2">{competencyName[sortedItem.competency_id]}</td>
+              <td className="px-2">
                 {sortedItem.maxScore}
               </td>
             </tr>

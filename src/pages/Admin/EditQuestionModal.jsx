@@ -16,7 +16,7 @@ const programOptions = [
     { value: 'Groupwork', label: 'Groupwork' },
   ];
 
-const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
+const EditQuestionModal = ({ isOpen, onClose, questionToEdit, fetchData, onEditQuestion, questionsData }) => {
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Bachelor of Science in Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [questionText, setQuestionText] = useState('');
@@ -31,6 +31,7 @@ const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
       setQuestionText(questionToEdit.questionText);
       setChoices(questionToEdit.choices);
       console.log('competency:', mappedCompetencyValue)
+      fetchData();
     }
     
   }, [isOpen, questionToEdit]);
@@ -74,8 +75,9 @@ const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
   const competencyValue = selectedCompetency ? selectedCompetency.value : null;
   const competencyId = competencyValueToId[competencyValue];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     // Construct the request body
     const requestBody = {
       question_text: questionText,
@@ -83,18 +85,31 @@ const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
       competency: competencyValue,
       choices,
     };
-
+    
+    console.log('requestBody:', requestBody);
+    console.log('questionToEdit.question_id:', questionToEdit.question_id);
+    
     // Send a PUT request to update the question
-    axios
-      .put(`https://smartexam.cyclic.app/questions/update/${questionToEdit.question_id}`, requestBody)
-      .then((response) => {
-        setAlertMessage('Question updated successfully');
-      })
-      .catch((error) => {
-        console.error('Error updating question:', error);
-        setAlertMessage('Failed to update question');
+    try {
+      // Send a PUT request to update the question
+      const response = await axios.put(`https://smartexam.cyclic.app/questions/update/${questionToEdit.question_id}`, requestBody);
+      onEditQuestion(response.data);
+      setAlertMessage('Question updated successfully');
+
+      // Update localStorage
+      const updatedQuestionsData = questionsData.map((question) => {
+        if (question.question_id === response.data.question_id) {
+          return response.data;
+        }
+        return question;
       });
+      localStorage.setItem('questionsData', JSON.stringify(updatedQuestionsData));
+    } catch (error) {
+      console.error('Error updating question:', error);
+      setAlertMessage('Failed to update question');
+    }
   };
+  
   const { theme } = useContext(ThemeContext);
   const customStyles = {
     control: (provided, state) => {
@@ -124,11 +139,27 @@ const EditQuestionModal = ({ isOpen, onClose, questionToEdit }) => {
       onClick={onClose}
     >
       <div
-        className="modal-container bg-white dark:bg-slate-900 w-3/5 p-4 border-2 border-indigo-700 mb-2 rounded-3xl"
+        className="modal-container relative bg-white dark:bg-slate-900 w-3/5 p-4 border-2 border-indigo-700 mb-2 rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="absolute top-3 right-56 text-4xl hover:text-red-700 text-slate-200" onClick={onClose}>
-          x
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
         <form onSubmit={handleSubmit}>
         {alertMessage && (

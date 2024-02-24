@@ -39,145 +39,107 @@ const Questionnaire = () => {
     setIsModalOpen(false);
     setQuestionToEdit(null);
   };
+  
+// Remove localStorage related code from the fetchData function
+const fetchData = async () => {
+  try {
+    if (selectedProgram) {
+      let response;
+      const maxQuestionsPerCategory = 100;
+      let maxQuestions = 0;
 
-  function shuffleArray(array) {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
-  }
+      if (selectedCompetency?.value === 'All Competency') {
+        // Fetch questions for all available competencies
+        const competencies = ['SWPPS', 'Casework', 'HBSE', 'CO', 'Groupwork'];
+        const allQuestions = [];
 
-  function shuffleArrayWithCorrectChoice(questions) {
-    const shuffledQuestions = [...questions];
-  
-    for (let i = 0; i < shuffledQuestions.length; i++) {
-      if (shuffledQuestions[i].choices) {
-        const correctChoices = shuffledQuestions[i].choices.filter((choice) => choice.isCorrect);
-        const incorrectChoices = shuffledQuestions[i].choices.filter((choice) => !choice.isCorrect);
-  
-        if (correctChoices.length > 0 && incorrectChoices.length > 2) {
-          // Shuffle the choices, ensuring one correct and three incorrect choices
-          const shuffledCorrectChoice = shuffleArray(correctChoices);
-          const shuffledIncorrectChoices = shuffleArray(incorrectChoices.slice(0, 3));
-          shuffledQuestions[i].choices = [...shuffledCorrectChoice, ...shuffledIncorrectChoices];
-        }
-      }
-    }
-  
-    return shuffledQuestions;
-  }  
-  
-    const fetchData = async () => {
-      try {
-        if (selectedProgram) {
-          let response;
-          const maxQuestionsPerCategory = 100; // Set the maximum questions per category
-          let maxQuestions = 0; // Initialize maxQuestions to zero
+        // Fetch questions for each competency and merge the results
+        for (const competency of competencies) {
+          const query = `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`;
+          const search = searchQuery.trim().toLowerCase();
+          const queryWithSearch = search ? `${query}&search=${search}` : query;
+          const competencyResponse = await axios.get(queryWithSearch);
 
-          if (selectedCompetency?.value === 'All Competency') {
-            // Check if competency data is already saved in local storage
-            const competencyDataAll = localStorage.getItem('competencyData_All');
-            if (competencyDataAll) {
-              const parsedData = JSON.parse(competencyDataAll);
-              response = { data: parsedData };
-              // Set maxQuestions to the number of questions available for all competencies
-              maxQuestions = parsedData.length;
-            } else {
-              // Fetch questions for all available competencies
-              const competencies = ['SWPPS', 'Casework', 'HBSE', 'CO', 'Groupwork']; // Replace with your predefined competencies
-              const allQuestions = [];
-  
-              // Fetch questions for each competency and merge the results
-              for (const competency of competencies) {
-                const competencyResponse = await axios.get(
-                  `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${competency}`
-                );
-  
-                // Limit to maxQuestionsPerCategory questions per category
-                const limitedQuestions = shuffleArray(competencyResponse.data).slice(0, maxQuestionsPerCategory);
-                maxQuestions += limitedQuestions.length; // Increment the total questions count
-  
-                // Check if maxQuestions exceeds 500, and if so, truncate the questions.
-                if (maxQuestions > 500) {
-                  const overflow = maxQuestions - 500;
-                  limitedQuestions.splice(-overflow);
-                  maxQuestions = 500;
-                }
-  
-                allQuestions.push(...limitedQuestions);
-  
-                // If maxQuestions is already 500, break the loop.
-                if (maxQuestions >= 500) {
-                  break;
-                }
-              }
-  
-              response = { data: allQuestions };
-              localStorage.setItem('selectedCompetencyId', 'All');
-              localStorage.setItem('competencyData_All', JSON.stringify(allQuestions));
-            }
-          } else if (selectedCompetency) {
-            // Check if competency data is already saved in local storage
-            const competencyData = localStorage.getItem(`competencyData_${selectedCompetency.value}`);
-            if (competencyData) {
-              const parsedData = JSON.parse(competencyData);
-              response = { data: parsedData };
-              // Set maxQuestions to the number of questions available for the selected competency
-              maxQuestions = parsedData.length;
-            } else {
-              // Fetch questions for the selected competency
-              response = await axios.get(
-                `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}&search=${searchQuery}`
-              );
-  
-              // Limit to maxQuestionsPerCategory questions for the selected category
-              response.data = shuffleArray(response.data).slice(0, maxQuestionsPerCategory);
-              maxQuestions = response.data.length; // Set the total questions count
-  
-              // Truncate if maxQuestions exceeds 500
-              if (maxQuestions > 500) {
-                response.data.splice(-maxQuestions + 500);
-                maxQuestions = 500;
-              }
-  
-              // Save the competency data to local storage
-              localStorage.setItem(`competencyData_${selectedCompetency.value}`, JSON.stringify(response.data));
-            }
-            localStorage.setItem('selectedCompetencyId', selectedCompetency.value);
-          } else {
-            // If no competency is selected, use all questions
-            return; // Exit early to avoid setting state again
+          // Limit to maxQuestionsPerCategory questions per category
+          const limitedQuestions = competencyResponse.data.slice(0, maxQuestionsPerCategory);
+          maxQuestions += limitedQuestions.length;
+
+          // Check if maxQuestions exceeds 500, and if so, truncate the questions.
+          if (maxQuestions > 500) {
+            const overflow = maxQuestions - 500;
+            limitedQuestions.splice(-overflow);
+            maxQuestions = 500;
           }
-  
-          const storedCurrentQuestion = localStorage.getItem('currentQuestion');
-        if (storedCurrentQuestion) {
-          currentQuestion = parseInt(storedCurrentQuestion, 10);
-          setCurrentQuestion(currentQuestion);
-        } else {
-          setCurrentQuestion(0);
-        }
-  
-          const randomizedQuestions = shuffleArray(response.data).slice(0, 500);
-          // Process choices
-          const processedQuestions = shuffleArrayWithCorrectChoice(randomizedQuestions);
-  
-          setQuestionsData(processedQuestions);
-          setMaxQuestions(maxQuestions); // Set the total questions count
-          setLoading(true)
-          console.log('filteredQuestions:', response.data);
-          console.log('selectedCompetencyId', selectedCompetency.value);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    useEffect(() => {
-  
-    fetchData();
-  }, [searchQuery, selectedProgram, selectedCompetency]);
 
+          allQuestions.push(...limitedQuestions);
+
+          // If maxQuestions is already 500, break the loop.
+          if (maxQuestions >= 500) {
+            break;
+          }
+        }
+
+        response = { data: allQuestions };
+      } else if (selectedCompetency) {
+        // Fetch questions for the selected competency
+        const query = `https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`;
+        const search = searchQuery.trim().toLowerCase();
+        const queryWithSearch = search ? `${query}&search=${search}` : query;
+        response = await axios.get(queryWithSearch);
+
+        // Limit to maxQuestionsPerCategory questions for the selected category
+        response.data = response.data.slice(0, maxQuestionsPerCategory);
+        maxQuestions = response.data.length;
+
+        // Truncate if maxQuestions exceeds 500
+        if (maxQuestions > 500) {
+          response.data.splice(-maxQuestions + 500);
+          maxQuestions = 500;
+        }
+      } else {
+        return;
+      }
+
+      setCurrentQuestion(0);
+      setQuestionsData(response.data);
+      setMaxQuestions(maxQuestions);
+      setLoading(true);
+
+      // Log fetched data
+      console.log('Fetched data:', response.data);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+// Use a function to fetch data from the backend API
+const fetchDataFromBackend = async () => {
+  try {
+      const response = await axios.get(`https://smartexam.cyclic.app/questions/fetch?program=${selectedProgram.label || ''}&competency=${selectedCompetency.value || ''}`);
+      setQuestionsData(response.data);
+  } catch (error) {
+      console.error('Error:', error);
+  }
+};
+
+// Call the fetchDataFromBackend function in useEffect
+useEffect(() => {
+  fetchDataFromBackend();
+  fetchData();
+}, [selectedProgram, selectedCompetency]);
+
+const handleEditQuestion = (updatedQuestion) => {
+  // Update the state with the updated question
+  const updatedQuestionsData = questionsData.map((question) => {
+    if (question.question_id === updatedQuestion.question_id) {
+      return updatedQuestion;
+    }
+    return question;
+  });
+  setQuestionsData(updatedQuestionsData);
+  fetchData();
+};
 
   // Function to generate letters (A, B, C, ...) based on the index
   const generateLetter = (index) => {
@@ -192,6 +154,7 @@ const Questionnaire = () => {
         // Handle success, for example, you can close the modal or update the questions list
         console.log('Question deleted successfully');
         // Close the modal or update the questions list here
+        fetchData();
       })
       .catch((error) => {
         console.error('Error deleting question:', error);
@@ -245,7 +208,10 @@ const Questionnaire = () => {
 
   <div className="flex flex-col w-full lg:grid lg:grid-rows-2 lg:grid-cols-1 text-center py-2 text-lg font-semibold dark:text-white space-x-4">
   <div className="flex items-center justify-between w-full">
-  <form className="group flex-1 mb-3 mr-3 relative">
+  <form className="group flex-1 mb-3 mr-3 relative" onSubmit={(e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    fetchData(); // Fetch data based on selected program, competency, and search query
+  }}>
   <svg
     width="20"
     height="20"
@@ -260,13 +226,22 @@ const Questionnaire = () => {
     />
   </svg>
   <input
-          className="focus:ring-2 focus:ring-blue-500 w-full focus:outline-none appearance-none lg:w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
-          type="text"
-          aria-label="Filter questions"
-          placeholder="Search question and choices..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as the user types
-        />
+    className="focus:ring-2 focus:ring-blue-500 w-full focus:outline-none appearance-none lg:w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 pr-14 ring-1 ring-slate-200 shadow-sm"
+    type="text"
+    aria-label="Filter questions"
+    placeholder="Search question and choices..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as the user types
+  />
+  <button 
+      className="absolute inset-y-0 right-0 bg-indigo-700 hover:bg-indigo-600 w-32 justify-center items-center text-sm text-center mb-3 text-white h-10 py-2 px-4 rounded"
+    // Add onClick event to handle search
+    onClick={() => {
+      fetchData(); // Fetch data based on selected program, competency, and search query
+    }}
+  >
+    Search
+  </button>
 </form>
 
     <button
@@ -303,6 +278,8 @@ const Questionnaire = () => {
     isOpen={modalOpen}
     onClose={closeModal}
     questionToEdit={questionToEdits}
+    fetchDataFromBackend={fetchDataFromBackend}
+    fetchData={fetchData}
   />
 </header>
 
@@ -348,6 +325,8 @@ const Questionnaire = () => {
           programOptions={programOptions}
           competencyOptions={competencyOptions}
           fetchData={fetchData}
+          onEditQuestion={handleEditQuestion}
+          questionsData={questionsData}
         />
         <div className="p-3 dark:text-white lg:text-2xl sm:text-sm md:text-lg text-center">{question.questionText}</div>
         <div id="answers-container" className="p-3">

@@ -54,11 +54,10 @@ const NavbarStudents = () => {
   return (
     <div className="navbar dark:bg-slate-900 border-b-2 dark:border-gray-700 dark:rounded-lg">
       <div className="flex items-center mx-auto">
-        <span className="text-xl font-medium whitespace-nowrap dark:text-white">
+        <span className="text-xl font-medium whitespace-nowrap dark:text-white hidden sm:block">
           Welcome
         </span>
       </div>
-
       <div className="icons">
         <div className="notification flex items-center gap-[25px] border-r-[1px] pr-[25px]">
         <Toggle />

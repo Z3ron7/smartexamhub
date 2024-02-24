@@ -15,7 +15,7 @@ const SidebarSuper = () => {
   const location = useLocation()
 
   const Menus = [
-    { title: 'Dashboard', path: '/super-dashboard', src: <AiFillPieChart /> },
+    { title: 'Dashboard', path: '/admin-dashboard', src: <AiFillPieChart /> },
     { title: 'Users', path: '/users', src: <BsPeopleFill /> },
     { title: 'Questionnaire', path: '/questionnaire', src: <RiQuestionnaireFill /> },
     { title: 'Room', path: '/room', src: <SiGoogleclassroom /> },

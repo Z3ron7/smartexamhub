@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 //Super Admin---------------------------
-import ProfileS from './pages/SuperAdmin/Profile'
+import ProfileS from './pages/Admin/Profile'
 import LayoutSuper from './components/LayoutSuper';
-import RoomSuper from './pages/SuperAdmin/Room';
-import DashboardSuper from './pages/SuperAdmin/Dashboard'
-import QuestionnaireSuper from './pages/SuperAdmin/Questionnaire'
+import RoomSuper from './pages/Admin/Room';
+import DashboardSuper from './pages/Admin/Dashboard'
+import QuestionnaireSuper from './pages/Admin/Questionnaire'
 // import RegisterAdmin from './pages/SuperAdmin/RegisterAdmin';
-import ViewRoom from './pages/SuperAdmin/ViewRoom';
-import ExamResult from './pages/SuperAdmin/ExamResult';
+import ViewRoom from './pages/Admin/ViewRoom';
+import ExamResult from './pages/Admin/ExamResult';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
 //Admin----------------------------------
-import ProfileA from './pages/Admin/Profile'
-import Layout from './components/Layout';
-import Dashboardss from './pages/Admin/Dashboard';
-import Questionnairess from './pages/Admin/Questionnaire';
-import Roomss from './pages/Admin/Rooms';
-import Userss from './pages/users/Users';
-import ExamResultss from './pages/Admin/ExamResults';
+// import ProfileA from './pages/Admin/Profile'
+// import Layout from './components/Layout';
+// import Dashboardss from './pages/Admin/Dashboard';
+// import Questionnairess from './pages/Admin/Questionnaire';
+// import Roomss from './pages/Admin/Rooms';
+// import Userss from './pages/users/Users';
+// import ExamResultss from './pages/Admin/ExamResults';
 //Exam-takers----------------------------
 import ProfileSt from './pages/Students/Profile'
 import LayoutStudents from './components/LayoutStudents';
@@ -94,7 +94,7 @@ function App() {
           }
         />
         <Route
-          path="/super-dashboard"
+          path="/admin-dashboard"
           element={
             <ProtectedRoute
               element={<LayoutSuper><DashboardSuper /></LayoutSuper>}
@@ -183,7 +183,7 @@ function App() {
         />
 
         {/*------------------------------------ Routes for admin-------------------------------------- */}
-        <Route
+        {/* <Route
           path="/admin-profile"
           element={
             <ProtectedRoute
@@ -259,7 +259,7 @@ function App() {
               userRole={userRole}
             />
           }
-        />
+        /> */}
         {/* --------------------------------------Routes for student----------------------------------- */}
         <Route
           path="/profileS"

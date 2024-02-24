@@ -72,7 +72,7 @@ const CreateRoom = ({isOpen, onClose, onCreateRoom}) => {
     { value: 5, label: 'Groupwork' },
   ];
   const countdownOptions = [
-    { value: 0, label: '0' },
+    { value: 0.5, label: '30 minutes' },
     { value: 1, label: '1 hour' },
     { value: 2, label: '2 hours' },
     { value: 3, label: '3 hours' },

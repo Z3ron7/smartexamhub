@@ -1,19 +1,26 @@
-import React from 'react'
-import Navbar from './NavbarSuper'
-import Sidebar from './SidebarSuper'
+import React, { useState } from 'react';
+import Navbar from './NavbarSuper';
+import Sidebar from './SidebarSuper';
 
 const LayoutSuper = ({ children }) => {
-    return (
-        <>
-            <div className='flex flex-auto h-full'>
-                <Sidebar />
-                <div className='grow'>
-                    <Navbar />
-                    <div className='m-5'>{children}</div>
-                </div>
-            </div>
-        </>
-    )
-}
+  const [mobileMenu, setMobileMenu] = useState(false);
 
-export default LayoutSuper
+  // Function to close the mobile menu
+  const closeMobileMenu = () => {
+    setMobileMenu(false);
+  };
+
+  return (
+    <>
+      <div className='flex flex-auto h-full'>
+        <Sidebar />
+        <div className='grow'>
+          <Navbar closeMobileMenu={closeMobileMenu} />
+          <div className='m-5' onClick={closeMobileMenu}>{children}</div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LayoutSuper;

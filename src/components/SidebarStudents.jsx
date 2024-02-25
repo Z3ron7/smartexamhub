@@ -129,7 +129,7 @@ const SidebarStudents = () => {
         <div
           className={`${
             mobileMenu ? 'flex' : 'hidden'
-          } absolute z-50 flex-col items-center self-end py-8 mt-16 space-y-2 font-bold sm:w-auto left-6 right-6 dark:text-white  bg-gray-50 dark:bg-slate-800 drop-shadow md rounded-xl`}
+          } absolute z-50 flex-col items-start self-end py-8 mt-16 space-y-2 font-bold sm:w-auto left-6 right-6 dark:text-white  bg-gray-50 dark:bg-slate-800 drop-shadow md rounded-xl`}
         >
           {Menus.map((menu, index) => (
             <Link to={menu.path} key={index} onClick={() => setMobileMenu(!viewResultOpen)}>

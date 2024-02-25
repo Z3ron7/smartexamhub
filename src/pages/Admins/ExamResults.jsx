@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
 import { FaEllipsisV } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import AccordionLayout from '../../components/accordion/AccordionLayout'
-import error from "../../assets/images/loading-search-animation.gif"
-
-const CUSTOM_ANIMATION = {
-  mount: { scale: 1 },
-  unmount: { scale: 0.9 },
-};
 
 // Define a function to get text color based on competency level
 function getColorForLevel(level) {
@@ -33,7 +22,7 @@ function getColorForLevel(level) {
   }
 }
 
-export default function ExamHistory() {
+export default function ExamResults() {
   const [examScores, setExamScores] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -45,14 +34,14 @@ export default function ExamHistory() {
     }
   };
 
-
   useEffect(() => {
     const user_id = localStorage.getItem('user_id');
 
     const fetchExamScores = async () => {
       try {
-        const response = await axios.get(`https://smartexam.cyclic.app/exams/fetch-user-exam?userId=${user_id}`);
-        setExamScores(response.data.userExams);
+        const response = await axios.get('https://smartexam.cyclic.app/dashboard/fetch-exam-room');
+        setExamScores(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching exam scores:', error);
       }
@@ -60,47 +49,6 @@ export default function ExamHistory() {
 
     fetchExamScores();
   }, []);
-  if (examScores.length === 0) {
-    return (
-      <div>
-        <div className="flex bg-gray-200 dark:text-blue-600 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
-          <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Exam ID</div>
-          <div className="w-1/4 text-sm md:text-sm lg:font-semibold">Competency ID</div>
-          <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Duration (Minutes)</div>
-          <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Total Duration</div>
-          <div className="w-1/5 text-sm md:text-sm lg:font-semibold">Exam Date taken</div>
-          <div className="w-1/6 text-sm md:text-sm lg:font-semibold">Action</div>
-        </div>
-      <div className='flex justify-center items-center mt-36'>
-
-                
-<div className='p-4 justify-center items-center'>
-<img src={error} alt='' className='justify-center  w-44 h-36 scale-[135%]' />
-<p className='mt-[22px] text-xl text-center font-mono text-semibold text-gray-500'>No Exam data...</p>
-</div>
-</div>
-</div>
-    );
-  }
-
-  const handleDeleteExam = async (examId) => {
-    try {
-      // Make a DELETE request to your backend API
-      await axios.delete(`https://smartexam.cyclic.app/exams/delete-user-exam`, {
-        data: { examId }, // Pass the examId in the request body
-      });
-  
-      // After successful deletion, you can update the examScores state
-      // to remove the deleted exam from the list
-      setExamScores((prevExamScores) =>
-        prevExamScores.filter((exam) => exam.exam_id !== examId)
-      );
-    } catch (error) {
-      console.error('Error deleting exam:', error);
-      // Handle the error here, e.g., display an error message to the user
-    }
-  };
-  
 // Define a mapping of competency IDs to competency names
 const competencyMap = {
   '1': 'SWWPS',
@@ -111,8 +59,8 @@ const competencyMap = {
   // Add more mappings as needed
 };
 
-  const processExamScores = (exam) => {
-    const { score, duration_minutes, end_time, total_duration_minutes } = exam;
+  const processExamScores = (exam, index, activeIndex) => {
+    const { room_name, description, score, duration_minutes, end_time, total_duration_minutes } = exam;
     const endDate = new Date(end_time);
     const endDateFormatted = endDate.toISOString().split('T')[0];
 
@@ -197,13 +145,13 @@ const competencyMap = {
       const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
 
       return (
-        <div className="flex justify-center">
-          <div className='w-1/2 border bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
+        <div className="flex flex-col sm:flex-row justify-center">
+          <div className=' max-w-lg sm:w-1/2 lg:w-1/2 md:w-1/2 border mx-2 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
             <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
               <h2 className='text-[16px] leading-[19px] font-bold text-[#4e73df]'> Result</h2>
               <FaEllipsisV color='gray' className='cursor-pointer' />
             </div>
-            <div className='lineChart '>
+            <div className='lineChart'>
               <ResponsiveContainer height={300}>
                 <LineChart
                   data={competenciesForChart}
@@ -216,7 +164,7 @@ const competencyMap = {
                 >
                   <CartesianGrid strokeDasharray='3 3' />
                   <XAxis dataKey='competency' />
-                  <YAxis domain={[0, 10]} />
+                  <YAxis domain={[0, 100]} />
                   <Tooltip />
                   <Legend />
                   <Line type='monotone' dataKey='score' stroke='#8884d8' activeDot={{ r: 8 }} />
@@ -224,8 +172,10 @@ const competencyMap = {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className='bg-gray-200 dark:bg-slate-900 ml-3 p-2 rounded-lg h-[350px] shadow-md'>
+          <div className='bg-gray-200 dark:bg-slate-900 p-2 rounded-lg h-[350px] w- shadow-md'>
             <h2 className='text-xl font-semibold'>Exam Details</h2>
+            <p>Exam Name: {room_name}</p>
+            <p>Description: {description}</p>
             <p>Duration (Minutes): {duration_minutes}</p>
             <p>Date: {endDateFormatted}</p>
           <p>Exam taken (Minutes): {total_duration_minutes}</p>
@@ -248,77 +198,119 @@ const competencyMap = {
       );
     }
   };
-  function Icon({ index, open }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className={`${index === open ? "rotate-180" : ""} h-5 w-5 transition-transform`}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-    </svg>
-  );
-}
+  
   const competencyName = {
-    6: 'All Competency',
+    4: 'All Competency',
     1: 'SWWPS',
     2: 'Casework',
     3: 'HBSE',
-    4: 'CO',
-    5: 'Groupwork',
+    5: 'CO',
+    6: 'Groupwork',
   };
+  
   return (
-    <div className="dash dark:text-white overflow-x-auto">
+    <div className="dash flex dark:text-white">
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
-        <div className="flex bg-gray-200 dark:text-blue-600 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
-          <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Exam ID</div>
-          <div className="w-1/4 text-sm md:text-sm lg:font-semibold">Competency ID</div>
-          <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Duration (Minutes)</div>
+        <div className="flex bg-gray-200 dark:bg-slate-900 p-2 gap-2 mb-4 rounded-lg shadow-md">
+          <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Name</div>
+          <div className="sm:w-20 lg:w-28 lg:pl-14 lg:font-semibold md:text-sm text-sm">Avatar</div>
+          <div className="w-1/4 text-sm md:text-sm lg:pl-16 lg:font-semibold">Room Name</div>
+          <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Competency ID</div>
+          <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Score</div>
           <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Total Duration</div>
-          <div className="w-1/5 text-sm md:text-sm lg:font-semibold">Exam Date taken</div>
           <div className="w-1/6 text-sm md:text-sm lg:font-semibold">Action</div>
         </div>
-        {examScores.map((exam, index) => (
-          <AccordionLayout 
-          title={(
-            <div className="flex flex-row items-center justify-center gap-2 p-2 sm:gap-10 lg:gap-5 dark:text-white mx-3">
-  <div className="w-10 text-xs lg:text-base lg:w-16 ">{exam.exam_id}</div>
-  <div className="w-24 text-xs lg:text-base lg:w-32">{competencyName[exam.competency_id]}</div>
-  <div className="pl-3 text-xs lg:text-base w-1/6 lg:w-28 lg:pl-32">{exam.duration_minutes}</div>
-  <div className="w-28 text-xs lg:text-base lg:w-28 sm:pl-10 lg:pl-32">{exam.total_duration_minutes}</div>
-  <div className=" w-32 lg:w-72 lg:pl-44">
-  <span className='w-24 text-xs lg:text-base'>{new Date(exam.end_time).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</span>
-  </div>
-  <div className="flex justify-end mt-4">
-  <button
-  onClick={(e) => {
-    e.stopPropagation();
-    const confirmed = window.confirm("Are you sure you want to delete this exam?");
-    if (confirmed) {
-      handleDeleteExam(exam.exam_id);
+        {examScores.map((exam, index) => {
+  // Initialize an array to store the mapped scores for each competency
+  const mappedScores = [];
+  
+  // Initialize an object to store the counts and percentages
+  const competencyCounts = {};
+
+  // Check if the exam has a score
+  if (exam.score) {
+    const scoreString = exam.score;
+    const scores = JSON.parse(scoreString);
+
+    // Calculate the total score for all competencies
+    let totalScore = 0;
+    let totalPossibleScore = 0;
+
+    for (const competencyId in scores) {
+      if (competencyMap[competencyId]) {
+        const competencyScore = scores[competencyId];
+        totalScore += competencyScore;
+        totalPossibleScore += 100; // Assuming the maximum score for each competency is 100
+        mappedScores.push({
+          competency: competencyMap[competencyId],
+          score: competencyScore,
+          totalPossibleScore: 100, // Each competency has a total possible score of 100
+        });
+
+        // Update competency counts
+        if (!competencyCounts[competencyMap[competencyId]]) {
+          competencyCounts[competencyMap[competencyId]] = {
+            score: 0,
+            totalPossibleScore: 0,
+          };
+        }
+        competencyCounts[competencyMap[competencyId]].score += competencyScore;
+        competencyCounts[competencyMap[competencyId]].totalPossibleScore += 100;
+      }
     }
-  }}
-  className="text-white lg:pl-14 rounded p-2"
->
-        <img className=' p-1 border-2 border-white hover:border-red-600' src="/delete.svg" alt="" />
-      </button>
-    </div>
-</div>
-          )}
-          index={index}
-          activeIndex={activeIndex}
-          setActiveIndex={handleOpen}
-          key={index}
-        >
-          {processExamScores(exam)}
-          
-        </AccordionLayout>
-        ))}
+
+    // Calculate and add the "All Competency" entry
+    const allCompetencyScore = totalScore;
+    const allCompetencyPossibleScore = totalPossibleScore;
+    mappedScores.push({
+      competency: 'All Competency',
+      score: allCompetencyScore,
+      totalPossibleScore: allCompetencyPossibleScore,
+    });
+
+    // Sort the mappedScores array so that "All Competency" comes before other competencies
+    mappedScores.sort((a, b) => {
+      if (a.competency === 'All Competency') return -1;
+      if (b.competency === 'All Competency') return 1;
+      return a.competency.localeCompare(b.competency);
+    });
+    
+    return (
+      <AccordionLayout 
+        title={(
+          <div className="flex flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-5 dark:text-white mx-3">
+            <div className="w-12 text-xs lg:text-base lg:w-16 ">{exam.name}</div>
+            <div className="w-36 text-xs lg:text-base lg:w-16 lg:ml-12"><img
+          src={exam.image}
+          alt=""
+          className="rounded-full w-10 h-10"
+        /></div>
+            <div className="w-12 text-xs lg:text-base lg:w-16 lg:pl-12 ">{exam.room_name}</div>
+            <div className="w-28 text-xs lg:text-base lg:w-40 lg:pl-28">{competencyName[exam.competency_id]}</div>
+            <div className="pl-3 text-xs lg:text-base w-1/6 lg:w-28 lg:pl-24">
+              <ul>
+                  <li>
+                    {mappedScores[0].score}
+                  </li>
+              </ul>
+            </div>
+            <div className="w-28 text-xs lg:text-base lg:w-28 sm:pl-10 lg:pl-32">{exam.total_duration_minutes}</div>
+          </div>
+        )}
+        index={index}
+        activeIndex={activeIndex}
+        setActiveIndex={handleOpen}
+        key={index}
+      >
+        {processExamScores(exam)}
+      </AccordionLayout>
+    );
+  }
+  // Return null or handle the case where there's no score
+  return null;
+})}
       </div>
     </div>
   );

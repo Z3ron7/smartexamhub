@@ -263,7 +263,7 @@ if (examScores.length === 0) {
   <div className="pl-3 text-xs lg:text-base w-1/6 lg:w-28 lg:pl-32">{exam.duration_minutes}</div>
   <div className="w-28 text-xs lg:text-base lg:w-28 sm:pl-10 lg:pl-32">{exam.total_duration_minutes}</div>
   <div className=" w-32 lg:w-72 lg:pl-44">
-    <span className='w-24 text-xs lg:text-base'>{new Date(exam.end_time).toISOString().split('T')[0].split(' ')[0]}</span>
+  <span className='w-24 text-xs lg:text-base'>{new Date(exam.end_time).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</span>
   </div>
 </div>
           )}

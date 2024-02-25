@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom'
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCompetency }) => {
   // State for selectedCompetency
   const [localSelectedCompetency, setLocalSelectedCompetency] = useState('All Competency');
+  const [isExploding, setIsExploding] = useState(false);
 
   // Function to filter questions based on selected competency
   const filteredQuestionsByCompetency = localSelectedCompetency === 'All Competency'
@@ -35,10 +37,22 @@ const ExamResult = ({ filteredQuestions, selectedChoices, resetExam, selectedCom
   const selectedOption = competencyOptions.find(option => option.value === selectedCompetency);
   return selectedOption ? selectedOption.label : 'Unknown Competency';
   }
-
+  useEffect(() => {
+    window.scrollTo(0, 1);
+    setIsExploding(true);
+    if (isExploding) {
+      const timeoutId = setTimeout(() => {
+        setIsExploding(false);
+      }, 4000);
+      // Clean up the timeout when the component is unmounted
+      return () => clearTimeout(timeoutId);
+    }
+  }, []);
+  
   return (
     <div>
-      <div className='p-3 my-3 border-2 dark:border-gray-700 dark:rounded-lg dark:bg-slate-900'>
+        <div className='flex justify-center'>{isExploding && <ConfettiExplosion />}</div>
+      <div className='p-3 my-3 border-2 dark:border-gray-700 dark:rounded-lg dark:bg-slate-900' >
       <div className="competency-buttons">
       {/* Buttons for selecting competencies */}
       {competencyOptions.map(option => (

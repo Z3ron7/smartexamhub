@@ -10,8 +10,8 @@ function Exam() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
-  const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 1; 
+  const [selectedChoices, setSelectedChoices] = useState([]); // Adjust the number of questions
+  const questionsPerPage = 10; 
   const [selectedProgram, setSelectedProgram] = useState({ value: 'Social Work', label: 'Social Work' });
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyScores, setCompetencyScores] = useState({});
@@ -513,8 +513,13 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
   return (
     <div className="container min-h-screen h-auto items scroll-smooth flex flex-col">
       <div className="text-center border-2 dark:border-gray-700 border-indigo-700 rounded-lg dark:rounded-lg dark:bg-slate-900 py-4 header-bg shadow-md text-lg font-semibold dark:text-white">
+      <div className="col-span-3 flex justify-center">
+    {showResults &&
+      <h2 className="font-mono font-bold text-2xl">CONGRATULATIONS!</h2>}
+  </div>
+  {!showResults && (
         <div className="flex flex-row gap-5 justify-center mx-3 items-center dark:text-white">
-          <div className="mb-4 lg:w-72 dark:bg-slate-600">
+          <div className="lg:w-72 dark:bg-slate-600">
         {!showResults && ( 
             <Select
               placeholder="Program"
@@ -527,8 +532,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
             />
         )}
           </div>
-
-          <div className="mb-4 lg:w-72">
+          <div className="lg:w-72">
         {!showResults && ( 
             <Select
               placeholder="Choose a Category"
@@ -542,7 +546,7 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
         )}
           </div>
 
-          <div className="mb-4 lg:w-72">
+          <div className=" lg:w-72">
         {!showResults && ( 
             <Select
               options={countdownOptions}
@@ -553,7 +557,9 @@ const totalPages = Math.ceil(maxQuestions / questionsPerPage);
             />
         )}
           </div>
+          
         </div>
+        )}
       </div>
       <div className="flex justify-center items-center w-full sticky top-0 left-0 bg-white dark:bg-transparent text-center">
       {selectedTime > 0 && (

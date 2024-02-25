@@ -56,7 +56,7 @@ const Room = () => {
    5: '5 hours'
   };
   return (
-    <div className="overflow-auto">
+    <div>
         {roomsAvailable ? (
           <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-4 lg:grid-rows-1 gap-4">
             {roomData.map((room, roomIndex) => (

@@ -141,9 +141,15 @@ function Exam() {
         }
 
         // Retrieve currentQuestion from localStorage or set it to 0 if not available
-const storedCurrentQuestion = localStorage.getItem('currentQuestion');
-const initialCurrentQuestion = storedCurrentQuestion ? parseInt(storedCurrentQuestion, 10) : 0;
-setCurrentQuestion(initialCurrentQuestion);
+        const storedCurrentQuestion = localStorage.getItem('currentQuestion');
+        let currentQuestion;
+        if (storedCurrentQuestion) {
+          currentQuestion = parseInt(storedCurrentQuestion, 10);
+        } else {
+          currentQuestion = (currentPage - 1) * questionsPerPage;
+        }
+        setCurrentQuestion(currentQuestion);
+        
 
           if (!countdownStarted) {
             // Shuffle data only if countdown has not started
@@ -183,6 +189,7 @@ const saveExamStateToLocalStorage = () => {
     maxQuestions: maxQuestions,
     filteredQuestions: filteredQuestions.map(question => ({ ...question })), // Convert to plain objects
     selectedChoices: [...selectedChoices],
+    currentPage: currentPage,
   };
   localStorage.setItem('examState', JSON.stringify(examState));
 };
@@ -200,8 +207,13 @@ useEffect(() => {
     setMaxQuestions(parsedState.maxQuestions);
     setFilteredQuestions(parsedState.filteredQuestions); // Convert plain objects back to the original 
     setSelectedChoices(parsedState.selectedChoices);
+    const currentPage = Math.floor(parsedState.currentQuestion / questionsPerPage) + 1;
+    
+    // Use currentPage where you need it, for example:
+    console.log('Current Page:', currentPage);
   }
 }, []);
+
 
 const handleChoiceClick = (choiceIndex, choice, competencyId) => {
   const updatedSelectedChoices = [...selectedChoices];
@@ -435,6 +447,7 @@ const handleFinishExam = () => {
   setShowResults(true);
   setCountdownStarted(false);
   endExam(); // Call the endExam function when the Finish button is clicked
+  localStorage.removeItem('examState');
   saveTimerStateToLocalStorage();
   setTimeout(() => {
     // Reset the loading state to false after 2 seconds
@@ -496,11 +509,6 @@ const handlePageClick = (page) => {
     alert('Please answer all questions on the current page before proceeding.');
     // You can also customize the behavior as per your requirements.
   }
-};
-
-const isCurrentPageFullyAnswered = () => {
-  const currentQuestions = filteredQuestions.slice(currentQuestion, currentQuestion + questionsPerPage);
-  return currentQuestions.every((_, choiceIndex) => selectedChoices[currentQuestion + choiceIndex] !== undefined);
 };
 
 const totalPages = Math.ceil(maxQuestions / questionsPerPage);

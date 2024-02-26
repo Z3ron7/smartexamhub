@@ -147,7 +147,7 @@ const Analytics = () => {
       console.log('competency:', competenciesForChart)
       return (
         <div key={index} className="lg:w-1/2 md:w-2/3 pr-4 sm:w-[415px]">
-            <div className='basis-[50%] border-2 border-slate-400 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
+            <div className='basis-[50%] border-2 border-slate-400 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 w-[370px] md:w-92 lg:w-full sm:w-[384px] h-4/6 lg:mb-3'>
           <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-slate-300 mb-[20px]'>
           <h2 className={`text-[16px] leading-[19px] font-bold ${index === 0 ? 'text-[#4e73df]' : 'text-[#c85b1c]'}`}>
         {index === 0 ? 'Latest Result' : 'Previous Result'}
@@ -162,7 +162,7 @@ const Analytics = () => {
                 margin={{
                   top: 5,
                   right: 30,
-                  left: 20,
+                  left: 0,
                   bottom: 5,
                 }}
               >

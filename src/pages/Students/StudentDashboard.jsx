@@ -33,7 +33,7 @@ const StudentDashboard = () => {
       if (examScores.length === 0) {
         return (
           <div className='flex flex-col md:flex-row md:gap-6 justify-center items-center mt-36'>
-  <div className='basis-[53%] border-2 w-96 border-slate-700 justify-center items-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4 sm:mb-4 md:mb-0'>
+  <div className='basis-[53%] border-2 border-slate-700 justify-center items-center bg-white shadow-md rounded-[4px] dark:bg-slate-900 w-[370px] md:w-92 lg:w-full sm:w-[384px] h-4/5 lg:mb-0 lg:mr-4 sm:mb-4 md:mb-0'>
     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
       <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
     </div>
@@ -44,7 +44,7 @@ const StudentDashboard = () => {
       <p className='mt-[15px] text-center justify-center text-semibold text-gray-500'>No Exam data...</p>
     </div>
   </div>
-  <div className='basis-[43%] justify-center items-center w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] md:w-80 h-4/5 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
+  <div className='basis-[43%] justify-center items-center border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] w-[370px] md:w-92 lg:w-full sm:w-[384px] h-4/5 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
     <div className='bg-[#F8F9FC] items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
       <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
     </div>
@@ -150,7 +150,7 @@ const StudentDashboard = () => {
     return (
         <div key={index} className='dash'>
             <div className='flex flex-col md:flex-row md:gap-6 mt-[22px] w-full'>
-            <div className='basis-[53%] border-2 border-slate-700 bg-white shadow-md rounded-[4px] dark:bg-slate-900 md:w-80 h-4/5 lg:mb-0 lg:mr-4'>
+            <div className='basis-[53%] border-2 border-slate-700 bg-white shadow-md rounded-[4px] dark:bg-slate-900 w-[370px] md:w-92 lg:w-full sm:w-[384px] sm:mb-4 mb-4 h-4/5 lg:mb-0 lg:mr-4'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold '>Recent Exam chart</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />
@@ -162,9 +162,9 @@ const StudentDashboard = () => {
                         <LineChart
                             data={competenciesForChart}
                             margin={{
-                                top: 5,
+                                top: 10,
                                 right: 30,
-                                left: 20,
+                                left: 0,
                                 bottom: 5,
                             }}
                         >
@@ -178,7 +178,7 @@ const StudentDashboard = () => {
                         </ResponsiveContainer>
                     </div>
                 </div>
-                <div className='basis-[43%] w-96 border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] lg:mb-0 lg:mr-4 dark:bg-slate-900'>
+                <div className='basis-[43%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] w-[370px] md:w-92 lg:w-full sm:w-[384px] sm:mb-4 mb-4 lg:mb-0 lg:mr-4 dark:bg-slate-900'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
                         <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Percentage of All Competency</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />

@@ -234,14 +234,14 @@ const handleEditQuestion = (updatedQuestion) => {
     onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as the user types
   />
   <button 
-      className="absolute inset-y-0 right-0 bg-indigo-700 hover:bg-indigo-600 w-32 justify-center items-center text-sm text-center mb-3 text-white h-10 py-2 px-4 rounded"
-    // Add onClick event to handle search
-    onClick={() => {
-      fetchData(); // Fetch data based on selected program, competency, and search query
-    }}
-  >
-    Search
-  </button>
+  className="absolute inset-y-0 right-0 bg-indigo-700 hover:bg-indigo-600 w-12 justify-center items-center text-[13px] text-center mb-3 text-white h-10 py-2 px-1 rounded sm:w-24 md:w-32 lg:w-32"
+  // Add onClick event to handle search
+  onClick={() => {
+    fetchData(); // Fetch data based on selected program, competency, and search query
+  }}
+>
+  Search
+</button>
 </form>
 
     <button

@@ -47,7 +47,7 @@ const Dashboard = () => {
                     <BsFillPersonCheckFill fontSize={28} color="" />
 				</div>
                     <div>
-                        <h2 className='text-[#B589DF] text-[11px] leading-[17px] px-[10px] font-bold'>Total (Exam-takers)</h2>
+                        <h2 className='text-[#4E73DF] text-[12px] leading-[17px] px-[9px] font-bold'>Total (Exam-takers)</h2>
                         <h1 className='text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px] px-[10px] dark:text-white'>{totalStudents}</h1>
                     </div>
 
@@ -57,7 +57,7 @@ const Dashboard = () => {
                     <BsFillPersonCheckFill fontSize={28} color="" />
 				</div>
                     <div>
-                        <h2 className='text-[#1cc88a] text-[11px] leading-[17px] px-[10px] font-bold'>
+                        <h2 className='text-[#1cc88a] text-[12px] leading-[17px] px-[10px] font-bold'>
                             Students</h2>
                         <h1 className='text-[20px] leading-[24px] font-bold text-[#5a5c69] px-[10px] mt-[5px] dark:text-white'>{graduatingStudents}</h1>
                     </div>
@@ -67,7 +67,7 @@ const Dashboard = () => {
                     <FaGraduationCap fontSize={28} color="" />
 				</div>
                     <div>
-                        <h2 className='text-[#1cc88a] text-[11px] leading-[17px] px-[10px] font-bold'>ALUMNI </h2>
+                        <h2 className='text-[#36B9CC] text-[12px] leading-[17px] px-[10px] font-bold'>ALUMNI </h2>
                         <h1 className='text-[20px] leading-[24px] font-bold text-[#5a5c69] px-[10px] mt-[5px] dark:text-white'>{alumni}</h1>
                     </div>
                 </div>
@@ -76,7 +76,7 @@ const Dashboard = () => {
                     <BsFillPersonLinesFill fontSize={28} color="" />
 				</div>
                     <div>
-                        <h2 className='text-[#1cc88a] text-[11px] leading-[17px] px-[10px] font-bold'>PENDING REQUESTS</h2>
+                        <h2 className='text-[#F6C23E] text-[12px] leading-[17px] px-[10px] font-bold'>PENDING REQUESTS</h2>
                         <h1 className='text-[20px] leading-[24px] font-bold text-[#5a5c69] px-[10px] mt-[5px] dark:text-white'>{pendingRequests}</h1>
                     </div>
                 </div>

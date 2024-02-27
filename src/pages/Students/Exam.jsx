@@ -184,8 +184,6 @@ const saveExamStateToLocalStorage = () => {
     currentQuestion: currentQuestion,
     score,
     userExamId,
-    selectedProgram,
-    selectedCompetency,
     maxQuestions: maxQuestions,
     filteredQuestions: filteredQuestions.map(question => ({ ...question })), // Convert to plain objects
     selectedChoices: [...selectedChoices],
@@ -386,7 +384,6 @@ const startExam = async () => {
     saveTimerStateToLocalStorage();
     setNum(selectedTime * 3600); // Set the countdown time in seconds
     setExamStartTime(new Date()); // Update exam start time to current time
-    localStorage.removeItem('examState');
 
     // Reset the loading state after 2 seconds (simulate loading)
     setTimeout(() => {
@@ -448,7 +445,7 @@ const handleFinishExam = () => {
   setCountdownStarted(false);
   endExam(); // Call the endExam function when the Finish button is clicked
   localStorage.removeItem('examState');
-  saveTimerStateToLocalStorage();
+  localStorage.removeItem('timerState');
   setTimeout(() => {
     // Reset the loading state to false after 2 seconds
     setLoading(false);

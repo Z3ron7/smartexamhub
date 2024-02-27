@@ -68,11 +68,11 @@ const Rankings = () => {
       <table className="table-auto w-full overflow-y-scroll h-80">
         <thead className="bg-slate-600 p-2 font-semibold border-b-2 text-white">
           <tr>
-            <th className="px-4 py-2">#</th>
-            <th className="px-4 py-2">Avatar</th>
-            <th className="px-4 py-2">User</th>
-            <th className="px-3 py-2">Categories</th>
-            <th className="px-3 py-2">Score</th>
+            <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">#</th>
+            <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">Avatar</th>
+            <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">User</th>
+            <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">Categories</th>
+            <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">Score</th>
           </tr>
         </thead>
         <tbody>

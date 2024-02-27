@@ -350,7 +350,7 @@ function App() {
           }
         />
         <Route
-          path="/student-room/exam-room/start-exam"
+          path="/student-room/exam-room/start-exam/:room_id"
           element={
             <ProtectedRoute
               element={<LayoutStudents><ExamStart /></LayoutStudents>}

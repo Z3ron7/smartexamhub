@@ -62,9 +62,9 @@ function VerifyUser() {
             <table className="dark:text-white w-full">
               <thead className=''>
                 <tr className="bg-slate-600 text-white font-mono font-semibold">
-                  <th className='flex items-start justify-start p-2 mx-4'>Name</th>
-                  <th className=''>Email</th>
-                  <th className="">Actions</th>
+                  <th className='flex items-start justify-start p-2 lg:p-3 md:p-2 sm:p-2 mx-4'>Name</th>
+                  <th className='p-2 lg:p-3 md:p-2 sm:p-2'>Email</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="p-4">
@@ -74,9 +74,9 @@ function VerifyUser() {
     className="border-b border-gray-200 p-5 cursor-pointer" // Increase padding to p-6
     onClick={() => handleRowClick(user)}
   >
-    <td className="flex mx-0 p-3">{user.name}</td>
-    <td className="text-center p-3">{user.username}</td>
-    <td className="text-center text-[green]">
+    <td className="flex p-1 lg:3 md:p-2 sm:p-2 text-xs lg:text-base md:text-sm sm:text-sm py-2 mx-0">{user.name}</td>
+    <td className="text-center p-2 lg:p-3 md:p-2 text-xs lg:text-base md:text-sm sm:text-sm sm:p-2">{user.username}</td>
+    <td className="text-center text-[green] p-2 lg:p-3 md:p-2 sm:p-2 text-xs lg:text-base md:text-sm sm:text-sm">
       View
     </td>
   </tr>

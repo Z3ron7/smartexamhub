@@ -146,7 +146,7 @@ const competencyMap = {
 
       return (
         <div className="flex flex-col sm:flex-row justify-center">
-          <div className=' max-w-lg sm:w-1/2 lg:w-1/2 md:w-1/2 border mx-2 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
+          <div className=' w-[350px] sm:w-1/2 lg:w-1/2 md:w-1/2 border mx-2 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
             <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
               <h2 className='text-[16px] leading-[19px] font-bold text-[#4e73df]'> Result</h2>
               <FaEllipsisV color='gray' className='cursor-pointer' />
@@ -172,7 +172,7 @@ const competencyMap = {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className='bg-gray-200 dark:bg-slate-900 p-2 rounded-lg h-[350px] w- shadow-md'>
+          <div className='bg-gray-200 dark:bg-slate-900 p-2 rounded-lg w-[360px] h-[350px] w- shadow-md'>
             <h2 className='text-xl font-semibold'>Exam Details</h2>
             <p>Exam Name: {room_name}</p>
             <p>Description: {description}</p>
@@ -209,11 +209,11 @@ const competencyMap = {
   };
   
   return (
-    <div className="dash flex dark:text-white">
+    <div className="flex dark:text-white overflow-x-visible">
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
-        <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 p-2 mb-4 border-b-2 rounded-lg shadow-md">
+        {/* <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 p-2 mb-4 border-b-2 rounded-lg shadow-md">
           <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Name</div>
           <div className="sm:w-20 lg:w-28 lg:pl-14 lg:font-semibold md:text-sm text-sm">Avatar</div>
           <div className="w-1/4 text-sm md:text-sm lg:pl-16 lg:font-semibold">Room Name</div>
@@ -221,7 +221,20 @@ const competencyMap = {
           <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Score</div>
           <div className="pl-1 w-1/5 text-sm md:text-sm lg:font-semibold">Total Duration</div>
           <div className="w-1/6 text-sm md:text-sm lg:font-semibold">Action</div>
-        </div>
+        </div> */}
+        <table className="dark:text-white w-full rounded-lg">
+              <thead className='w-80'>
+                <tr className="bg-slate-600 text-white text-[10px] sm:text-sm md:text-sm lg:text-base font-mono font-semibold">
+                  <th className='flex items-start justify-start p-2 lg:p-3 md:p-2 sm:p-2 w-24 sm:w-24 md:w-28 lg:w-28'>Name</th>
+                  <th className='p-2 lg:p-3 md:p-2 sm:p-2'>Avatar</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Room Name</th>
+                  <th className="p-2 lg:p-3 text-left md:p-2 sm:p-2">Competency ID</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Score</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Total Duration</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Action</th>
+                </tr>
+              </thead>
+        </table>
         {examScores.map((exam, index) => {
   // Initialize an array to store the mapped scores for each competency
   const mappedScores = [];
@@ -280,23 +293,23 @@ const competencyMap = {
     return (
       <AccordionLayout 
         title={(
-          <div className="flex flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-5 dark:text-white mx-3 ">
-            <div className="w-12 text-xs lg:text-base lg:w-16 ">{exam.name}</div>
-            <div className="w-36 text-xs lg:text-base lg:w-16 lg:ml-12"><img
+          <div className="flex flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 lg:gap-2 dark:text-white mx-3 ">
+            <div className="w-24 text-xs lg:text-base sm:w-16 md:w-12 lg:w-44 ">{exam.name}</div>
+            <div className="w-14 sm:w-14 md:w-16 lg:w-16 text-xs sm:text-sm md:text-sm lg:text-base "><img
           src={exam.image}
           alt=""
-          className="rounded-full w-10 h-10"
+          className="rounded-full w-8 sm:w-8 md:w-9 lg:w-10 h-8 sm:h-8 md:h-9 lg:h-10"
         /></div>
-            <div className="w-12 text-xs lg:text-base lg:w-16 lg:pl-12 ">{exam.room_name}</div>
-            <div className="w-28 text-xs lg:text-base lg:w-40 lg:pl-28">{competencyName[exam.competency_id]}</div>
-            <div className="pl-3 text-xs lg:text-base w-1/6 lg:w-28 lg:pl-24">
+            <div className=" w-16 sm:w-14 md:w-24 lg:w-44 text-xs lg:text-base lg:pl-12 ">{exam.room_name}</div>
+            <div className="w-24 sm:w-14 md:w-24 lg:w-44 text-xs lg:text-base">{competencyName[exam.competency_id]}</div>
+            <div className=" text-xs sm:text-sm md:text-base lg:text-base w-12 sm:w-14 md:w-24 lg:w-20 text-center">
               <ul>
                   <li>
                     {mappedScores[0].score}
                   </li>
               </ul>
             </div>
-            <div className="w-28 text-xs lg:text-base lg:w-28 sm:pl-10 lg:pl-32">{exam.total_duration_minutes}</div>
+            <div className="w-28 sm:w-14 md:w-24 lg:w-52 text-xs lg:text-base lg:text-center">{exam.total_duration_minutes}</div>
           </div>
         )}
         index={index}

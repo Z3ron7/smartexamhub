@@ -59,7 +59,11 @@ export default function Register() {
       setLoading(false); // Hide loading spinner
       return;
     }
-  
+    if (values.passwordConfirmation !== values.password) {
+      console.error("Confirm password does not match password.");
+      setLoading(false);
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("name", values.name);
@@ -126,7 +130,7 @@ export default function Register() {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
   const togglePasswordVisibility1 = () => {
-    setShowPassword1((prevShowPassword) => !prevShowPassword);
+    setShowPassword1((prevShowPassword1) => !prevShowPassword1);
   };
   return (
     <div className="bg-white" style={{ backgroundImage: `url(${RP})`, backgroundSize: "100% 100%", backgroundPosition: "center", display: "flex", flexDirection: "column", alignItems: "center", height: "100vh" }}>
@@ -351,16 +355,9 @@ export default function Register() {
         className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
         required
       />
-      <button
-        onClick={togglePasswordVisibility1}
-        className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
-      >
-        {showPassword1 ? (
-    <FaEye className="h-6 w-6" />
-  ) : (
-    <FaEyeSlash className="h-6 w-6" />
+      {passwordConfirmation !== values.password && (
+  <p className="text-red-500 text-sm mt-1">Confirm password does not match password.</p>
   )}
-      </button>
     </div>
             </div>
         

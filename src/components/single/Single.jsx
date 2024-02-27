@@ -12,6 +12,15 @@ import {
 import "./single.scss";
 import { useParams } from "react-router-dom";
 
+function formatDate(date) {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
+
 function getTimeAgo(time) {
   const currentTime = new Date();
   const activityTime = new Date(time);
@@ -28,22 +37,21 @@ function getTimeAgo(time) {
 
   if (timeDiffInMilliseconds < minute) {
     const seconds = Math.floor(timeDiffInMilliseconds / 1000);
-    return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+    return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
   } else if (timeDiffInMilliseconds < hour) {
     const minutes = Math.floor(timeDiffInMilliseconds / minute);
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   } else if (timeDiffInMilliseconds < day) {
     const hours = Math.floor(timeDiffInMilliseconds / hour);
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return `${hours} hour${hours > 1 ? "s" : ""} ago`;
   } else if (timeDiffInMilliseconds < week) {
     const days = Math.floor(timeDiffInMilliseconds / day);
-    return `${days} day${days > 1 ? 's' : ''} ago`;
+    return `${days} day${days > 1 ? "s" : ""} ago`;
   } else if (timeDiffInMilliseconds < month) {
     const weeks = Math.floor(timeDiffInMilliseconds / week);
-    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
   } else {
-    const months = Math.floor(timeDiffInMilliseconds / month);
-    return `${months} month${months > 1 ? 's' : ''} ago`;
+    return formatDate(activityTime);
   }
 }
 

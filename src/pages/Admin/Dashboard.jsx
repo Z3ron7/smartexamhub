@@ -94,7 +94,7 @@ const Dashboard = () => {
                 </div>
                 <div className='basis-[50%] border-2 border-slate-700 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900'>
                     <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                        <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Recent Exam Rankings</h2>
+                        <h2 className='text-[#4e73df] text-[16px] leading-[19px] font-bold'>Exam Rankings</h2>
                         <FaEllipsisV color="gray" className='cursor-pointer' />
                     </div>
                     <div className=' dark:text-white'>

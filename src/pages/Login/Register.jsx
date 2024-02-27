@@ -351,9 +351,16 @@ export default function Register() {
         className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm sm:text-sm sm:leading-6"
         required
       />
-      {values.password !== passwordConfirmation && passwordConfirmation.length > 0 && (
-      <p className="text-red-500 text-sm mt-1">Password and confirmation password do not match.</p>
-    )}
+      <button
+        onClick={togglePasswordVisibility1}
+        className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
+      >
+        {showPassword1 ? (
+    <FaEye className="h-6 w-6" />
+  ) : (
+    <FaEyeSlash className="h-6 w-6" />
+  )}
+      </button>
     </div>
             </div>
         

@@ -166,7 +166,7 @@ const Single = () => {
         <li key={index}>
           <div>
           <p className="dark:text-white">{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
-            <time className="dark:text-white">{getTimeAgo(activity.end_time)}</time>
+          <time className="dark:text-white">{getTimeAgo(new Date(activity.end_time))}</time>
           </div>
         </li>
       ))}

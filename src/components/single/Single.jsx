@@ -29,13 +29,13 @@ function getTimeAgo(time) {
   const timeDiffInMilliseconds = currentTime - activityTime;
 
   // Define time units
-  const minute = 60 * 1000; // 1 minute in milliseconds
+  const minute = 60 * 60; // 1 minute in milliseconds
   const hour = 60 * minute; // 1 hour in milliseconds
   const day = 24 * hour; // 1 day in milliseconds
   const month = 30 * day; // 1 month in milliseconds
 
   if (timeDiffInMilliseconds < minute) {
-    const seconds = Math.floor(timeDiffInMilliseconds / 1000);
+    const seconds = Math.floor(timeDiffInMilliseconds / 60);
     return `Less than a minute ago`;
   } else if (timeDiffInMilliseconds < hour) {
     const minutes = Math.floor(timeDiffInMilliseconds / minute);

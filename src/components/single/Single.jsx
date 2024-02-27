@@ -16,25 +16,34 @@ function getTimeAgo(time) {
   const currentTime = new Date();
   const activityTime = new Date(time);
 
-  // Calculate the time difference in seconds
-  const timeDiffInSeconds = Math.floor((currentTime - activityTime) / 1000);
+  // Calculate the time difference in milliseconds
+  const timeDiffInMilliseconds = currentTime - activityTime;
 
   // Define time units
-  const minute = 60; // 1 minute in seconds
-  const hour = 60 * minute; // 1 hour in seconds
-  const day = 24 * hour; // 1 day in seconds
+  const minute = 60 * 1000; // 1 minute in milliseconds
+  const hour = 60 * minute; // 1 hour in milliseconds
+  const day = 24 * hour; // 1 day in milliseconds
+  const week = 7 * day; // 1 week in milliseconds
+  const month = 30 * day; // 1 month in milliseconds
 
-  if (timeDiffInSeconds < minute) {
-    return `${timeDiffInSeconds} second${timeDiffInSeconds > 1 ? 's' : ''} ago`;
-  } else if (timeDiffInSeconds < hour) {
-    const minutes = Math.floor(timeDiffInSeconds / minute);
+  if (timeDiffInMilliseconds < minute) {
+    const seconds = Math.floor(timeDiffInMilliseconds / 1000);
+    return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+  } else if (timeDiffInMilliseconds < hour) {
+    const minutes = Math.floor(timeDiffInMilliseconds / minute);
     return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  } else if (timeDiffInSeconds < day) {
-    const hours = Math.floor(timeDiffInSeconds / hour);
+  } else if (timeDiffInMilliseconds < day) {
+    const hours = Math.floor(timeDiffInMilliseconds / hour);
     return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  } else {
-    const days = Math.floor(timeDiffInSeconds / day);
+  } else if (timeDiffInMilliseconds < week) {
+    const days = Math.floor(timeDiffInMilliseconds / day);
     return `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (timeDiffInMilliseconds < month) {
+    const weeks = Math.floor(timeDiffInMilliseconds / week);
+    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+  } else {
+    const months = Math.floor(timeDiffInMilliseconds / month);
+    return `${months} month${months > 1 ? 's' : ''} ago`;
   }
 }
 

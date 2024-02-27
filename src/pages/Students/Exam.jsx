@@ -370,7 +370,7 @@ const startExam = async () => {
     const user_id = localStorage.getItem('user_id');
 
     // Create a user_exam entry in the database
-    const response = await axios.post('https://smartexam.cyclic.app/exams/user-exams', {
+    const response = await axios.post('https://smartexamhub.vercel.app/exams/user-exams', {
       user_id,
       program: programValue,
       competency: competencyValue,
@@ -421,7 +421,7 @@ const endExam = async () => {
       Math.floor(total_duration_minutes % 60)
     ).padStart(2, '0')}m:${String(Math.floor((total_duration_minutes % 1) * 60)).padStart(2, '0')}s`;
 
-    const response = await axios.post('https://smartexam.cyclic.app/exams/end-exam', {
+    const response = await axios.post('https://smartexamhub.vercel.app/exams/end-exam', {
       exam_id: user_exam_id,
       score: calculateScore(),
       total_duration_minutes: formattedTotalDuration,

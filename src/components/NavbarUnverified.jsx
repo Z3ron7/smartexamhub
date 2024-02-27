@@ -7,7 +7,6 @@ import { Menu, Popover, Transition } from '@headlessui/react'
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
-import Cookies from 'js-cookie';
 
 const NavbarUnverified = () => {
   const [open, setOpen] = useState(false);

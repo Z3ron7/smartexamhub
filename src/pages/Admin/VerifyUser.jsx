@@ -64,7 +64,7 @@ function VerifyUser() {
                 <tr className="bg-slate-600 text-white font-mono font-semibold">
                   <th className='flex items-start justify-start p-2 lg:p-3 md:p-2 sm:p-2 mx-4'>Name</th>
                   <th className='p-2 lg:p-3 md:p-2 sm:p-2'>Email</th>
-                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Actions</th>
+                  <th className="p-2 lg:p-3 md:p-2 sm:p-2">Action</th>
                 </tr>
               </thead>
               <tbody className="p-4">

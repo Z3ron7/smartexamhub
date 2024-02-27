@@ -200,12 +200,12 @@ const competencyMap = {
   };
   
   const competencyName = {
-    4: 'All Competency',
+    6: 'All Competency',
     1: 'SWWPS',
     2: 'Casework',
     3: 'HBSE',
-    5: 'CO',
-    6: 'Groupwork',
+    4: 'CO',
+    5: 'Groupwork',
   };
   
   return (

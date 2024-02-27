@@ -26,19 +26,15 @@ function getTimeAgo(time) {
   const activityTime = new Date(time);
 
   // Calculate the time difference in milliseconds
-  const timeDiffInMilliseconds = currentTime - activityTime;
+  const timeDiffInMilliseconds = currentTime.getTime() - activityTime.getTime();
 
   // Define time units
-  const minute = 60 * 60; // 1 minute in milliseconds
-  const hour = 60 * minute; // 1 hour in milliseconds
+  const hour = 60 * 60 * 1000; // 1 hour in milliseconds
   const day = 24 * hour; // 1 day in milliseconds
   const month = 30 * day; // 1 month in milliseconds
 
-  if (timeDiffInMilliseconds < minute) {
-    const seconds = Math.floor(timeDiffInMilliseconds / 60);
-    return `Less than a minute ago`;
-  } else if (timeDiffInMilliseconds < hour) {
-    const minutes = Math.floor(timeDiffInMilliseconds / minute);
+  if (timeDiffInMilliseconds < hour) {
+    const minutes = Math.floor(timeDiffInMilliseconds / 60000); // Convert milliseconds to minutes
     return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   } else if (timeDiffInMilliseconds < day) {
     const hours = Math.floor(timeDiffInMilliseconds / hour);
@@ -171,7 +167,7 @@ const Single = () => {
         <li key={index}>
           <div>
           <p className="dark:text-white">{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
-          <time className="dark:text-white">{getTimeAgo(new Date(activity.end_time))}</time>
+          <time className="dark:text-white">{getTimeAgo(activity.end_time)}</time>
           </div>
         </li>
       ))}

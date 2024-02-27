@@ -11,7 +11,7 @@ function ExamStart({setUserExamId, userExamId, selectedCompetency, setSelectedCo
   const [maxQuestions, setMaxQuestions] = useState(null);
   const [score, setScore] = useState(0);
   const [selectedChoices, setSelectedChoices] = useState(Array(maxQuestions).fill(null)); // Adjust the number of questions
-  const questionsPerPage = 3; // Adjust the number of questions per page
+  const questionsPerPage = 10; // Adjust the number of questions per page
   const [competencyScores, setCompetencyScores] = useState({});
   const [filteredQuestions, setFilteredQuestions] = useState([]);
 

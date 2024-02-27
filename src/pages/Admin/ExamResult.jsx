@@ -56,6 +56,7 @@ const competencyMap = {
   '3': 'HBSE',
   '4': 'CO',
   '5': 'Groupwork',
+  '6': 'All Competency',
   // Add more mappings as needed
 };
 

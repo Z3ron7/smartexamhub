@@ -65,7 +65,7 @@ const Rankings = () => {
 
   return (
     <div className="container mx-auto p-2 font-mono">
-      <table className="table-auto w-full overflow-y-scroll h-80">
+      <table className="table-auto w-full overflow-y-scroll h-96">
         <thead className="bg-slate-600 p-2 font-semibold border-b-2 text-white">
           <tr>
             <th className="px-2 lg:px-3 md:px-2 sm:px-2 py-2">#</th>

@@ -25,6 +25,7 @@ function getColorForLevel(level) {
 export default function ExamResult() {
   const [examScores, setExamScores] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleOpen = (index) => {
     if (activeIndex === index) {
@@ -144,7 +145,15 @@ const competencyMap = {
       });
 
       const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
-
+      const filteredExamScores = examScores.filter((exam) => {
+        const searchTerm = searchQuery.toLowerCase();
+        return (
+          (exam.room_name && exam.room_name.toLowerCase().includes(searchTerm)) ||
+          (exam.competency_id && competencyName[exam.competency_id].toLowerCase().includes(searchTerm)) ||
+          (exam.name && exam.name.toLowerCase().includes(searchTerm)) ||
+          (exam.score && exam.score.toLowerCase().includes(searchTerm))
+        );
+      });
       return (
         <div className="flex flex-col sm:flex-row justify-center">
           <div className=' w-[350px] sm:w-1/2 lg:w-1/2 md:w-1/2 border mx-2 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
@@ -208,12 +217,30 @@ const competencyMap = {
     4: 'CO',
     5: 'Groupwork',
   };
-  
+  const filteredExamScores = examScores.filter((exam) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return (
+      (exam.room_name && exam.room_name.toLowerCase().includes(searchTerm)) ||
+      (exam.competency_id && competencyName[exam.competency_id].toLowerCase().includes(searchTerm)) ||
+      (exam.name && exam.name.toLowerCase().includes(searchTerm)) ||
+      (exam.score && exam.score.toLowerCase().includes(searchTerm))
+    );
+  });
   return (
     <div className="flex dark:text-white overflow-x-visible">
+      
       <div className="flex items-center justify-between">
       </div>
       <div className="mt-[10px] w-full justify-center">
+      <div className="flex m-5 w-96 h-12 border-2 border-slate-600 ">
+      <input
+        className="p-2 w-96"
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Search by Room Name, Competency, or Name"
+      />
+      </div>
         {/* <div className="flex bg-gray-200 dark:bg-slate-900 gap-2 p-2 mb-4 border-b-2 rounded-lg shadow-md">
           <div className="sm:w-14 lg:w-28 lg:font-semibold md:text-sm text-sm">Name</div>
           <div className="sm:w-20 lg:w-28 lg:pl-14 lg:font-semibold md:text-sm text-sm">Avatar</div>
@@ -236,7 +263,7 @@ const competencyMap = {
                 </tr>
               </thead>
         </table>
-        {examScores.map((exam, index) => {
+        {filteredExamScores.map((exam, index) => {
   // Initialize an array to store the mapped scores for each competency
   const mappedScores = [];
   

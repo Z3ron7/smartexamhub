@@ -105,7 +105,7 @@ const NavbarStudents = () => {
 
           {auth ? ( // Check if user data is available
             <div className="user h-[50px] w-[50px] rounded-full cursor-pointer flex items-center justify-center relative z-40">
-              <img src={image} alt="User Avatar" />
+              <img src={image || "/noavatar.png"} alt="User Avatar" />
             </div>
           ) : (
             <div className="user h-[50px] w-[50px] rounded-full cursor-pointer flex items-center justify-center relative z-40">

@@ -320,6 +320,7 @@ export default function Register() {
           required
         />
         <button
+        type="button"
   onClick={togglePasswordVisibility}
   className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
 >
@@ -353,6 +354,7 @@ export default function Register() {
       />
       <button
         onClick={togglePasswordVisibility1}
+        type="button"
         className="absolute inset-y-0 right-0 px-2 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue active:shadow-none"
       >
         {showPassword1 ? (

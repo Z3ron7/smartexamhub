@@ -286,7 +286,7 @@ const Single = () => {
               {latestActivities.map((activity, index) => (
                 <li key={index}>
                   <div>
-                    <p>{`Took the exam with a category of ${competencyMap[activity.competency_id]} and a score of ${activity.score}`}</p>
+                    <p>{`Took the exam with a category of ${competencyMap[activity.competency_id]}.`}</p>
                     <time>{activity.end_time}</time>
                   </div>
                   <div>{processExamScores(activity)}</div>

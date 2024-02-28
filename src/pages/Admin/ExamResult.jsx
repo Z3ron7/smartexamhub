@@ -41,7 +41,7 @@ export default function ExamResult() {
       try {
         const response = await axios.get('https://smartexam.cyclic.app/dashboard/fetch-exam-room');
         setExamScores(response.data);
-        console.log(response.data)
+        console.log("ExamScores",response.data)
       } catch (error) {
         console.error('Error fetching exam scores:', error);
       }

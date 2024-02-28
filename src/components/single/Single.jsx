@@ -13,16 +13,6 @@ import "./single.scss";
 import { useParams } from "react-router-dom";
 import AccordionLayout from '../../components/accordion/AccordionLayout'
 
-
-function formatDate(date) {
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-}
-
 function getTimeAgo(time) {
   const currentTime = new Date();
   const activityTime = new Date(time);
@@ -93,164 +83,6 @@ const Single = () => {
     }
     fetchLatestActivities();
   }, [user_id]);
-  const competencyMap = {
-    '1': 'SWWPS',
-    '2': 'Casework',
-    '3': 'HBSE',
-    '4': 'CO',
-    '5': 'Groupwork',
-    '6': 'All Competency',
-    // Add more mappings as needed
-  };
-  
-    const processExamScores = (exam, index, activeIndex) => {
-      const { room_name, description, score, duration_minutes, end_time, total_duration_minutes } = exam;
-      const endDate = new Date(end_time);
-      const endDateFormatted = endDate.toISOString().split('T')[0];
-  
-      // Initialize an array to store the mapped competency names and scores
-      const mappedScores = [];
-  
-      // Initialize an object to store the counts and percentages
-      const competencyCounts = {};
-  
-      // Check if score is available before parsing it
-      if (score) {
-        const scoreString = score;
-        const scores = JSON.parse(scoreString);
-  
-        // Calculate the total score for all competencies
-        let totalScore = 0;
-        let totalPossibleScore = 0;
-  
-        for (const competencyId in scores) {
-          if (competencyMap[competencyId]) {
-            const competencyScore = scores[competencyId];
-            totalScore += competencyScore;
-            totalPossibleScore += 100; // Assuming the maximum score for each competency is 100
-            mappedScores.push({
-              competency: competencyMap[competencyId],
-              score: competencyScore,
-              totalPossibleScore: 100, // Each competency has a total possible score of 100
-            });
-  
-            // Update competency counts
-            if (!competencyCounts[competencyMap[competencyId]]) {
-              competencyCounts[competencyMap[competencyId]] = {
-                score: 0,
-                totalPossibleScore: 0,
-              };
-            }
-            competencyCounts[competencyMap[competencyId]].score += competencyScore;
-            competencyCounts[competencyMap[competencyId]].totalPossibleScore += 100;
-          }
-        }
-  
-        // Calculate and add the "All Competency" entry
-        const allCompetencyScore = totalScore;
-        const allCompetencyPossibleScore = totalPossibleScore;
-        mappedScores.push({
-          competency: 'All Competency',
-          score: allCompetencyScore,
-          totalPossibleScore: allCompetencyPossibleScore,
-        });
-  
-        // Sort the mappedScores array so that "All Competency" comes before other competencies
-        mappedScores.sort((a, b) => {
-          if (a.competency === 'All Competency') return -1;
-          if (b.competency === 'All Competency') return 1;
-          return a.competency.localeCompare(b.competency);
-        });
-  
-        // Filter out "All Competency" from mappedScores
-  
-        // Define competency level criteria
-        const competencyLevels = [
-          { level: 'Excellent', minPercent: 90 },
-          { level: 'Average', minPercent: 80 },
-          { level: 'Good', minPercent: 75 },
-          { level: 'Poor', minPercent: 60 },
-          { level: 'Very Poor', minPercent: 0 },
-        ];
-  
-        // Calculate and update competency levels
-        mappedScores.forEach((item) => {
-          const percentage = ((item.score / item.totalPossibleScore) * 100).toFixed(2); // Round to two decimal places
-          for (const levelData of competencyLevels) {
-            if (percentage >= levelData.minPercent) {
-              item.level = levelData.level;
-              break;
-            }
-            // Add the competency level message
-            item.levelMessage = `(You've got ${item.level} result in ${item.competency})`;
-          }
-        });
-  
-        const competenciesForChart = mappedScores.filter((item) => item.competency !== 'All Competency');
-  
-        return (
-          <div className="flex flex-col sm:flex-row justify-center">
-            <div className=' w-[350px] sm:w-1/2 lg:w-1/2 md:w-1/2 border mx-2 bg-white shadow-md cursor-pointer rounded-[4px] dark:bg-slate-900 mb-4 h-4/6 lg:mb-3'>
-              <div className='bg-[#F8F9FC] flex items-center justify-between py-[15px] px-[20px] border-b-[1px] dark:bg-slate-900 border-[#EDEDED]'>
-                <h2 className='text-[16px] leading-[19px] font-bold text-[#4e73df]'> Result</h2>
-                <FaEllipsisV color='gray' className='cursor-pointer' />
-              </div>
-              <div className='lineChart'>
-                <ResponsiveContainer height={300}>
-                  <LineChart
-                    data={competenciesForChart}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray='3 3' />
-                    <XAxis dataKey='competency' />
-                    <YAxis domain={[0, 100]} />
-                    <Tooltip />
-                    <Legend />
-                    <Line type='monotone' dataKey='score' stroke='#8884d8' activeDot={{ r: 8 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            <div className='bg-gray-200 dark:bg-slate-900 p-2 rounded-lg w-[360px] h-[350px] w- shadow-md'>
-              <h2 className='text-xl font-semibold'>Exam Details</h2>
-              <p>Exam Name: {room_name}</p>
-              <p>Description: {description}</p>
-              <p>Duration (Minutes): {duration_minutes}</p>
-              <p>Date: {endDateFormatted}</p>
-            <p>Exam taken (Minutes): {total_duration_minutes}</p>
-              <ul>
-                {mappedScores.map((item, index) => (
-                  <li key={index}>
-                    {item.competency}: {item.score} out of {item.totalPossibleScore}{' '}
-                    {parseFloat((item.score / item.totalPossibleScore * 100).toFixed(2))}%
-                    {item.level && (
-                      <span className={`${getColorForLevel(item.level)}`}>
-                        {' '}
-                        (You've got {item.level} result in {item.competency})
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        );
-      }
-    };
-    
-    const competencyName = {
-      6: 'All Competency',
-      1: 'SWWPS',
-      2: 'Casework',
-      3: 'HBSE',
-      4: 'CO',
-      5: 'Groupwork',
-    };
   return (
     <div className="single">
       <div className="view">
@@ -323,101 +155,18 @@ const Single = () => {
       <div className="activities">
   <h2 className="dark:text-white">Latest Activities</h2>
   <ul className="activity-list">
-  {latestActivities.map((exam, index) => {
-  // Initialize an array to store the mapped scores for each competency
-  const mappedScores = [];
-  
-  // Initialize an object to store the counts and percentages
-  const competencyCounts = {};
-
-  // Check if the exam has a score
-  if (exam.score) {
-    const scoreString = exam.score;
-    const scores = JSON.parse(scoreString);
-
-    // Calculate the total score for all competencies
-    let totalScore = 0;
-    let totalPossibleScore = 0;
-
-    for (const competencyId in scores) {
-      if (competencyMap[competencyId]) {
-        const competencyScore = scores[competencyId];
-        totalScore += competencyScore;
-        totalPossibleScore += 100; // Assuming the maximum score for each competency is 100
-        mappedScores.push({
-          competency: competencyMap[competencyId],
-          score: competencyScore,
-          totalPossibleScore: 100, // Each competency has a total possible score of 100
-        });
-
-        // Update competency counts
-        if (!competencyCounts[competencyMap[competencyId]]) {
-          competencyCounts[competencyMap[competencyId]] = {
-            score: 0,
-            totalPossibleScore: 0,
-          };
-        }
-        competencyCounts[competencyMap[competencyId]].score += competencyScore;
-        competencyCounts[competencyMap[competencyId]].totalPossibleScore += 100;
-      }
-    }
-
-    // Calculate and add the "All Competency" entry
-    const allCompetencyScore = totalScore;
-    const allCompetencyPossibleScore = totalPossibleScore;
-    mappedScores.push({
-      competency: 'All Competency',
-      score: allCompetencyScore,
-      totalPossibleScore: allCompetencyPossibleScore,
-    });
-
-    // Sort the mappedScores array so that "All Competency" comes before other competencies
-    mappedScores.sort((a, b) => {
-      if (a.competency === 'All Competency') return -1;
-      if (b.competency === 'All Competency') return 1;
-      return a.competency.localeCompare(b.competency);
-    });
-    
-    return (
-      <AccordionLayout 
-        title={(
-          <div className="flex flex-row items-center justify-center gap-2 sm:gap-2 md:gap-3 lg:gap-2 dark:text-white mx-3 ">
-            <div className="w-24 text-xs lg:text-base sm:w-16 md:w-12 lg:w-44 ">{exam.name}</div>
-            <div className="w-14 sm:w-14 md:w-16 lg:w-16 text-xs sm:text-sm md:text-sm lg:text-base "><img
-          src={exam.image}
-          alt=""
-          className="rounded-full w-8 sm:w-8 md:w-9 lg:w-10 h-8 sm:h-8 md:h-9 lg:h-10"
-        /></div>
-            <div className=" w-16 sm:w-14 md:w-24 lg:w-44 text-xs lg:text-base lg:pl-12 ">{exam.room_name}</div>
-            <div className="w-24 sm:w-14 md:w-24 lg:w-44 text-xs lg:text-base">{competencyName[exam.competency_id]}</div>
-            <div className=" text-xs sm:text-sm md:text-base lg:text-base w-12 sm:w-14 md:w-24 lg:w-20 text-center">
-              <ul>
-                  <li>
-                    {mappedScores[0].score}
-                  </li>
-              </ul>
-            </div>
-            <div className="w-28 sm:w-14 md:w-24 lg:w-52 text-xs lg:text-base lg:text-center">{exam.total_duration_minutes}</div>
+      {latestActivities.map((activity, index) => (
+        <li key={index}>
+          <div>
+          <p className="dark:text-white">{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
+          <time className="dark:text-white">{getTimeAgo(activity.end_time)}</time>
           </div>
-        )}
-        index={index}
-        activeIndex={activeIndex}
-        setActiveIndex={handleOpen}
-        key={index}
-      >
-        {processExamScores(exam)}
-      </AccordionLayout>
-    );
-  }
-  // Return null or handle the case where there's no score
-  return null;
-})}
+        </li>
+      ))}
     </ul>
 </div>
-
     </div>
   );
-  
 };
 
 

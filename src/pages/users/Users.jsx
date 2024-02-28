@@ -5,7 +5,7 @@ import "./users.scss";
 import axios from "axios";
 
 const columns = [
-  { field: "user_id", headerName: "ID", width: 50 },
+  
   {
     field: "image",
     headerName: "Avatar",

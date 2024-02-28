@@ -110,7 +110,7 @@ function LoginPage() {
               </div>
             </div>
             <div className="mt-2 relative rounded-md shadow-sm">
-              <input
+              <inputs
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"

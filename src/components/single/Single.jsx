@@ -55,6 +55,15 @@ const Single = () => {
 
   const [userData, setUserData] = useState(null);
   const [latestActivities, setLatestActivities] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleOpen = (index) => {
+    if (activeIndex === index) {
+      setActiveIndex(null); // Close the accordion if it's already open
+    } else {
+      setActiveIndex(index); // Open the clicked accordion
+    }
+  };
 
   useEffect(() => {
     // Fetch user data based on the user ID
@@ -154,16 +163,27 @@ const Single = () => {
       </div>
       <div className="activities">
   <h2 className="dark:text-white">Latest Activities</h2>
-  <ul className="activity-list">
+  <AccordionLayout
+  title={(
+    <ul className="activity-list">
       {latestActivities.map((activity, index) => (
         <li key={index}>
           <div>
-          <p className="dark:text-white">{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
-          <time className="dark:text-white">{getTimeAgo(activity.end_time)}</time>
+            <p className="dark:text-white">{`Took the exam with a category of ${competencyMap[activity.competency_id]}`}</p>
+            <time className="dark:text-white">{getTimeAgo(activity.end_time)}</time>
           </div>
         </li>
       ))}
     </ul>
+  )}
+  index={index}
+  activeIndex={activeIndex}
+  setActiveIndex={handleOpen}
+  key={index}
+>
+  {/* Include the code for the latest activities here */}
+</AccordionLayout>
+
 </div>
     </div>
   );

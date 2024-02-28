@@ -162,7 +162,7 @@ const Single = () => {
           </div> */}
       </div>
       <div className="activities">
-  <h2 className="dark:text-white">Latest Activitiess</h2>
+  <h2 className="dark:text-white">Latest Activitiesss</h2>
   <AccordionLayout
   title={(
     <ul className="activity-list">
